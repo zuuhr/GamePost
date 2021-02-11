@@ -6,8 +6,14 @@ Miflix es un servicio de streaming que ofrece una amplia variedad de series, pel
 - Parte de administrador: Los administradores del servicio podrán acceder a una página donde se habilita la gestión de películas y series incluidas en el catálogo, así como la categorización según etiquetas y géneros de los mismos. 
 
 # Entidades
-1. Entidad 1
-2. Entidad wsfef
+1. Usuario: Contiene el nombre, plan de suscripción y contraseña.
+2. Serie: Contiene una pequeña descripción y se relaciona con sus capítulos. Tendrá asignados uno o varios géneros y tags.
+3. Capítulos: Contiene el video multimedia a retransmitir.
+4. Película: Contiene una pequeña descripción y el video multimedia. Tendrá asignados uno o varios géneros y tags.
+5. Género: Se relacionará con las series y películas de cara a facilitar el sistema de sugerencias.
+6. Tags: Se relacionará con las series y películas de cara a facilitar el sistema de sugerencias. Más bajo nivel que los géneros.
+7. Lista deseados: El usuario podrá seleccionar una serie o película para verla más tarde y añadirla así a esta lista.
+8. Lista seguir viendo: El usuario tendrá una lista de series empezadas, la cual se usará para mostrar una sección con las mismas en su menú principal, con el fin de tener un acceso rápido a una serie a la que esté enganchado. En la relación entre esta clase y serie/película se guardará el dato "capítulo" y "segundo".
 
 # Descripción del servicio interno
 
