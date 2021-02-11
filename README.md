@@ -11,6 +11,12 @@ Miflix es un servicio de streaming que ofrece una amplia variedad de series, pel
 
 # Descripción del servicio interno
 
+- Visualización por streaming con calidad variable según el estado de conexión.
+- Generación de sugerencias según visualizaciones previas y popularidad.
+- Gestión de usuarios y planes de suscripción.
+- Generación de listas de deseados y seguir viendo.
+- Subida de películas y series para los administradores.
+
 # [Trello](https://trello.com/b/XFN4E5ZO)
 
 # Integrantes del desarrollo:
