@@ -1,12 +1,15 @@
 # MiFlix
 Miflix es un servicio de streaming que ofrece una amplia variedad de series, películas, títulos de anime, documentales y otros contenidos premiados en dispositivos conectados a internet. Puedes ver todo el contenido que quieras, cuando quieras y sin un solo anuncio por una tarifa mensual reducida.
 
-- Parte Pública: El usuario podrá acceder a la página de registro donde elegirá un plan de suscripción y se podrá crear una cuenta de usuario.
-- Parte Privada: Una vez registrado, el usuario se puede loguear y acceder a su lista de series y películas, acceder al media por streaming y recibir sugerencias.
+- Parte Pública: El usuario podrá acceder a la página de registro donde elegirá un plan de suscripción y se podrá crear una cuenta de usuario, así como iniciar sesión.
+- Parte Privada: Una vez registrado y logueado, el usuario puede acceder al catálogo de series y películas, su lista de deseados, reproducir el media por streaming y recibir sugerencias según el contenido visualizado.
+- Parte de administrador: Los administradores del servicio podrán acceder a una página donde se habilita la gestión de películas y series incluidas en el catálogo, así como la categorización según etiquetas y géneros de los mismos. 
 
 # Entidades
 1. Entidad 1
 2. Entidad wsfef
+
+# Descripción del servicio interno
 
 # [Trello](https://trello.com/b/XFN4E5ZO)
 
