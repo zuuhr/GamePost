@@ -1,27 +1,25 @@
-# MiFlix
-Miflix es un servicio de streaming que ofrece una amplia variedad de series, películas, títulos de anime, documentales y otros contenidos premiados en dispositivos conectados a internet. Puedes ver todo el contenido que quieras, cuando quieras y sin un solo anuncio por una tarifa mensual reducida.
+# (Nombre por determinar)
+(Nombre por determinar) es una página web dedicada a la difusión, discusión y puesta en común de opiniones e información acerca de videojuegos. Como punto de encuentro entre los jugadores, podrán consultar descripciones sobre todos los juegos del catálogo, así como consultar y abrir nuevas discusiones en el foro de dicho videojuego. Al registrarse, el usuario podrá crear nuevas entradas, almacenar sus juegos favoritos en listas, guardar entradas de foro para consultarlas más tarde o subscribirse a una discusión para no perder pista de esta.
 
-- Parte Pública: El usuario podrá acceder a la página de registro donde elegirá un plan de suscripción y se podrá crear una cuenta de usuario, así como iniciar sesión.
-- Parte Privada: Una vez registrado y logueado, el usuario puede acceder al catálogo de series y películas, su lista de deseados, reproducir el media por streaming y recibir sugerencias según el contenido visualizado.
-- Parte de administrador: Los administradores del servicio podrán acceder a una página donde se habilita la gestión de películas y series incluidas en el catálogo, así como la categorización según etiquetas y géneros de los mismos. 
+- Parte Pública: Visualización de la información de juegos y discusiones. Página principal personalizada según actualidad.
+- Parte Privada: Creación de nuevas entradas en el foro, almacenado de juegos y entradas de foros en listas. Página principal personalizada según gustos. Notificaciones sobre discusiones marcadas.
+- Parte de administrador: Gestión de descripciones y comentarios de foros en juegos. Herramienta para añadir o retirar juegos del catálogo.
 
 # Entidades
-1. Usuario: Contiene el nombre, plan de suscripción y contraseña.
-2. Serie: Contiene una pequeña descripción y se relaciona con sus capítulos. Tendrá asignados uno o varios géneros y tags.
-3. Capítulos: Contiene el video multimedia a retransmitir.
-4. Película: Contiene una pequeña descripción y el video multimedia. Tendrá asignados uno o varios géneros y tags.
-5. Género: Se relacionará con las series y películas de cara a facilitar el sistema de sugerencias.
-6. Tags: Se relacionará con las series y películas de cara a facilitar el sistema de sugerencias. Más bajo nivel que los géneros.
-7. Lista deseados: El usuario podrá seleccionar una serie o película para verla más tarde y añadirla así a esta lista.
-8. Lista seguir viendo: El usuario tendrá una lista de series empezadas, la cual se usará para mostrar una sección con las mismas en su menú principal, con el fin de tener un acceso rápido a una serie a la que esté enganchado. En la relación entre esta clase y serie/película se guardará el dato "capítulo" y "segundo".
+1. Usuario: Contiene el nombre, contraseña, referencia a la lista de listas y buzón de notificaciones.
+2. Juego: Descripción y foro.
+3. Descripción: Nombre, género, nº jugadores, año de publicación, plataforma, desarrolladora, publisher, motor de desarrollo, sinopsis.
+4. Entradas de foro: Nombre de entrada, autor, fecha creación, fecha última entrada, nº respuestas, votos.
+5. Lista: Contiene los juegos y/o entradas de foro incluidas por el usuario.
 
 # Descripción del servicio interno
 
-- Visualización por streaming con calidad variable según el estado de conexión.
-- Generación de sugerencias según visualizaciones previas y popularidad.
-- Gestión de usuarios y planes de suscripción.
-- Generación de listas de deseados y seguir viendo.
-- Subida de películas y series para los administradores.
+- Gestión de usuarios
+- Creación de nuevas entradas de foro
+- Gestión de respuestas entre usuarios
+- Sistema de notificaciones
+- Gestión de listas de cada usuario
+- Gestión de juegos e información de los mismos para administradores.
 
 # [Trello](https://trello.com/b/XFN4E5ZO)
 
