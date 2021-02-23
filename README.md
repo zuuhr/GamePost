@@ -7,19 +7,14 @@
 
 # Entidades
 1. Usuario: Contiene el nombre, contraseña, referencia a la lista de listas y buzón de notificaciones.
-2. Juego: Descripción y foro.
-3. Descripción: Nombre, género, nº jugadores, año de publicación, plataforma, desarrolladora, publisher, motor de desarrollo, sinopsis.
-4. Entradas de foro: Nombre de entrada, autor, fecha creación, fecha última entrada, nº respuestas, votos.
-5. Lista: Contiene los juegos y/o entradas de foro incluidas por el usuario.
+2. Juego: Descripción y entradas de foro asociadas. La descipción incluye: Nombre, género, nº jugadores, año de publicación, plataforma, desarrolladora, publisher, motor de desarrollo, sinopsis.
+5. Entradas de foro: Nombre de entrada, autor, fecha creación, fecha última entrada, nº respuestas, votos.
+6. Lista: Contiene los juegos y/o entradas de foro incluidas por el usuario.
 
 # Descripción del servicio interno
 
-- Gestión de usuarios
-- Creación de nuevas entradas de foro
-- Gestión de respuestas entre usuarios
-- Sistema de notificaciones
-- Gestión de listas de cada usuario
-- Gestión de juegos e información de los mismos para administradores.
+- Envío de notificaciones
+- Procesamiento de gustos de usuario
 
 # [Trello](https://trello.com/b/XFN4E5ZO)
 
