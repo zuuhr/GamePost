@@ -1,5 +1,5 @@
-# (Nombre por determinar)
-(Nombre por determinar) es una página web dedicada a la difusión, discusión y puesta en común de opiniones e información acerca de videojuegos. Como punto de encuentro entre los jugadores, podrán consultar descripciones sobre todos los juegos del catálogo, así como consultar y abrir nuevas discusiones en el foro de dicho videojuego. Al registrarse, el usuario podrá crear nuevas entradas, almacenar sus juegos favoritos en listas, guardar entradas de foro para consultarlas más tarde o subscribirse a una discusión para no perder pista de esta.
+# GamePost
+GamePost es una página web dedicada a la difusión, discusión y puesta en común de opiniones e información acerca de videojuegos. Como punto de encuentro entre los jugadores, podrán consultar descripciones sobre todos los juegos del catálogo, así como consultar y abrir nuevas discusiones en el foro de dicho videojuego. Al registrarse, el usuario podrá crear nuevas entradas, almacenar sus juegos favoritos en listas, guardar entradas de foro para consultarlas más tarde o subscribirse a una discusión para no perder pista de esta.
 
 - Parte Pública: Visualización de la información de juegos y discusiones. Página principal personalizada según actualidad.
 - Parte Privada: Creación de nuevas entradas en el foro, almacenado de juegos y entradas de foros en listas. Página principal personalizada según gustos. Notificaciones sobre discusiones marcadas.
