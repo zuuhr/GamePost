@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-GamepostApplication<gamepost>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "es.codeurjc.gamepost.GamepostApplication",
+            "projectName": "gamepost",
+            "args": ""
+        }
+    ]
+}
