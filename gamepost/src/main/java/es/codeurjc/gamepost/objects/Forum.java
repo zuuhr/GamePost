@@ -1,9 +1,19 @@
 package es.codeurjc.gamepost.objects;
 
-import java.util.List;
+import java.util.Dictionary;
 
 public class Forum {
-    List<ForumEntry> forumEntries;
+    Dictionary<Integer, ForumEntry> forumEntries;    
 
-    //public void sortBy()      //TODO: pues eso. Hacer el método sortBy.
+    public void sortBy(ForumColumnsEnum column, boolean isAscendent){
+        //TODO: pues eso. Hacer el método sortBy.
+    }
+}
+
+enum ForumColumnsEnum{
+    Title,
+    CreationDate,
+    LastUpdateDate,
+    NumResponses,
+    Votes
 }

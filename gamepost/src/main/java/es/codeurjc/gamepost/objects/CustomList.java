@@ -1,17 +1,18 @@
 package es.codeurjc.gamepost.objects;
 
-import java.util.List;
+import java.util.Dictionary;
 
 public class CustomList<T> {
+    int id;
     String name;
-    List<T> elements;
+    Dictionary<Integer, T> elements;
 
-    public boolean addElement(T element){
-        return elements.add(element);
+    public boolean addElement(Integer id, T element){
+        return element == elements.put(id, element);
     }
 
-    public boolean removeElement(T element){
-        return elements.remove(element);
+    public boolean removeElement(Integer id, T element){
+        return element == elements.remove(id);
     }
 
     public T getElement(int index){

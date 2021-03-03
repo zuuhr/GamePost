@@ -1,9 +1,9 @@
 package es.codeurjc.gamepost.objects;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.Dictionary;
 
-public class ForumEntry {
+public class ForumEntry extends ListElement{
     //#region Variables
 
     int id;
@@ -13,15 +13,14 @@ public class ForumEntry {
     Date lastUpdatedOn;
     int votes;
     Content content;
-    List<Comment> comments;
+    Dictionary<Integer, Comment> comments;
 
     //#endregion
 
     //#region Constructors
 
-    //TODO: proper ForumEntry constructor. 
     public ForumEntry(int id, String title, int authorId, Date createdOn, Date lastUpdatedOn, int votes,
-            Content content, List<Comment> comments) {
+            Content content, Dictionary<Integer, Comment> comments) {
         this.id = id;
         this.title = title;
         this.authorId = authorId;
@@ -98,12 +97,12 @@ public class ForumEntry {
     }
     */
 
-    public List<Comment> getComments() {
+    public Dictionary<Integer, Comment> getComments() {
         return comments;
     }
 
     public void addComment(Comment comment){
-        comments.add(comment);
+        comments.put(comment.id, comment);
     }
 
     /*

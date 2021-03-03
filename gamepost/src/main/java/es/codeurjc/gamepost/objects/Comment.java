@@ -1,20 +1,20 @@
 package es.codeurjc.gamepost.objects;
 
-public class Comment {
+public class Comment extends ListElement{
     int id;
     String title;
     int authorId;
     Content content;
     int parentId;
-    //int votes;    //TODO: Decide whether to include votes in comments or not.
-    //Blob[] / String[] media; //TODO: Use string to reference the object on the database or store it.
+    String[] media;
     
-    public Comment(int id, String title, int authorId, Content content, int parentId) {
+    public Comment(int id, String title, int authorId, Content content, int parentId, String[] media) {
         this.id = id;
         this.title = title;
         this.authorId = authorId;
         this.content = content;
         this.parentId = parentId;
+        this.media = media;
     }
 
     //#region Getters&Setters
@@ -50,6 +50,10 @@ public class Comment {
 //    public void decreaseVotes(){
 //        votes--;
 //    }
+
+    public String[] getMedia(){
+        return media;
+    }
     
     //#endregion
 }

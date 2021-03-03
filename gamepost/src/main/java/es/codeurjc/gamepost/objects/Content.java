@@ -3,13 +3,14 @@ package es.codeurjc.gamepost.objects;
 public class Content {
     int id;
     String text;
-    // Blob[] / String[] media; //TODO: Decide whether to store the url to the object in the databes or the object itself.
+    String[] media;
 
     //#region Constructor
 
-    public Content(int id, String text) {
+    public Content(int id, String text, String[] media) {
         this.id = id;
         this.text = text;
+        this.media = media;
     }
 
     //#endregion
@@ -26,6 +27,14 @@ public class Content {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String[] getMedia(){
+        return media;
+    }
+
+    public void setMedia(String[] media){
+        this.media = media;
     }
     
     //#endregion

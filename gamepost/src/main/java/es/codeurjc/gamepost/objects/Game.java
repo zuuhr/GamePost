@@ -2,9 +2,9 @@ package es.codeurjc.gamepost.objects;
 
 //import java.sql.Blob;
 
-public class Game {
+public class Game extends ListElement{
     int id;
-    //Blob or media cover;  //TODO: define the type
+    String cover;
     Description description;
     Forum forum;
 
