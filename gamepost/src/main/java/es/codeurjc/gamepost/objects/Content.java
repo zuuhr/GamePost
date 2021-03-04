@@ -1,9 +1,19 @@
 package es.codeurjc.gamepost.objects;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import javax.persistence.Entity;
+
+@Entity
 public class Content {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
     String text;
-    String[] media;
+    String[] media; //TODO: Reference to a type URL? (Url would contain a string)
+                    //How do we get the link to access the resource on the database?
 
     //#region Constructor
 

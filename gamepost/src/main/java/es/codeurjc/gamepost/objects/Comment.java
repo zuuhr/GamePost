@@ -1,19 +1,32 @@
 package es.codeurjc.gamepost.objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import javax.persistence.Entity;
+
+@Entity
 public class Comment extends ListElement{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
-    String title;
-    int authorId;
-    Content content;
-    int parentId;
-    String[] media;
     
-    public Comment(int id, String title, int authorId, Content content, int parentId, String[] media) {
+    String title;
+    @ManyToOne User author;
+    @OneToOne(cascade=CascadeType.ALL) Content content;
+    @OneToOne Comment parent;   //TODO: Define a strategy for root comments
+    String[] media;     //TODO: Reference to a type URL? (Url would contain a string)
+    
+    public Comment(int id, String title, User author, Content content, Comment parent, String[] media) {
         this.id = id;
         this.title = title;
-        this.authorId = authorId;
+        this.author = author;
         this.content = content;
-        this.parentId = parentId;
+        this.parent = parent;
         this.media = media;
     }
 
@@ -27,16 +40,16 @@ public class Comment extends ListElement{
         return title;
     }
 
-    public int getAuthorId() {
-        return authorId;
+    public User getAuthor() {
+        return author;
     }
 
     public Content getContent() {
         return content;
     }
 
-    public int getParentId() {
-        return parentId;
+    public Comment getParent() {
+        return parent;
     }
 
 //    public int getVotes(){
