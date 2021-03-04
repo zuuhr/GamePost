@@ -20,5 +20,4 @@ public class Game extends ListElement{
     String cover;
     @OneToOne(cascade=CascadeType.ALL) Description description;
     @OneToOne(cascade=CascadeType.ALL) Forum forum;
-
 }

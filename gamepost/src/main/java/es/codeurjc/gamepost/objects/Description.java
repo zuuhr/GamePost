@@ -6,10 +6,10 @@ import java.util.List;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import es.codeurjc.gamepost.objects.enums.DevelopperEnum;
-import es.codeurjc.gamepost.objects.enums.GenreEnum;
-import es.codeurjc.gamepost.objects.enums.PlatformEnum;
-import es.codeurjc.gamepost.objects.enums.PublisherEnum;
+import es.codeurjc.gamepost.objects.enums.Developper;
+import es.codeurjc.gamepost.objects.enums.Genre;
+import es.codeurjc.gamepost.objects.enums.Platform;
+import es.codeurjc.gamepost.objects.enums.Publisher;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,17 +23,17 @@ public class Description {
     int id;
 
     //TODO: Fix the Enums problem
-    /*
+    
     String name;
-    @ManyToMany List<GenreEnum> genre;       
+    @ManyToMany List<Genre> genre;
     int numPlayers;
     Date publishedOn;
-    @ManyToMany List<PlatformEnum> platform; 
-    @ManyToOne DevelopperEnum developper;   
-    @ManyToOne PublisherEnum publisher;      
+    @ManyToMany List<Platform> platform; 
+    @ManyToOne Developper developper;   
+    @ManyToOne Publisher publisher;      
     String synopsis;
-    */
 
+    /*
     String name;
     int genre;       
     int numPlayers;
@@ -42,4 +42,5 @@ public class Description {
     int developper;  
     int publisher;   
     String synopsis;
+    */
 }
