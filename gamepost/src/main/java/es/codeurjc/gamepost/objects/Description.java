@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import es.codeurjc.gamepost.objects.enums.Developper;
+import es.codeurjc.gamepost.objects.enums.Developer;
 import es.codeurjc.gamepost.objects.enums.Genre;
 import es.codeurjc.gamepost.objects.enums.Platform;
 import es.codeurjc.gamepost.objects.enums.Publisher;
@@ -27,7 +27,7 @@ public class Description {
     int numPlayers;
     Date publishedOn;
     @ManyToMany List<Platform> platform; 
-    @ManyToOne Developper developper;   
+    @ManyToOne Developer developper;   
     @ManyToOne Publisher publisher;      
     String synopsis;
 }
