@@ -11,13 +11,35 @@ import es.codeurjc.gamepost.objects.enums.GenreEnum;
 import es.codeurjc.gamepost.objects.enums.PlatformEnum;
 import es.codeurjc.gamepost.objects.enums.PublisherEnum;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Description {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    int id;
+
+    //TODO: Fix the Enums problem
+    /*
     String name;
-    @ManyToMany List<GenreEnum> genre;        //TODO: define enums
+    @ManyToMany List<GenreEnum> genre;       
     int numPlayers;
     Date publishedOn;
-    @ManyToMany List<PlatformEnum> platform;     //TODO: define enums
-    @ManyToOne DevelopperEnum developper;             //TODO: define enums
-    @ManyToOne PublisherEnum publisher;              //TODO: define enums
+    @ManyToMany List<PlatformEnum> platform; 
+    @ManyToOne DevelopperEnum developper;   
+    @ManyToOne PublisherEnum publisher;      
+    String synopsis;
+    */
+
+    String name;
+    int genre;       
+    int numPlayers;
+    Date publishedOn;
+    int platform;    
+    int developper;  
+    int publisher;   
     String synopsis;
 }

@@ -7,6 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Comment extends ListElement{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -8,6 +8,9 @@ import javax.persistence.OneToOne;
 
 //import java.sql.Blob;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Game extends ListElement{
     
     @Id

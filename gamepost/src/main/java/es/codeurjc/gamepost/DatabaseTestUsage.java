@@ -12,6 +12,7 @@ public class DatabaseTestUsage implements CommandLineRunner{
     @Autowired
     private UserRepository repository;
 
+    //TODO: This seems not to be working.
     @Override
     public void run(String... args) throws Exception{
         repository.save(new User("Yo"));

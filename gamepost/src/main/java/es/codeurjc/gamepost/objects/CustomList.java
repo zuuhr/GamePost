@@ -7,13 +7,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import javax.persistence.Entity;
+
+@Entity
 public class CustomList<T> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
     
     String name;
-    @ManyToMany List<T> elements;
+    @ManyToMany(targetEntity = ListElement.class) List<T> elements;
 
     public boolean addElement(T element){
         return elements.add(element);
