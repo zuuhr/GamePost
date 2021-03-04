@@ -21,8 +21,6 @@ public class Description {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
-
-    //TODO: Fix the Enums problem
     
     String name;
     @ManyToMany List<Genre> genre;
@@ -32,15 +30,4 @@ public class Description {
     @ManyToOne Developper developper;   
     @ManyToOne Publisher publisher;      
     String synopsis;
-
-    /*
-    String name;
-    int genre;       
-    int numPlayers;
-    Date publishedOn;
-    int platform;    
-    int developper;  
-    int publisher;   
-    String synopsis;
-    */
 }
