@@ -1,18 +1,26 @@
 package es.codeurjc.gamepost.objects;
 
-import java.util.Dictionary;
+import java.util.List;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 public class CustomList<T> {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
+    
     String name;
-    Dictionary<Integer, T> elements;
+    @ManyToMany List<T> elements;
 
-    public boolean addElement(Integer id, T element){
-        return element == elements.put(id, element);
+    public boolean addElement(T element){
+        return elements.add(element);
     }
 
-    public boolean removeElement(Integer id, T element){
-        return element == elements.remove(id);
+    public boolean removeElement(T element){
+        return elements.remove(element);
     }
 
     public T getElement(int index){
