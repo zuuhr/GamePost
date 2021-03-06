@@ -53,4 +53,20 @@ public class UserController {
             return "index";
         }
     }
+
+    @RequestMapping("/logIn")
+    public String logIn(Model model, @RequestParam String username, @RequestParam String password){
+        Optional<User> user = userRepository.findByName(username);
+        if(user.isPresent()){
+            if(user.get().getPassword().compareTo(password) == 0){
+                log.info("INFO: User logged.");
+            }else{
+                log.info("INFO: Wrong password.");
+            }
+           return "login";
+        }else{
+            log.info("INFO: The user can not be found.");
+            return "login";
+        }
+    }
 }

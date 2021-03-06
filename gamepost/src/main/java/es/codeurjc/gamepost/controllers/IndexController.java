@@ -32,6 +32,11 @@ public class IndexController {
         return "signin";
     }
 
+    @GetMapping("/login")
+    public String login(Model model){
+        return "login";
+    }
+
    
 
 }
