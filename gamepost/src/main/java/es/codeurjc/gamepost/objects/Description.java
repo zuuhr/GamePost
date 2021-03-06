@@ -3,14 +3,44 @@ package es.codeurjc.gamepost.objects;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import es.codeurjc.gamepost.objects.enums.Developper;
+import es.codeurjc.gamepost.objects.enums.Genre;
+import es.codeurjc.gamepost.objects.enums.Platform;
+import es.codeurjc.gamepost.objects.enums.Publisher;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Description {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    int id;
+
+    //TODO: Fix the Enums problem
+    
     String name;
-    List<Integer> genre;        //TODO: define enums
+    @ManyToMany List<Genre> genre;
     int numPlayers;
     Date publishedOn;
-    List<Integer> platform;     //TODO: define enums
-    int developper;             //TODO: define enums
-    int publisher;              //TODO: define enums
-    //int gameEngine;
+    @ManyToMany List<Platform> platform; 
+    @ManyToOne Developper developper;   
+    @ManyToOne Publisher publisher;      
     String synopsis;
+
+    /*
+    String name;
+    int genre;       
+    int numPlayers;
+    Date publishedOn;
+    int platform;    
+    int developper;  
+    int publisher;   
+    String synopsis;
+    */
 }

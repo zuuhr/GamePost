@@ -1,29 +1,43 @@
 package es.codeurjc.gamepost.objects;
 
 import java.sql.Date;
-import java.util.Dictionary;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import javax.persistence.Entity;
+
+@Entity
 public class ForumEntry extends ListElement{
     //#region Variables
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
+    
     String title;
-    int authorId;
+    @ManyToOne User author;
     Date createdOn;
     Date lastUpdatedOn;
     int votes;
-    Content content;
-    Dictionary<Integer, Comment> comments;
+    @OneToOne(cascade=CascadeType.ALL) Content content;
+    @OneToMany(cascade=CascadeType.ALL) List<Comment> comments;
 
     //#endregion
 
     //#region Constructors
 
-    public ForumEntry(int id, String title, int authorId, Date createdOn, Date lastUpdatedOn, int votes,
-            Content content, Dictionary<Integer, Comment> comments) {
+    public ForumEntry(int id, String title, User author, Date createdOn, Date lastUpdatedOn, int votes,
+            Content content, List<Comment> comments) {
         this.id = id;
         this.title = title;
-        this.authorId = authorId;
+        this.author = author;
         this.createdOn = createdOn;
         this.lastUpdatedOn = lastUpdatedOn;
         this.votes = votes;
@@ -51,12 +65,12 @@ public class ForumEntry extends ListElement{
         this.title = title;
     }
 
-    public int getAuthorId() {
-        return authorId;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public Date getCreatedOn() {
@@ -97,12 +111,12 @@ public class ForumEntry extends ListElement{
     }
     */
 
-    public Dictionary<Integer, Comment> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
     public void addComment(Comment comment){
-        comments.put(comment.id, comment);
+        comments.add(comment);
     }
 
     /*
@@ -112,7 +126,4 @@ public class ForumEntry extends ListElement{
     */
 
     //#endregion
-
-    
-    
 }
