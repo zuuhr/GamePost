@@ -12,4 +12,8 @@ public class Platform{
     int id;
 
     String text;
+
+    public Platform(String text){
+        this.text = text;
+    }
 }

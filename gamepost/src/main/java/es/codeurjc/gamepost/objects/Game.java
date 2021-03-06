@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 @Entity
 public class Game extends ListElement{
     
+    //#region Variables
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
@@ -20,4 +22,16 @@ public class Game extends ListElement{
     String cover;
     @OneToOne(cascade=CascadeType.ALL) Description description;
     @OneToOne(cascade=CascadeType.ALL) Forum forum;
+
+    //#endregion
+
+    //#region Constructor
+
+    public Game(String cover, Description description){
+        this.cover = cover;
+        this.description = description;
+        this.forum = new Forum();
+    }
+
+    //#endregion
 }

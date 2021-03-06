@@ -1,6 +1,7 @@
 package es.codeurjc.gamepost.objects;
 
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -33,16 +34,14 @@ public class ForumEntry extends ListElement{
 
     //#region Constructors
 
-    public ForumEntry(int id, String title, User author, Date createdOn, Date lastUpdatedOn, int votes,
-            Content content, List<Comment> comments) {
-        this.id = id;
+    public ForumEntry(String title, User author, Date lastUpdatedOn, Content content) {
         this.title = title;
         this.author = author;
-        this.createdOn = createdOn;
+        this.createdOn = new Date();
         this.lastUpdatedOn = lastUpdatedOn;
-        this.votes = votes;
+        this.votes = 0;
         this.content = content;
-        this.comments = comments;
+        this.comments = new ArrayList<Comment>();
     }
 
     //#endregion
@@ -51,10 +50,6 @@ public class ForumEntry extends ListElement{
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -69,16 +64,8 @@ public class ForumEntry extends ListElement{
         return author;
     }
 
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
     public Date getCreatedOn() {
         return createdOn;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
     }
 
     public Date getLastUpdatedOn() {
@@ -115,15 +102,13 @@ public class ForumEntry extends ListElement{
         return comments;
     }
 
-    public void addComment(Comment comment){
-        comments.add(comment);
+    public boolean addComment(Comment comment){
+        return comments.add(comment);
     }
 
-    /*
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public boolean removeComment(Comment comment){
+        return comments.remove(comment);
     }
-    */
 
     //#endregion
 }

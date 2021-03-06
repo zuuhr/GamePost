@@ -1,5 +1,6 @@
 package es.codeurjc.gamepost;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,12 @@ public class DatabaseTestUsage implements CommandLineRunner{
     public void run(String... args) throws Exception{
         repository.save(new User("Yo"));
 
-        Optional<User> users = repository.findById(0);
+        List<User> users = repository.findAll();
         
-        if (users.isPresent()) {
+        if (!users.isEmpty()) {
 			System.out.println(users);
 		}
 
-        repository.deleteAll();
+        //repository.deleteAll();
     }
 }

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 
 @Entity
 public class Content {
+    //#region Variables
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
@@ -15,10 +17,11 @@ public class Content {
     String[] media; //TODO: Reference to a type URL? (Url would contain a string)
                     //How do we get the link to access the resource on the database?
 
+    //#endregion
+    
     //#region Constructor
 
-    public Content(int id, String text, String[] media) {
-        this.id = id;
+    public Content(String text, String[] media) {
         this.text = text;
         this.media = media;
     }
