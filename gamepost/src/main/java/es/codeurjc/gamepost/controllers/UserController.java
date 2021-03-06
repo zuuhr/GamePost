@@ -13,11 +13,13 @@ import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.UserRepository;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
 import java.util.Optional;
 
+import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,12 +36,16 @@ public class UserController {
         userRepository.save(new User("Julen", "wordpass"));
     }
 
-    /*
     @GetMapping("/users")
-    public Collection<User> getUsers(){
-        return users.findAll();
+    public ResponseEntity<List<User>> getUsers(){
+        List<User> users = userRepository.findAll();
+
+        if(users.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }else{
+            return ResponseEntity.ok(users);
+        }
     }
-    */
 
     @RequestMapping("/signIn")
     public String signIn(Model model, @RequestParam String username, @RequestParam String password){
