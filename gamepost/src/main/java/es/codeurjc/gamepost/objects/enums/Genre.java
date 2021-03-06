@@ -12,4 +12,8 @@ public class Genre{
     int id;
 
     String text;
+
+    public Genre(String text){
+        this.text = text;
+    }
 }

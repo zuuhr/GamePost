@@ -12,4 +12,8 @@ public class Publisher{
     int id;
 
     String text;
+
+    public Publisher(String text){
+        this.text = text;
+    }
 }

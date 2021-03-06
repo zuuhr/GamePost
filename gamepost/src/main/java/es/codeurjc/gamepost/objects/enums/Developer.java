@@ -12,4 +12,8 @@ public class Developer{
     int id;
 
     String text;
+
+    public Developer(String text){
+        this.text = text;
+    }
 }

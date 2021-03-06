@@ -1,5 +1,6 @@
 package es.codeurjc.gamepost.objects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.GeneratedValue;
@@ -11,12 +12,28 @@ import javax.persistence.Entity;
 
 @Entity
 public class CustomList<T> {
+
+    //#region Variables
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
     
     String name;
     @ManyToMany(targetEntity = ListElement.class) List<T> elements;
+
+    //#endregion
+
+    //#region Constructor
+
+    public CustomList(String name){
+        this.name = name;
+        elements = new ArrayList<T>();
+    }
+
+    //#endregion
+
+    //#region Methods
 
     public boolean addElement(T element){
         return elements.add(element);
@@ -29,4 +46,6 @@ public class CustomList<T> {
     public T getElement(int index){
         return elements.get(index);
     }
+
+    //#endregion
 }
