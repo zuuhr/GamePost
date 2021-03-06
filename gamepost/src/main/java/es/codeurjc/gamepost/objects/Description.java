@@ -10,6 +10,7 @@ import es.codeurjc.gamepost.objects.enums.Developer;
 import es.codeurjc.gamepost.objects.enums.Genre;
 import es.codeurjc.gamepost.objects.enums.Platform;
 import es.codeurjc.gamepost.objects.enums.Publisher;
+import javassist.runtime.Desc;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,6 +38,8 @@ public class Description {
 
     //#region Constructor
 
+    public Description(){}
+    
     public Description(String name, List<Genre> genre, int numPlayers, Date publishedOn, List<Platform> platform,
             Developer developper, Publisher publisher, String synopsis) {
         this.name = name;

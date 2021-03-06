@@ -26,6 +26,8 @@ public class CustomList<T> {
 
     //#region Constructor
 
+    public CustomList(){}
+    
     public CustomList(String name){
         this.name = name;
         elements = new ArrayList<T>();

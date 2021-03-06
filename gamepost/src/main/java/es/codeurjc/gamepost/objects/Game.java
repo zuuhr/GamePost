@@ -27,6 +27,8 @@ public class Game extends ListElement{
 
     //#region Constructor
 
+    public Game(){}
+    
     public Game(String cover, Description description){
         this.cover = cover;
         this.description = description;

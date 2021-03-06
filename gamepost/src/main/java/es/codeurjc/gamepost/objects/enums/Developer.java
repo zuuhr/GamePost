@@ -13,6 +13,8 @@ public class Developer{
 
     String text;
 
+    public Developer(){}
+    
     public Developer(String text){
         this.text = text;
     }

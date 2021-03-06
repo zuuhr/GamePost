@@ -13,6 +13,8 @@ public class Genre{
 
     String text;
 
+    public Genre(){}
+    
     public Genre(String text){
         this.text = text;
     }

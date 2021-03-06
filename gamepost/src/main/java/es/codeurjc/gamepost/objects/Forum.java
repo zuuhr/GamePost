@@ -24,7 +24,7 @@ public class Forum {
     //#endregion
 
     //#region Constructor
-
+    
     public Forum(){
         forumEntries = new ArrayList<ForumEntry>();
     }

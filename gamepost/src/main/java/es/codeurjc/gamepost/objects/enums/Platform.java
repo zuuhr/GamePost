@@ -13,6 +13,8 @@ public class Platform{
 
     String text;
 
+    public Platform(){}
+    
     public Platform(String text){
         this.text = text;
     }

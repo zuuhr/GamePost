@@ -28,6 +28,8 @@ public class Comment extends ListElement{
 
     //#region Constructor
     
+    public Comment(){}
+    
     public Comment(String title, User author, Content content, Comment parent, String[] media) {
         this.title = title;
         this.author = author;

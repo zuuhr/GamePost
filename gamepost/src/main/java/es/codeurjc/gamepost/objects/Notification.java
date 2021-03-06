@@ -22,6 +22,8 @@ public class Notification {
 
     //#region Constructor
 
+    public Notification(){}
+    
     public Notification(String origin, String title) {
         this.origin = origin;
         this.isRead = false;

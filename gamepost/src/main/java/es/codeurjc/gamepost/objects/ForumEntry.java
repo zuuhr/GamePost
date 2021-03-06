@@ -34,6 +34,8 @@ public class ForumEntry extends ListElement{
 
     //#region Constructors
 
+    public ForumEntry(){}
+    
     public ForumEntry(String title, User author, Date lastUpdatedOn, Content content) {
         this.title = title;
         this.author = author;

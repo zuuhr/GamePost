@@ -2,6 +2,7 @@ package es.codeurjc.gamepost.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,8 +21,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@RestController
-@RequestMapping("/users")
+@Controller
 public class UserController {
     private Logger log = LoggerFactory.getLogger(UserController.class);
     
@@ -48,7 +48,7 @@ public class UserController {
            //model.repeatedUser = true --> Displays a message in the Sign in page "The name is not available." 
            return "signin";
         }else{
-            log.debug("The name is available");
+            log.info("INFO: The name is available");
             userRepository.save(new User(username, password));
             return "index";
         }

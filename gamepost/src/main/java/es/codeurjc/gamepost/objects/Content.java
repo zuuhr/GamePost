@@ -21,6 +21,8 @@ public class Content {
     
     //#region Constructor
 
+    public Content(){}
+    
     public Content(String text, String[] media) {
         this.text = text;
         this.media = media;

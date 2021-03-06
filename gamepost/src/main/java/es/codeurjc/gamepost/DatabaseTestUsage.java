@@ -16,7 +16,7 @@ public class DatabaseTestUsage implements CommandLineRunner{
     //TODO: This seems not to be working.
     @Override
     public void run(String... args) throws Exception{
-        repository.save(new User("Yo"));
+        repository.save(new User("Yo", "jeje"));
 
         List<User> users = repository.findAll();
         
