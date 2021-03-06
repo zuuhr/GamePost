@@ -11,6 +11,9 @@ import javax.persistence.Entity;
 
 @Entity
 public class Comment extends ListElement{
+    
+    //#region Variable
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
@@ -20,15 +23,20 @@ public class Comment extends ListElement{
     @OneToOne(cascade=CascadeType.ALL) Content content;
     @OneToOne Comment parent;   //TODO: Define a strategy for root comments
     String[] media;     //TODO: Reference to a type URL? (Url would contain a string)
+
+    //#endregion
+
+    //#region Constructor
     
-    public Comment(int id, String title, User author, Content content, Comment parent, String[] media) {
-        this.id = id;
+    public Comment(String title, User author, Content content, Comment parent, String[] media) {
         this.title = title;
         this.author = author;
         this.content = content;
         this.parent = parent;
         this.media = media;
     }
+
+    //#endregion
 
     //#region Getters&Setters
 
@@ -51,18 +59,6 @@ public class Comment extends ListElement{
     public Comment getParent() {
         return parent;
     }
-
-//    public int getVotes(){
-//        return votes;
-//    }
-//
-//    public void increaseVotes(){
-//        votes++;
-//    }
-//
-//    public void decreaseVotes(){
-//        votes--;
-//    }
 
     public String[] getMedia(){
         return media;
