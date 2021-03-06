@@ -6,18 +6,19 @@
     <title>GamePost</title>
 
    <!-- Bootstrap CSS -->
+   <!-- <link href="css\bootstrap.min.css" rel="stylesheet"> -->
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
   
  
   </head>
   <body class="text-center" style="background-color: #181818;">
-    <form class="form-signin">
+    <form class="form-signin" method="POST" action="signIn">
   <a href="/">
         <h1 class="h3 mb-3 font-weight-normal text-white-50">GamePost</h1>
     </a>
     <h1 class="h3 mb-3 font-weight-normal text-white">Please sign in</h1>
-  <label for="inputEmail" class="sr-only text-white">Email address</label>
-  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+  <label for="name" class="sr-only text-white">Username</label>
+  <input name="username" type="text" id="name" class="form-control" placeholder="Username" required autofocus>
   <label for="inputPassword" class="sr-only text-white">Password</label>
   <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
   <div class="checkbox mb-3 text-white">

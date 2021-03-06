@@ -34,8 +34,9 @@ public class User {
 
     //#region Constructor
 
-    public User(String name){
+    public User(String name, String password){
         this.name = name;
+        this.password = password;
 
         this.forumEntries = new CustomList<ForumEntry>("ForumEntries");
         this.comments = new CustomList<Comment>("Comments");
