@@ -38,6 +38,11 @@ public class IndexController {
     public String login(Model model){
         return "login";
     }
+    
+    @GetMapping("/game")
+    public String game(Model model){
+        return "game";
+    }
 
    
 
