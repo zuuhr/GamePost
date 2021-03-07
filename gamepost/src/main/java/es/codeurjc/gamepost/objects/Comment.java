@@ -22,7 +22,6 @@ public class Comment extends ListElement{
     @ManyToOne User author;
     @OneToOne(cascade=CascadeType.ALL) Content content;
     @OneToOne Comment parent;   //TODO: Define a strategy for root comments
-    String[] media;     //TODO: Reference to a type URL? (Url would contain a string)
 
     //#endregion
 
@@ -30,12 +29,11 @@ public class Comment extends ListElement{
     
     public Comment(){}
     
-    public Comment(String title, User author, Content content, Comment parent, String[] media) {
+    public Comment(String title, User author, Content content, Comment parent) {
         this.title = title;
         this.author = author;
         this.content = content;
         this.parent = parent;
-        this.media = media;
     }
 
     //#endregion
@@ -60,10 +58,6 @@ public class Comment extends ListElement{
 
     public Comment getParent() {
         return parent;
-    }
-
-    public String[] getMedia(){
-        return media;
     }
     
     //#endregion

@@ -8,30 +8,32 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.codeurjc.gamepost.objects.Comment;
 import es.codeurjc.gamepost.objects.Content;
-import es.codeurjc.gamepost.objects.Forum;
 import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.User;
-import es.codeurjc.gamepost.repositories.ForumEntryRepository;
+import es.codeurjc.gamepost.repositories.CommentRepository;
 
 @Controller
-public class ForumEntryController {
+public class CommentController {
+    
     @Autowired
-    private ForumEntryRepository forumEntryRepository;
+    private CommentRepository commentRepository;
 
     @PostConstruct
     public void init(){
     }
 
     //TODO: Associate this method with the form in the web
-    @RequestMapping("/submit/ForumEntry")
-    public String submitForumEntry(Model model, @RequestParam String title, @RequestParam Content content, @RequestParam Forum forum)
-    {
+    @RequestMapping("/submit/Comment")
+    public String submitComment(Model model, @RequestParam String title, 
+        @RequestParam Comment parent, @RequestParam Content content, @RequestParam ForumEntry forumEntry)
+        {
         
         User author = (User) model.getAttribute("user");   //TODO: Coger user de sesión
-        ForumEntry fe = forumEntryRepository.save(new ForumEntry(title, author, content));
+        Comment c = commentRepository.save(new Comment(title, author, content, parent));
         
-        forum.addForumEntry(fe);
+        forumEntry.addComment(c);
 
         return "index"; //TODO: Return a meaningfull html
     }
