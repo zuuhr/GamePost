@@ -6,10 +6,6 @@ import java.util.List;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import es.codeurjc.gamepost.objects.enums.Developer;
-import es.codeurjc.gamepost.objects.enums.Genre;
-import es.codeurjc.gamepost.objects.enums.Platform;
-import es.codeurjc.gamepost.objects.enums.Publisher;
 import javassist.runtime.Desc;
 
 import javax.persistence.Entity;
@@ -26,12 +22,12 @@ public class Description {
     int id;
     
     String name;
-    @ManyToMany List<Genre> genre;
+    List<String> genre;
     int numPlayers;
     Date publishedOn;
-    @ManyToMany List<Platform> platform; 
-    @ManyToOne Developer developper;   
-    @ManyToOne Publisher publisher;      
+    List<String> platform; 
+    String developper;   
+    String publisher;      
     String synopsis;
 
     //#endregion
@@ -40,8 +36,8 @@ public class Description {
 
     public Description(){}
     
-    public Description(String name, List<Genre> genre, int numPlayers, Date publishedOn, List<Platform> platform,
-            Developer developper, Publisher publisher, String synopsis) {
+    public Description(String name, List<String> genre, int numPlayers, Date publishedOn, List<String> platform,
+        String developper, String publisher, String synopsis) {
         this.name = name;
         this.genre = genre;
         this.numPlayers = numPlayers;
@@ -68,11 +64,11 @@ public class Description {
         this.name = name;
     }
 
-    public List<Genre> getGenre() {
+    public List<String> getGenre() {
         return genre;
     }
 
-    public void setGenre(List<Genre> genre) {
+    public void setGenre(List<String> genre) {
         this.genre = genre;
     }
 
@@ -92,27 +88,27 @@ public class Description {
         this.publishedOn = publishedOn;
     }
 
-    public List<Platform> getPlatform() {
+    public List<String> getPlatform() {
         return platform;
     }
 
-    public void setPlatform(List<Platform> platform) {
+    public void setPlatform(List<String> platform) {
         this.platform = platform;
     }
 
-    public Developer getDevelopper() {
+    public String getDevelopper() {
         return developper;
     }
 
-    public void setDevelopper(Developer developper) {
+    public void setDevelopper(String developper) {
         this.developper = developper;
     }
 
-    public Publisher getPublisher() {
+    public String getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(Publisher publisher) {
+    public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
 
