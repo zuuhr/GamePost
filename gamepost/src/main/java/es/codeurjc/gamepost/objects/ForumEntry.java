@@ -36,11 +36,11 @@ public class ForumEntry extends ListElement{
 
     public ForumEntry(){}
     
-    public ForumEntry(String title, User author, Date lastUpdatedOn, Content content) {
+    public ForumEntry(String title, User author, Content content) {
         this.title = title;
         this.author = author;
         this.createdOn = new Date();
-        this.lastUpdatedOn = lastUpdatedOn;
+        this.lastUpdatedOn = new Date();
         this.votes = 0;
         this.content = content;
         this.comments = new ArrayList<Comment>();
@@ -105,6 +105,7 @@ public class ForumEntry extends ListElement{
     }
 
     public boolean addComment(Comment comment){
+        lastUpdatedOn = new Date();
         return comments.add(comment);
     }
 
