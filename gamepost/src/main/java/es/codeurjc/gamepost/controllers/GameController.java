@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.codeurjc.gamepost.objects.Description;
 import es.codeurjc.gamepost.objects.Forum;
 import es.codeurjc.gamepost.objects.Game;
+import es.codeurjc.gamepost.objects.enums.Developer;
+import es.codeurjc.gamepost.objects.enums.Genre;
+import es.codeurjc.gamepost.objects.enums.Platform;
+import es.codeurjc.gamepost.objects.enums.Publisher;
 import es.codeurjc.gamepost.repositories.DescriptionRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 
@@ -27,9 +31,9 @@ public class GameController {
     //TODO: Associate this method with the form in the web
     @RequestMapping("/submit/Game")
     public String submitGame(Model model, @RequestParam String cover, 
-        @RequestParam String name, @RequestParam List<String> genre, @RequestParam int numPlayers, 
-        @RequestParam Date publishedDate, @RequestParam List<String> platform, 
-        @RequestParam String developer, @RequestParam String publisher, @RequestParam String synopsis){
+        @RequestParam String name, @RequestParam List<Genre> genre, @RequestParam int numPlayers, 
+        @RequestParam Date publishedDate, @RequestParam List<Platform> platform, 
+        @RequestParam Developer developer, @RequestParam Publisher publisher, @RequestParam String synopsis){
         
         Description d = descriptionRepository.save(new Description(
             name, genre, numPlayers, publishedDate, platform, developer, publisher, synopsis
