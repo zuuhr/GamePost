@@ -14,8 +14,9 @@ public class Content {
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
     String text;
-    String[] media; //TODO: Reference to a type URL? (Url would contain a string)
+    String media; //TODO: Reference to a type URL? (Url would contain a string)
                     //How do we get the link to access the resource on the database?
+                    //TODO:Enable multiple media
 
     //#endregion
     
@@ -23,7 +24,7 @@ public class Content {
 
     public Content(){}
     
-    public Content(String text, String[] media) {
+    public Content(String text, String media) {
         this.text = text;
         this.media = media;
     }
@@ -44,11 +45,11 @@ public class Content {
         this.text = text;
     }
 
-    public String[] getMedia(){
+    public String getMedia(){
         return media;
     }
 
-    public void setMedia(String[] media){
+    public void setMedia(String media){
         this.media = media;
     }
     

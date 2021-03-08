@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.codeurjc.gamepost.objects.Content;
 import es.codeurjc.gamepost.objects.Description;
 import es.codeurjc.gamepost.objects.Forum;
+import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Game;
 import es.codeurjc.gamepost.objects.enums.Developer;
 import es.codeurjc.gamepost.objects.enums.Genre;
@@ -70,6 +72,12 @@ public class GameController {
 
         Game g = new Game("jaja", d);
         gameRepository.save(g);
+
+        ForumEntry fe = new ForumEntry("Hello world", null, 
+            new Content("my firsst content", "url here")
+        );
+        
+        g.getForum().addForumEntry(fe);
     }
 
     //TODO: Associate this method with the form in the web

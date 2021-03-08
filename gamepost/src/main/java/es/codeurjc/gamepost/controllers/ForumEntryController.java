@@ -1,5 +1,8 @@
 package es.codeurjc.gamepost.controllers;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +16,19 @@ import es.codeurjc.gamepost.objects.Forum;
 import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
+import es.codeurjc.gamepost.repositories.ForumRepository;
+import es.codeurjc.gamepost.repositories.UserRepository;
 
 @Controller
 public class ForumEntryController {
     @Autowired
     private ForumEntryRepository forumEntryRepository;
+
+    @Autowired
+    private ForumRepository forumRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @PostConstruct
     public void init(){

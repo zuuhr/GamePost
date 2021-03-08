@@ -30,7 +30,7 @@ public class ContentController {
 
     //TODO: Associate this method with the form in the web
     @RequestMapping("/submit/Content")
-    public String submitContent(@RequestParam String text, @RequestParam String[] media)
+    public String submitContent(@RequestParam String text, @RequestParam String media)
     {
         contentRepository.save(new Content(text, media));
 
