@@ -31,8 +31,8 @@ public class Description {
     int numPlayers;
     Date publishedOn;
     @ManyToMany List<Platform> platform; 
-    @ManyToOne Developer developper;   
-    @ManyToOne Publisher publisher;      
+    String developer;   
+    String publisher;      
     String synopsis;
 
     //#endregion
@@ -42,13 +42,13 @@ public class Description {
     public Description(){}
     
     public Description(String name, List<Genre> genre, int numPlayers, Date publishedOn, List<Platform> platform,
-        Developer developper, Publisher publisher, String synopsis) {
+        String developper, String publisher, String synopsis) {
         this.name = name;
         this.genre = genre;
         this.numPlayers = numPlayers;
         this.publishedOn = publishedOn;
         this.platform = platform;
-        this.developper = developper;
+        this.developer = developper;
         this.publisher = publisher;
         this.synopsis = synopsis;
     }
@@ -101,19 +101,19 @@ public class Description {
         this.platform = platform;
     }
 
-    public Developer getDevelopper() {
-        return developper;
+    public String getDevelopper() {
+        return developer;
     }
 
-    public void setDevelopper(Developer developper) {
-        this.developper = developper;
+    public void setDevelopper(String developper) {
+        this.developer = developper;
     }
 
-    public Publisher getPublisher() {
+    public String getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(Publisher publisher) {
+    public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
 

@@ -31,6 +31,7 @@ public class EnumController {
     @PostConstruct
     public void init(){
         genreRepository.save(new Genre("Adventure"));
+        genreRepository.save(new Genre("RPG"));
 
         platformRepository.save(new Platform("Switch"));
 
