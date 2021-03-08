@@ -79,7 +79,7 @@ public class GameController {
             "El jugador controla a Link, que despierta en un mundo postapocalíptico después de estar cien años durmiendo para derrotar a Ganon y salvar al reino de Hyrule."
         );
 
-        Game g = new Game("jaja", d);
+        Game g = new Game("https://eplakaty.pl/img/towary/1/2017_04/pp34131-the-legend-of-zelda-breath-of-the-wild-plakat-z-gry-jpg.jpg", d);
         gameRepository.save(g);
 
         

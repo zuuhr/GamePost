@@ -21,7 +21,7 @@ public class Comment extends ListElement{
     String title;
     @ManyToOne User author;
     @OneToOne(cascade=CascadeType.ALL) Content content;
-    @OneToOne Comment parent;   //TODO: Define a strategy for root comments
+    int parent;   //TODO: Define a strategy for root comments
 
     //#endregion
 
@@ -29,7 +29,7 @@ public class Comment extends ListElement{
     
     public Comment(){}
     
-    public Comment(String title, User author, Content content, Comment parent) {
+    public Comment(String title, User author, Content content, int parent) {
         this.title = title;
         this.author = author;
         this.content = content;
@@ -56,7 +56,7 @@ public class Comment extends ListElement{
         return content;
     }
 
-    public Comment getParent() {
+    public int getParent() {
         return parent;
     }
     

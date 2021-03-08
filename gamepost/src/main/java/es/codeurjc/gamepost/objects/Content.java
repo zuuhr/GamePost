@@ -54,4 +54,9 @@ public class Content {
     }
     
     //#endregion
+
+    @Override
+    public String toString(){
+        return text;
+    }
 }

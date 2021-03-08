@@ -1,31 +1,38 @@
 package es.codeurjc.gamepost.controllers;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-
+import es.codeurjc.gamepost.objects.Game;
 import es.codeurjc.gamepost.objects.User;
+import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
 
 @Controller
 public class IndexController {
 
-    boolean authenticated;
-    String username;
+    @Autowired
+    GameRepository gameRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     
     @GetMapping("/")
     public String enlace(Model model){
-        // if(!authenticated){
-        //     username = "Log in/Sign in";
-        // } else{
-        //     username = "PC de Alguien";
-        // }
-
-        // model.addAttribute("authenticated", authenticated);
-        // model.addAttribute("username", username);
+        
+        List<Game> games = gameRepository.findAll();
+        Optional<User> user = userRepository.findByName("Mariam");
+        model.addAttribute("games", games);
+        if(user.isPresent()){
+            model.addAttribute("user", user);
+        }
         return "index";
     }
     

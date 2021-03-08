@@ -20,12 +20,12 @@
     <button class="btn btn-lg btn-secondary btn-block mx-4" type="submit">Search</button>
     <ul class="navbar-nav px-3 h-auto">
       <li class="nav-item text-nowrap ">
-        {{#authenticated}}
-        <a class="nav-link " href="/profile">{{username}}</a>
-        {{/authenticated}}
-        {{^authenticated}}
+        {{#user}}
+        <a class="nav-link " href="/profile">{{user.name}}</a>
+        {{/user}}
+        {{^user}}
         <a class="nav-link " href="/signin">Log in/Sign in</a>
-        {{/authenticated}}
+        {{/user}}
       </li>
     </ul>
   </nav>

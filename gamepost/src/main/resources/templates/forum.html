@@ -3,18 +3,19 @@
 <div class="col-6">
     <div class="mx-auto  mt-5">
         <div class="container rounded border p-4">
-            <h1 class="text-white text-center" style="font-family: Impact;">{{forumentry.title}} </h1>
+            <h1 class="text-white text-center" style="font-family: Impact;">{{game.description.name}} </h1>
+            <h2 class="text-white text-center" style="font-family: Impact;">{{forumentry.title}} </h2>
             <ul class="list-group">
                 {{#comments}}
                 <li class="list-group-item " style="margin-left: 0px;">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{comment.author}}</h5>
-                        <small>{{comment.date}}</small>
+                        <h5 class="mb-1">{{author}}</h5>
+                        <small>{{date}}</small>
                     </div>
-                    <p class="mb-1">{{comment.text}}</p>
-                    <button class="button">Reply</button>
+                    <p class="mb-1">{{text}}</p>
+                    <button class="button" onclick="window.location.href='/reply/{{game.id}}/{{forumenttry.id}}/{{id}}';">Reply</button>
                 </li>
-                {{!comments}}
+                {{/comments}}
             </ul>
 
 
