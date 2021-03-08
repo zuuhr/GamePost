@@ -56,7 +56,7 @@ public class UserController {
         }else{
             log.info("INFO: The name is available");
             userRepository.save(new User(username, password));
-            return "index";
+            return "redirect:/";
         }
     }
 
@@ -69,10 +69,10 @@ public class UserController {
             }else{
                 log.info("INFO: Wrong password.");
             }
-           return "login";
+           return "redirect:/";
         }else{
             log.info("INFO: The user can not be found.");
-            return "index";
+            return "login";
         }
     }
 }
