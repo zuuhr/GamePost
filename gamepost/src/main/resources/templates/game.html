@@ -45,12 +45,12 @@
           <tbody>
             {{#posts}}
             <tr onclick="window.location='/{{forumentry.game}}/{{forumentry.id}}';">
-              <th scope="row">{{forumentry.title}}</th>
-              <td>{{forumentry.author}}</td>
-              <td>{{forumentry.createdOn}}</td>
-              <td>{{forumentry.lastUpdatedOn}}</td>
-              <td>{{forumentry.replies}}</td>
-              <td>{{forumentry.votes}}</td>
+              <th scope="row">{{.title}}</th>
+              <td>{{.author}}</td>
+              <td>{{.createdOn}}</td>
+              <td>{{.lastUpdatedOn}}</td>
+              <td>{{.replies}}</td>
+              <td>{{.votes}}</td>
             </tr>
             {{/posts}}
           </tbody>
