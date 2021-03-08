@@ -3,31 +3,31 @@
 <div class="col-6">
   <div class="mx-auto  mt-5">
     <div class="container rounded border p-4">
-      <h1 class="text-white text-center" style="font-family: Impact;">BREATH OF THE WILD</h1>
+      <h1 class="text-white text-center" style="font-family: Impact;">{{description.name}} </h1>
       <div class="row">
         <div class="col-4">
           <figure class="figure">
-            <img src="https://eplakaty.pl/img/towary/1/2017_04/pp34131-the-legend-of-zelda-breath-of-the-wild-plakat-z-gry-jpg.jpg" class="figure-img img-fluid rounded border" alt="a">
+            <img src="{{game.cover}}" class="figure-img img-fluid rounded border" alt="a">
           </figure>
         </div>
         <div class="col">
-          <h4 class="text-white" style="font-family: Impact;">Title:</h4>
+          <h4 class="text-white" style="font-family: Impact;">Title:{{description.name}} </h4>
           <p></p>
-          <h4 class="text-white" style="font-family: Impact;">Release date:</h4>
+          <h4 class="text-white" style="font-family: Impact;">Release date:{{description.publishedOn}} </h4>
           <p></p>
-          <h4 class="text-white" style="font-family: Impact;">Genre:</h4>
+          <h4 class="text-white" style="font-family: Impact;">Genre:{{description.genre}}</h4>
           <p></p>
-          <h4 class="text-white" style="font-family: Impact;">Players:</h4>
+          <h4 class="text-white" style="font-family: Impact;">Players:{{description.numPlayers}}</h4>
           <p></p>
-          <h4 class="text-white" style="font-family: Impact;">Platforms:</h4>
+          <h4 class="text-white" style="font-family: Impact;">Platforms:{{description.platform}}</h4>
           <p></p>
-          <h4 class="text-white" style="font-family: Impact;">Developer:</h4>
+          <h4 class="text-white" style="font-family: Impact;">Developer:{{description.developer}}</h4>
           <p></p>
-          <h4 class="text-white" style="font-family: Impact;">Publisher:</h4>
+          <h4 class="text-white" style="font-family: Impact;">Publisher:{{description.publisher}}</h4>
           <p></p>
         </div>
       </div>
-      <h4 class="text-white" style="font-family: Impact;">Description:</h4>
+      <h4 class="text-white" style="font-family: Impact;">Description:{{description.synopsis}}</h4>
     </div>
     <div class="container rounded border p-4 mt-3">
       <div class="row">
@@ -46,7 +46,7 @@
             {{#posts}}
             <tr onclick="window.location='/{{forumentry.game}}/{{forumentry.id}}';">
               <th scope="row">{{forumentry.title}}</th>
-              <td>{{forumentry.user}}</td>
+              <td>{{forumentry.author}}</td>
               <td>{{forumentry.createdOn}}</td>
               <td>{{forumentry.lastUpdatedOn}}</td>
               <td>{{forumentry.replies}}</td>
