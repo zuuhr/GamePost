@@ -1,0 +1,13 @@
+<div class="col position-sticky border rounded m-5">
+    <div class="mx-auto text-center mt-5">
+      <h1 class="text-white-50">Latest Posts</h1>
+      <ul>
+        {{#latestposts}}
+        <li>
+          <a class="text-white text-left" href="/{{forumentry.game}}/{{forumentry.id}}">{{forumentry.title}}</a>
+        </li>
+        {{/latestposts}}
+      </ul>
+    </div>
+  </div>
+</div>

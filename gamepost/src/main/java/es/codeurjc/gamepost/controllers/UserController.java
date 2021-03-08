@@ -72,7 +72,7 @@ public class UserController {
            return "login";
         }else{
             log.info("INFO: The user can not be found.");
-            return "login";
+            return "index";
         }
     }
 }
