@@ -28,11 +28,31 @@ public class Game extends ListElement{
     //#region Constructor
 
     public Game(){}
-    
+
     public Game(String cover, Description description){
         this.cover = cover;
         this.description = description;
         this.forum = new Forum();
+    }
+
+    //#endregion
+
+    //#region
+
+    public int getId() {
+        return id;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public Description getDescription() {
+        return description;
+    }
+
+    public Forum getForum() {
+        return forum;
     }
 
     //#endregion

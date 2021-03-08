@@ -55,7 +55,11 @@ public class UserController {
            return "signin";
         }else{
             log.info("INFO: The name is available");
-            userRepository.save(new User(username, password));
+            userRepository.save(new User(
+                username, 
+                //new BCryptPasswordEncoder().encode(password));
+                password
+            ));
             return "redirect:/";
         }
     }
