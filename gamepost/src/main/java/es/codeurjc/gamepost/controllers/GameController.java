@@ -56,12 +56,15 @@ public class GameController {
     public void init(){
         Description d = new Description(
             "Legend of Zelda: Breath of the wild",
-            new ArrayList<Genre>(Arrays.asList(genreRepository.save(new Genre("Adventure")))),
+            new ArrayList<Genre>(Arrays.asList(
+                genreRepository.save(new Genre("Adventure")),
+                genreRepository.save(new Genre("RPG"))
+                )),
             1,
-            null,
+            new Date(),
             new ArrayList<Platform>(Arrays.asList(platformRepository.save(new Platform("Switch")))),
-            developerRepository.save(new Developer("Nintendo")),
-            publisherRepository.save(new Publisher("Nintendo")),
+            "Nintendo",
+            "Nintendo",
             "El jugador controla a Link, que despierta en un mundo postapocalíptico después de estar cien años durmiendo para derrotar a Ganon y salvar al reino de Hyrule."
         );
 
@@ -74,7 +77,7 @@ public class GameController {
     public String submitGame(Model model, @RequestParam String cover, 
         @RequestParam String name, @RequestParam List<Genre> genre, @RequestParam int numPlayers, 
         @RequestParam Date publishedDate, @RequestParam List<Platform> platform, 
-        @RequestParam Developer developer, @RequestParam Publisher publisher, @RequestParam String synopsis){
+        @RequestParam String developer, @RequestParam String publisher, @RequestParam String synopsis){
         
         Description d = descriptionRepository.save(new Description(
             name, genre, numPlayers, publishedDate, platform, developer, publisher, synopsis
@@ -91,6 +94,7 @@ public class GameController {
 
         if(game.isPresent()){
             model.addAttribute("game", game.get());
+            model.addAttribute("description", game.get().getDescription());
             return "game";
         }else{
             return "game";

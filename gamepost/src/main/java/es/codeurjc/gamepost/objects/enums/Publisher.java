@@ -18,4 +18,9 @@ public class Publisher{
     public Publisher(String text){
         this.text = text;
     }
+
+    @Override
+    public String toString(){
+        return text;
+    }
 }

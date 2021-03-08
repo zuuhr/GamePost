@@ -18,4 +18,9 @@ public class Genre{
     public Genre(String text){
         this.text = text;
     }
+
+    @Override
+    public String toString(){
+        return text;
+    }
 }

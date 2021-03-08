@@ -18,4 +18,9 @@ public class Platform{
     public Platform(String text){
         this.text = text;
     }
+
+    @Override
+    public String toString(){
+        return text;
+    }
 }
