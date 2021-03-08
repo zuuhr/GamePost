@@ -22,12 +22,15 @@ import es.codeurjc.gamepost.objects.Description;
 import es.codeurjc.gamepost.objects.Forum;
 import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Game;
+import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.objects.enums.Developer;
 import es.codeurjc.gamepost.objects.enums.Genre;
 import es.codeurjc.gamepost.objects.enums.Platform;
 import es.codeurjc.gamepost.objects.enums.Publisher;
 import es.codeurjc.gamepost.repositories.DescriptionRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
+import es.codeurjc.gamepost.repositories.ForumEntryRepository;
+import es.codeurjc.gamepost.repositories.UserRepository;
 import es.codeurjc.gamepost.repositories.enums.DeveloperRepository;
 import es.codeurjc.gamepost.repositories.enums.GenreRepository;
 import es.codeurjc.gamepost.repositories.enums.PlatformRepository;
@@ -54,6 +57,12 @@ public class GameController {
     @Autowired
     PublisherRepository publisherRepository;
 
+    @Autowired
+    ForumEntryRepository forumEntryRepository;
+    
+    @Autowired
+    UserRepository userRepository;
+
     @PostConstruct
     public void init(){
         Description d = new Description(
@@ -73,11 +82,9 @@ public class GameController {
         Game g = new Game("jaja", d);
         gameRepository.save(g);
 
-        ForumEntry fe = new ForumEntry("Hello world", null, 
-            new Content("my firsst content", "url here")
-        );
         
-        g.getForum().addForumEntry(fe);
+        
+        //g.getForum().addForumEntry(fe);
     }
 
     //TODO: Associate this method with the form in the web
@@ -93,18 +100,25 @@ public class GameController {
 
         gameRepository.save(new Game(cover, d));
 
-        return "index"; //TODO: Return a meaningfull html
+        return "submitgame";
     }
 
     @GetMapping("/game/{id}")
     public String getGame(Model model, @PathVariable int id){
         Optional<Game> game = gameRepository.findById(id);
+        List<User> users = userRepository.findAll();
 
+                
         if(game.isPresent()){
             model.addAttribute("game", game.get());
             model.addAttribute("description", game.get().getDescription());
+            ForumEntry fe = new ForumEntry("Hello world", users.get(0), game.get(), new Content("my firsst content", "url here") );
+            forumEntryRepository.save(fe);
+            List<ForumEntry> posts = forumEntryRepository.findAll();
+            model.addAttribute("posts", posts);
+ 
             return "game";
-        }else{
+        } else {
             return "game";
         }
     }

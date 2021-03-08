@@ -24,9 +24,11 @@ public class ForumEntry extends ListElement{
     
     String title;
     @ManyToOne User author;
+    @ManyToOne Game game;
     Date createdOn;
     Date lastUpdatedOn;
     int votes;
+    int replies;
     @OneToOne(cascade=CascadeType.ALL) Content content;
     @OneToMany(cascade=CascadeType.ALL) List<Comment> comments;
 
@@ -36,12 +38,14 @@ public class ForumEntry extends ListElement{
 
     public ForumEntry(){}
     
-    public ForumEntry(String title, User author, Content content) {
+    public ForumEntry(String title, User author, Game game,Content content) {
         this.title = title;
         this.author = author;
+        this.game = game;
         this.createdOn = new Date();
         this.lastUpdatedOn = new Date();
         this.votes = 0;
+        this.replies = 0;
         this.content = content;
         this.comments = new ArrayList<Comment>();
     }
