@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import es.codeurjc.gamepost.objects.Game;
 import es.codeurjc.gamepost.objects.User;
+import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
 
@@ -23,6 +25,8 @@ public class IndexController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ForumEntryRepository forumEntryRepository;
     
     @GetMapping("/")
     public String enlace(Model model){
@@ -34,6 +38,10 @@ public class IndexController {
         if(user.isPresent()){
             model.addAttribute("user", user.get());
         }
+
+        //Show forum entries
+        model.addAttribute("latestForumEntries", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
+
         return "index";
     }
     

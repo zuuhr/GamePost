@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,7 +60,6 @@ public class ForumEntryController {
         Optional<Game> game = gameRepository.findById(gameid);
         Optional<ForumEntry> forum = forumEntryRepository.findById(forumid);
         
-                
         if(forum.isPresent()){
             model.addAttribute("game", game.get());
             model.addAttribute("forumentry", forum.get());
