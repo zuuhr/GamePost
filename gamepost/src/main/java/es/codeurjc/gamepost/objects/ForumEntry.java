@@ -38,7 +38,7 @@ public class ForumEntry extends ListElement{
 
     public ForumEntry(){}
     
-    public ForumEntry(String title, User author, Game game,Content content) {
+    public ForumEntry(String title, User author, Game game, Content content) {
         this.title = title;
         this.author = author;
         this.game = game;

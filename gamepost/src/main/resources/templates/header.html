@@ -16,7 +16,9 @@
   <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-1 shadow border-white border-bottom ">
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 text-lg " href="/"
       style="font-family:Impact; font-size: 300%; ">GamePost</a>
-    <input class="form-control bg-dark border-light " type="text" placeholder="Search" aria-label="Search">
+    <form class="form-text" method="POST" action="/search">
+      <input class="form-control bg-dark border-light text-white" type="text" placeholder="Search" aria-label="Search" name="searchText">
+    </form>
     <button class="btn btn-lg btn-secondary btn-block mx-4" type="submit">Search</button>
     <ul class="navbar-nav px-3 h-auto">
       <li class="nav-item text-nowrap ">

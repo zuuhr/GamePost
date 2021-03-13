@@ -1,6 +1,7 @@
 package es.codeurjc.gamepost.controllers;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
@@ -32,9 +33,6 @@ public class ForumEntryController {
     private GameRepository gameRepository;
 
     @Autowired
-    private ForumRepository forumRepository;
-
-    @Autowired
     private UserRepository userRepository;
 
     @PostConstruct
@@ -42,16 +40,18 @@ public class ForumEntryController {
     }
 
     //TODO: Associate this method with the form in the web
-    @RequestMapping("/submit/ForumEntry")
-    public String submitForumEntry(Model model, @RequestParam String title, @RequestParam Content content, @RequestParam Forum forum)
+    @RequestMapping("/game/{gameid}/submitforumentry")
+    public String submitForumEntry(Model model, @PathVariable int gameid, @RequestParam String titleText, @RequestParam String bodyText)
     {
-        
+        List<User> users = userRepository.findAll();
         User author = (User) model.getAttribute("user");   //TODO: Coger user de sesión
-        ForumEntry fe = forumEntryRepository.save(new ForumEntry(title, author, content));
+        Content content = new Content(bodyText, "");
+        Optional<Game> game = gameRepository.findById(gameid);
+        forumEntryRepository.save(new ForumEntry(titleText, users.get(0), game.get(), content));
         
-        forum.addForumEntry(fe);
 
-        return "index"; //TODO: Return a meaningfull html
+        String url = "redirect:/game/"+ gameid;
+        return url; //TODO: Return a meaningfull html
     }
 
     @GetMapping("/game/{gameid}/{forumid}")
@@ -64,11 +64,19 @@ public class ForumEntryController {
             model.addAttribute("game", game.get());
             model.addAttribute("forumentry", forum.get());
             model.addAttribute("comments", forum.get().getComments());
-            
+            //TODO: model.addAttribute("user", user);
  
             return "forum";
         } else {
             return "redirect:/";
         }
+    }
+
+    @GetMapping("/game/{gameid}/newforumentry")
+    public String newForumEntry(Model model, @PathVariable int gameid){
+        Optional<Game> game = gameRepository.findById(gameid);
+        model.addAttribute("game", game.get());
+
+        return "submitforum";
     }
 }
