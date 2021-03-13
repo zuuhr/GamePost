@@ -56,5 +56,10 @@ public class IndexController {
         return "forum";
     }
 
+    @GetMapping("/profile")
+    public String profile(Model model){
+        return "profile";
+    }
+
 
 }

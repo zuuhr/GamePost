@@ -9,11 +9,12 @@
                 {{#comments}}
                 <li class="list-group-item " style="margin-left: 0px;">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{author}}</h5>
-                        <small>{{date}}</small>
+                        <h5 class="mb-1">{{author.name}}</h5>
+                        <small>{{postedOn}}</small>
                     </div>
-                    <p class="mb-1">{{text}}</p>
-                    <button class="button" onclick="window.location.href='/reply/{{game.id}}/{{forumenttry.id}}/{{id}}';">Reply</button>
+                    <p class="mb-1">{{content.text}}</p>
+                    <button class="button"
+                        onclick="window.location.href='/reply/{{game.id}}/{{forumentry.id}}/{{id}}';">Reply</button>
                 </li>
                 {{/comments}}
             </ul>

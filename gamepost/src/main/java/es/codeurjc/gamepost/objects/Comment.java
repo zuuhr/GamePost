@@ -1,5 +1,7 @@
 package es.codeurjc.gamepost.objects;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +24,7 @@ public class Comment extends ListElement{
     @ManyToOne User author;
     @OneToOne(cascade=CascadeType.ALL) Content content;
     int parent;   //TODO: Define a strategy for root comments
-
+    Date postedOn;
     //#endregion
 
     //#region Constructor
@@ -34,6 +36,7 @@ public class Comment extends ListElement{
         this.author = author;
         this.content = content;
         this.parent = parent;
+        this.postedOn = new Date();
     }
 
     //#endregion
