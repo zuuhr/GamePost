@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,14 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.codeurjc.gamepost.objects.Comment;
 import es.codeurjc.gamepost.objects.Content;
 import es.codeurjc.gamepost.objects.Description;
-import es.codeurjc.gamepost.objects.Forum;
 import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Game;
 import es.codeurjc.gamepost.objects.User;
-import es.codeurjc.gamepost.objects.enums.Developer;
 import es.codeurjc.gamepost.objects.enums.Genre;
 import es.codeurjc.gamepost.objects.enums.Platform;
-import es.codeurjc.gamepost.objects.enums.Publisher;
 import es.codeurjc.gamepost.repositories.DescriptionRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;

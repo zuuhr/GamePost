@@ -1,13 +1,11 @@
 package es.codeurjc.gamepost.controllers;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.gamepost.objects.Content;
-import es.codeurjc.gamepost.objects.Forum;
 import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Game;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
-import es.codeurjc.gamepost.repositories.ForumRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
 
@@ -45,12 +41,10 @@ public class ForumEntryController {
     public String submitForumEntry(Model model, @PathVariable int gameid, @RequestParam String titleText, @RequestParam String bodyText)
     {
         List<User> users = userRepository.findAll();
-        User author = (User) model.getAttribute("user");   //TODO: Coger user de sesión
         Content content = new Content(bodyText, "");
         Optional<Game> game = gameRepository.findById(gameid);
         forumEntryRepository.save(new ForumEntry(titleText, users.get(0), game.get(), content));
         
-
         String url = "redirect:/game/"+ gameid;
         return url; //TODO: Return a meaningfull html
     }

@@ -1,10 +1,10 @@
 package es.codeurjc.gamepost.controllers;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
+import org.hibernate.annotations.common.util.impl.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +19,12 @@ import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.CommentRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 public class CommentController {
+    private Logger log = LoggerFactory.getLogger(CommentController.class);
 
     @Autowired
     private CommentRepository commentRepository;
@@ -42,9 +46,12 @@ public class CommentController {
             c = new Comment(author, content, forumid);
         }
 
-        commentRepository.save(c);
+        //commentRepository.save(c);
+        
         ForumEntry forumEntry = forumEntryRepository.getOne(forumid);
         forumEntry.addComment(c);
+        log.info("Comment submitted");
+        
         // TODO: Update post within database
         //forumEntryRepository.save(forumEntry);
         //forumEntryRepository.save(forumEntryRepository.getOne(forumid));

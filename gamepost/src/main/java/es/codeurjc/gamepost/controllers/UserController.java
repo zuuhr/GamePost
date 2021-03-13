@@ -6,20 +6,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.ui.Model;
 
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.UserRepository;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
 import java.util.Optional;
 
-import org.apache.catalina.connector.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

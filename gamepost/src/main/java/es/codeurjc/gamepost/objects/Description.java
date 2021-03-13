@@ -4,15 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import es.codeurjc.gamepost.objects.enums.Developer;
 import es.codeurjc.gamepost.objects.enums.Genre;
 import es.codeurjc.gamepost.objects.enums.Platform;
-import es.codeurjc.gamepost.objects.enums.Publisher;
-import javassist.runtime.Desc;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
