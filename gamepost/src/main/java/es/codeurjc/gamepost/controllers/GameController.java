@@ -83,7 +83,7 @@ public class GameController {
         }
 
         // TODO: Associate this method with the form in the web
-        @RequestMapping("/submit/Game")
+        @RequestMapping("/game/submitgame")
         public String submitGame(Model model, @RequestParam String cover, @RequestParam String name,
                         @RequestParam List<Genre> genre, @RequestParam int numPlayers, @RequestParam Date publishedDate,
                         @RequestParam List<Platform> platform, @RequestParam String developer,
@@ -94,6 +94,11 @@ public class GameController {
 
                 gameRepository.save(new Game(cover, d));
 
+                return "submitgame";
+        }
+
+        @GetMapping("/game/newgame")
+        public String newGame(Model model){
                 return "submitgame";
         }
 

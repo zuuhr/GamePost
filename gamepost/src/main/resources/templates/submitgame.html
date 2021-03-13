@@ -1,41 +1,140 @@
-<!doctype html>
-<html lang="en">
+{{>header}}
+{{>navbar}}
+<div class="col-6">
+  <div class="mx-auto mt-4 mb-5">
+    <h1 class="text-white text-center" style="font-family: Impact;">Upload Game</h1>
+    <div class="container">
+      <form class="form-text mt-4" method="POST" action="/game/submitgame">
+        <div class="row">
+          <div class="mt-2">
+            <h4 class="text-white" style="font-family: Impact;">Title</h4>
+            <input class="form-control" aria-label="Title" name="titleText" placeholder="Title" required autofocus>
+          </div>
+          <div class="mt-2">
+            <h4 class="text-white" style="font-family: Impact;">Cover</h4>
+            <div class="input-group">
+              <label class="input-group-text" for="inputGroupFile01">Upload Cover</label>
+              <input type="file" class="form-control" id="inputGroupFile01" required>
+            </div>
+          </div>
+          <!-- Genre -->
+          <div class="mt-2">
+            <h4 class="text-white" style="font-family: Impact;">Genres</h4>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="genreAction" value="genreAction">
+              <label class="form-check-label" for="inlineCheckbox1">Action</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="genreAdventure" value="genreAdventure">
+              <label class="form-check-label" for="inlineCheckbox1">Adventure</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="genreFighting" value="genreFighting">
+              <label class="form-check-label" for="inlineCheckbox1">Fighting</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="genreRolePlaying" value="genreRolePlaying">
+              <label class="form-check-label" for="inlineCheckbox1">Role Playing</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="genreRacing" value="genreRacing">
+              <label class="form-check-label" for="inlineCheckbox1">Racing</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="genreSimulation" value="genreSimulation">
+              <label class="form-check-label" for="inlineCheckbox1">Simulation</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="genreSports" value="genreSports">
+              <label class="form-check-label" for="inlineCheckbox1">Sports</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="genreStrategy" value="genreStrategy">
+              <label class="form-check-label" for="inlineCheckbox1">Strategy</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="genreVisualNovel" value="genreVisualNovel">
+              <label class="form-check-label" for="inlineCheckbox1">Visual Novel</label>
+            </div>
+          </div>
+          <!-- FIN Genre -->
+          <div class="mt-2">
+            <h4 class="text-white" style="font-family: Impact;">Players</h4>
+            <input class="form-control" name="playersText" placeholder="Number of players" required autofocus>
+          </div>
+          <div class="mt-2">
+            <h4 class="text-white" style="font-family: Impact;">Developer</h4>
+            <input class="form-control" name="developerText" placeholder="Developer" required autofocus>
+          </div>
+          <div class="mt-2">
+            <h4 class="text-white" style="font-family: Impact;">Release Date</h4>
+            <input class="form-control" name="publisherText" placeholder="dd/MM/yyyy" required autofocus>
+          </div>
+          <div class="mt-2">
+            <h4 class="text-white" style="font-family: Impact;">Publisher</h4>
+            <input class="form-control" name="publisherText" placeholder="Publisher" required autofocus>
+          </div>
+          <!-- Platform -->
+          <div class="mt-2">
+            <h4 class="text-white" style="font-family: Impact;">Platforms</h4>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="platformWindows" value="platformWindows">
+              <label class="form-check-label" for="inlineCheckbox1">Windows</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="platformMac" value="platformMac">
+              <label class="form-check-label" for="inlineCheckbox1">Mac</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="platformLinux" value="platformLinux">
+              <label class="form-check-label" for="inlineCheckbox1">Linux</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="platformPS5" value="platformPS5">
+              <label class="form-check-label" for="inlineCheckbox1">PlayStation 5</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="platformPS4" value="platformPS4">
+              <label class="form-check-label" for="inlineCheckbox1">PlayStation 4</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="platformSwitch" value="platformSwitch">
+              <label class="form-check-label" for="inlineCheckbox1">Nintendo Switch</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="platformXboxSeriesXS" value="platformXboxSeriesXS">
+              <label class="form-check-label" for="inlineCheckbox1">Xbox Series X/S</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="platformAndroid" value="platformAndroid">
+              <label class="form-check-label" for="inlineCheckbox1">Android</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="platformIOS" value="platformIOS">
+              <label class="form-check-label" for="inlineCheckbox1">IOS</label>
+            </div>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>GamePost</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+          </div>
+          <!-- FIN Platform -->
+          <div class="mt-2">
+            <h4 class="text-white" style="font-family: Impact;">Description</h4>
+            <textarea class="form-control" aria-label="Body" placeholder="Description" name="descriptionText" required
+              autofocus></textarea>
+          </div>
+          <button class="btn btn-secondary mt-3" type="submit">Upload</button>
+        </div>
+      </form>
 
-<body class="text-center" style="background-color: #181818; margin-left: 30%; margin-right: 30%; margin-top: 10%;margin-bottom: 10%;">
-  <form class="form-signin" method="POST" action="submitGame">
-    <a href="/">
-      <h1 class="h3 mb-3 font-weight-normal text-white" style="font-family:Impact; font-size: 300%;">GamePost</h1>
-    </a>
-    <p></p>
-    <h1 class="h3 mb-3 font-weight-normal text-white">Please sign in</h1>
-    <p></p>
-    <label for="name" class="sr-only text-white">Username</label>
-    <p></p>
-    <input name="username" type="text" id="name" class="form-control text-center" placeholder="Username" required autofocus>
-    <p></p>
-    <label for="inputPassword" class="sr-only text-white">Password</label>
-    <p></p>
-    <input name="password" type="password" id="inputPassword" class="form-control text-center" placeholder="Password" required>
-    <p></p>
-    <div class="checkbox mb-3 text-white">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
     </div>
-    <p></p>
-    <button class="btn btn-lg btn-secondary btn-block" type="submit">Submit Game</button>
-    <a href="/login">
-      <button class="btn btn-lg btn-secondary btn-block" type="button">I already have an account</button>
-    </a>
-  </form>
-</body>
+  </div>
+</div>
+{{>latestposts}}
+</div>
 
-</html>
+
+<!-- Optional JavaScript; keep it at last-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="js\bootstrap.min.js"></script>-->
+
+
+{{>footer}}
