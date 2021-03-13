@@ -40,61 +40,62 @@ import es.codeurjc.gamepost.repositories.enums.PublisherRepository;
 @Controller
 public class GameController {
 
-    @Autowired
-    GameRepository gameRepository;
+        @Autowired
+        GameRepository gameRepository;
 
-    @Autowired
-    DescriptionRepository descriptionRepository;
+        @Autowired
+        DescriptionRepository descriptionRepository;
 
-    @Autowired
-    GenreRepository genreRepository;
+        @Autowired
+        GenreRepository genreRepository;
 
-    @Autowired
-    PlatformRepository platformRepository;
+        @Autowired
+        PlatformRepository platformRepository;
 
-    @Autowired
-    DeveloperRepository developerRepository;
+        @Autowired
+        DeveloperRepository developerRepository;
 
-    @Autowired
-    PublisherRepository publisherRepository;
+        @Autowired
+        PublisherRepository publisherRepository;
 
-    @Autowired
-    ForumEntryRepository forumEntryRepository;
+        @Autowired
+        ForumEntryRepository forumEntryRepository;
 
-    @Autowired
-    UserRepository userRepository;
+        @Autowired
+        UserRepository userRepository;
 
-    @PostConstruct
-    public void init() {
-        Description d = new Description("Legend of Zelda: Breath of the wild",
-                new ArrayList<Genre>(Arrays.asList(genreRepository.save(new Genre("Adventure")),
-                        genreRepository.save(new Genre("RPG")))),
-                1, new Date(), new ArrayList<Platform>(Arrays.asList(platformRepository.save(new Platform("Switch")))),
-                "Nintendo", "Nintendo",
-                "El jugador controla a Link, que despierta en un mundo postapocalíptico después de estar cien años durmiendo para derrotar a Ganon y salvar al reino de Hyrule.");
+        @PostConstruct
+        public void init() {
+                Description d = new Description("Legend of Zelda: Breath of the wild",
+                                new ArrayList<Genre>(Arrays.asList(genreRepository.save(new Genre("Adventure")),
+                                                genreRepository.save(new Genre("RPG")))),
+                                1, new Date(),
+                                new ArrayList<Platform>(Arrays.asList(platformRepository.save(new Platform("Switch")))),
+                                "Nintendo", "Nintendo",
+                                "El jugador controla a Link, que despierta en un mundo postapocalíptico después de estar cien años durmiendo para derrotar a Ganon y salvar al reino de Hyrule.");
 
-        Game g = new Game(
-                "https://eplakaty.pl/img/towary/1/2017_04/pp34131-the-legend-of-zelda-breath-of-the-wild-plakat-z-gry-jpg.jpg",
-                d);
-        gameRepository.save(g);
+                Game g = new Game(
+                                "https://eplakaty.pl/img/towary/1/2017_04/pp34131-the-legend-of-zelda-breath-of-the-wild-plakat-z-gry-jpg.jpg",
+                                d);
+                gameRepository.save(g);
 
-        // g.getForum().addForumEntry(fe);
-    }
+                // g.getForum().addForumEntry(fe);
+        }
 
-    // TODO: Associate this method with the form in the web
-    @RequestMapping("/submit/Game")
-    public String submitGame(Model model, @RequestParam String cover, @RequestParam String name,
-            @RequestParam List<Genre> genre, @RequestParam int numPlayers, @RequestParam Date publishedDate,
-            @RequestParam List<Platform> platform, @RequestParam String developer, @RequestParam String publisher,
-            @RequestParam String synopsis) {
+        // TODO: Associate this method with the form in the web
+        @RequestMapping("/submit/Game")
+        public String submitGame(Model model, @RequestParam String cover, @RequestParam String name,
+                        @RequestParam List<Genre> genre, @RequestParam int numPlayers, @RequestParam Date publishedDate,
+                        @RequestParam List<Platform> platform, @RequestParam String developer,
+                        @RequestParam String publisher, @RequestParam String synopsis) {
 
-        Description d = descriptionRepository.save(
-                new Description(name, genre, numPlayers, publishedDate, platform, developer, publisher, synopsis));
+                Description d = descriptionRepository.save(new Description(name, genre, numPlayers, publishedDate,
+                                platform, developer, publisher, synopsis));
 
-        gameRepository.save(new Game(cover, d));
+                gameRepository.save(new Game(cover, d));
 
-        return "submitgame";
-    }
+                return "submitgame";
+        }
 
     @GetMapping("/game/{id}")
     public String getGame(Model model, @PathVariable int id) {
@@ -118,7 +119,7 @@ public class GameController {
             forumEntryRepository.save(fe);
             List<ForumEntry> posts = forumEntryRepository.findAll();
             model.addAttribute("posts", posts);
-
+            //TODO: model.addAttribute("user", user);
             return "game";
         } else {
             return "game";

@@ -40,6 +40,11 @@
               <th scope="col">Last reply On</th>
               <th scope="col">Replies</th>
               <th scope="col">Likes</th>
+              <th scope="col">
+                <a href="/game/{{game.id}}/newforumentry">
+                  <button class="btn btn-secondary" type="button">New</button>
+                </a>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -51,6 +56,7 @@
               <td>{{lastUpdatedOn}}</td>
               <td>{{replies}}</td>
               <td>{{votes}}</td>
+              <td></td>
             </tr>
             {{/posts}}
           </tbody>

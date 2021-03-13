@@ -5,6 +5,22 @@
         <div class="container rounded border p-4">
             <h1 class="text-white text-center" style="font-family: Impact;">{{game.description.name}} </h1>
             <h2 class="text-white text-center" style="font-family: Impact;">{{forumentry.title}} </h2>
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1 text-white">{{forumentry.author.name}}</h5>
+                <small class="text-white">{{forumentry.createdOn}}</small>
+            </div>
+            <p class="mb-1 text-white">{{forumentry.content.text}}</p>
+            <!-- <button class="button"
+                onclick="window.location.href='/reply/{{game.id}}/{{forumentry.id}}/{{forumentry.id}}';">Reply</button> -->
+            <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseReply{{forumentry.id}}">Reply</button>
+            <div class="collapse" id="collapseReply{{forumentry.id}}">
+                <div class="input-group">
+                    <form class="form-text" method="POST" action="{{forumentry.id}}/{{forumentry.id}}/reply">
+                        <textarea class="form-control" aria-label="Reply: " name="contentText"></textarea>
+                        <button class="btn btn-secondary" type="submit">Post</button>
+                    </form>
+                </div>
+            </div> 
             <ul class="list-group">
                 {{#comments}}
                 <li class="list-group-item " style="margin-left: 0px;">

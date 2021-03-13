@@ -37,6 +37,6 @@ public class SearchEngineController {
             model.addAttribute("games", games);
         }
         model.addAttribute("searchText", searchText);
-        return "searchResults";
+        return "searchresults";
     }
 }

@@ -29,9 +29,10 @@ public class IndexController {
         
         List<Game> games = gameRepository.findAll();
         Optional<User> user = userRepository.findByName("Mariam");
+        //TODO: model.addAttribute("user", user);
         model.addAttribute("games", games);
         if(user.isPresent()){
-            model.addAttribute("user", user);
+            model.addAttribute("user", user.get());
         }
         return "index";
     }
@@ -46,18 +47,13 @@ public class IndexController {
         return "login";
     }
 
-    @GetMapping("/game")
-    public String game(Model model){
-        return "game";
-    }
-
-    @GetMapping("/forum")
-    public String forum(Model model){
-        return "forum";
-    }
-
     @GetMapping("/profile")
     public String profile(Model model){
+        Optional<User> user = userRepository.findByName("Mariam");
+        if(user.isPresent()){
+            model.addAttribute("user", user.get());
+        }
+        //TODO: model.addAttribute("user", user);
         return "profile";
     }
 
