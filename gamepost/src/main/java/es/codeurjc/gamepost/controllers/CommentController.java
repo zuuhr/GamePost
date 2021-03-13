@@ -21,40 +21,44 @@ import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 
 @Controller
 public class CommentController {
-    
+
     @Autowired
     private CommentRepository commentRepository;
 
     @Autowired
     private ForumEntryRepository forumEntryRepository;
 
-
-
-    //TODO: Associate this method with the form in the web
-    @RequestMapping("/reply/game/{gameid}/{forumid}/{commentid}")
-    public String submitComment(Model model, @PathVariable int gameid, @PathVariable int forumid, @PathVariable int commentid, @RequestParam String title, 
-        @RequestParam Comment parent, @RequestParam Content content, @RequestParam ForumEntry forumEntry)
-        {
-            User author = (User) model.getAttribute("user");   //TODO: Coger user de sesión
+    @RequestMapping("/game/{gameid}/{forumid}/{commentid}/reply")
+    public String submitComment(Model model, @PathVariable int gameid, @PathVariable int forumid,
+            @PathVariable int commentid, @RequestParam String contentText) {
+        User author = (User) model.getAttribute("user"); // TODO: Coger user de sesión
+        //Generate content TODO: add images
+        Content content = new Content(contentText, "");        
         Optional<Comment> parentComment = commentRepository.findById(commentid);
         Comment c;
-        if(parentComment.isPresent()){
-            c = new Comment(title, author, content, parent.getId());
-        } else{ //root comment
-            c = new Comment(title, author, content, forumid);
+        if (parentComment.isPresent()) {
+            c = new Comment(author, content, parentComment.get().getId());
+        } else { // root comment
+            c = new Comment(author, content, forumid);
         }
-        
-        
-        commentRepository.save(c);
-        forumEntry.addComment(c);
 
-        return "forumreply"; //TODO: Return a meaningfull html
+        commentRepository.save(c);
+        ForumEntry forumEntry = forumEntryRepository.getOne(forumid);
+        forumEntry.addComment(c);
+        // TODO: Update post within database
+        //forumEntryRepository.save(forumEntry);
+        //forumEntryRepository.save(forumEntryRepository.getOne(forumid));
+        
+        String url = "redirect:/game/" + gameid + "/" + forumid;
+
+        return url; // TODO: Return a meaningfull html
     }
 
     @PostConstruct
-    public void init(){
-        //List<ForumEntry> forumEntry = forumEntryRepository.findAll();
-        //Comment c = new Comment("title", forumEntry.get(0).getAuthor(), new Content(), forumEntry.get(0).getId());
-        //commentRepository.save(c);
+    public void init() {
+        // List<ForumEntry> forumEntry = forumEntryRepository.findAll();
+        // Comment c = new Comment("title", forumEntry.get(0).getAuthor(), new
+        // Content(), forumEntry.get(0).getId());
+        // commentRepository.save(c);
     }
 }

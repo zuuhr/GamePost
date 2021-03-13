@@ -20,7 +20,6 @@ public class Comment extends ListElement{
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
     
-    String title;
     @ManyToOne User author;
     @OneToOne(cascade=CascadeType.ALL) Content content;
     int parent;   //TODO: Define a strategy for root comments
@@ -31,8 +30,7 @@ public class Comment extends ListElement{
     
     public Comment(){}
     
-    public Comment(String title, User author, Content content, int parent) {
-        this.title = title;
+    public Comment(User author, Content content, int parent) {
         this.author = author;
         this.content = content;
         this.parent = parent;
@@ -45,10 +43,6 @@ public class Comment extends ListElement{
 
     public int getId() {
         return id;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public User getAuthor() {

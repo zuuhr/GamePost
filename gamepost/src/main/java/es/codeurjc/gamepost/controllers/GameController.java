@@ -106,10 +106,10 @@ public class GameController {
             model.addAttribute("description", game.get().getDescription());
             ForumEntry fe = new ForumEntry("Hello world", users.get(0), game.get(),
                     new Content("my firsst content", "url here"));
-            Comment comment = new Comment("First Post", users.get(0), new Content(
+            Comment comment = new Comment(users.get(0), new Content(
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
                     "url here"), 0);
-            Comment comment2 = new Comment("First Post", users.get(0), new Content(
+            Comment comment2 = new Comment(users.get(0), new Content(
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
                     "url here"), 0);
 
