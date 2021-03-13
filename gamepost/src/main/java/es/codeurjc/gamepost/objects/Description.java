@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import es.codeurjc.gamepost.objects.enums.Developer;
 import es.codeurjc.gamepost.objects.enums.Genre;
@@ -25,7 +26,8 @@ public class Description {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
-    
+    @OneToOne(mappedBy = "description")
+    Game game;
     String name;
     @ManyToMany List<Genre> genre;
     int numPlayers;
@@ -123,6 +125,14 @@ public class Description {
 
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     //#endregion
