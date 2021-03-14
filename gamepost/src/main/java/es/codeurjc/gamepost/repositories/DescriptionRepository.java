@@ -39,9 +39,9 @@ public interface DescriptionRepository extends JpaRepository<Description, Intege
                     return 0;
                 }
                 else if(o1.getValue() > o2.getValue()){
-                    return 1;
-                }else{
                     return -1;
+                }else{
+                    return 1;
                 }
             }
         );
