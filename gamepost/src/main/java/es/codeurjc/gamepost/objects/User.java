@@ -28,7 +28,7 @@ public class User {
     @OneToMany(cascade=CascadeType.ALL) List<Notification> notifications;
 
     @OneToOne(cascade=CascadeType.ALL) CustomList<ForumEntry> followingForumEntries;
-    @OneToMany(cascade=CascadeType.ALL) List<CustomList<ListElement>> myLists;    
+    @OneToMany(mappedBy="user", cascade=CascadeType.ALL) List<CustomList<ListElement>> myLists;    
 
     //#endregion
 
