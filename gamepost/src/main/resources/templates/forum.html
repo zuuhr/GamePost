@@ -15,7 +15,7 @@
             <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseReply{{forumentry.id}}">Reply</button>
             <div class="collapse" id="collapseReply{{forumentry.id}}">
                 <div class="input-group">
-                    <form class="form-text" method="POST" action="{{forumentry.id}}/{{forumentry.id}}/reply">
+                    <form class="form-text" method="POST" action="/game/{{game.id}}/{{forumentry.id}}/{{forumentry.id}}/reply">
                         <textarea class="form-control" aria-label="Reply: " name="contentText"></textarea>
                         <button class="btn btn-secondary" type="submit">Post</button>
                     </form>
@@ -34,7 +34,7 @@
                     <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseReply{{id}}">Reply</button>
                     <div class="collapse" id="collapseReply{{id}}">
                         <div class="input-group">
-                            <form class="form-text" method="POST" action="{{forumentry.id}}/{{id}}/reply">
+                            <form class="form-text" method="POST" action="/game/{{game.id}}/{{forumentry.id}}/{{id}}/reply">
                                 <textarea class="form-control" aria-label="Reply: " name="contentText"></textarea>
                                 <button class="btn btn-secondary" type="submit">Post</button>
                             </form>
