@@ -53,6 +53,4 @@ public interface DescriptionRepository extends JpaRepository<Description, Intege
 
         return resultList;
     }
-
-
 }

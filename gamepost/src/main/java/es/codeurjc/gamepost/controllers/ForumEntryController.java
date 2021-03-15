@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.codeurjc.gamepost.objects.Content;
 import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Game;
+import es.codeurjc.gamepost.objects.Notification;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
@@ -44,6 +45,11 @@ public class ForumEntryController {
         Content content = new Content(bodyText, "");
         Optional<Game> game = gameRepository.findById(gameid);
         forumEntryRepository.save(new ForumEntry(titleText, users.get(0), game.get(), content));
+
+        //TODO: Send a notification to all the users that follow this game
+        for (User user : users) {
+            user.addNotification(new Notification("/game/{gameid}/", "New forum entry in game {gameid}"));    
+        }
         
         String url = "redirect:/game/"+ gameid;
         return url; //TODO: Return a meaningfull html

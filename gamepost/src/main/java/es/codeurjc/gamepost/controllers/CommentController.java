@@ -1,10 +1,10 @@
 package es.codeurjc.gamepost.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
-import org.hibernate.annotations.common.util.impl.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.codeurjc.gamepost.objects.Comment;
 import es.codeurjc.gamepost.objects.Content;
 import es.codeurjc.gamepost.objects.ForumEntry;
+import es.codeurjc.gamepost.objects.Notification;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.CommentRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
+import es.codeurjc.gamepost.repositories.NotificationRepository;
+import es.codeurjc.gamepost.repositories.UserRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,10 +35,15 @@ public class CommentController {
     @Autowired
     private ForumEntryRepository forumEntryRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @RequestMapping("/game/{gameid}/{forumid}/{commentid}/reply")
     public String submitComment(Model model, @PathVariable int gameid, @PathVariable int forumid,
             @PathVariable int commentid, @RequestParam String contentText) {
+        
         User author = (User) model.getAttribute("user"); // TODO: Coger user de sesión
+        
         //Generate content TODO: add images
         Content content = new Content(contentText, "");        
         Optional<Comment> parentComment = commentRepository.findById(commentid);
@@ -46,7 +54,14 @@ public class CommentController {
             c = new Comment(author, content, forumid);
         }
 
-        //commentRepository.save(c);
+        //Send notification to author
+        author.addNotification(new Notification("/game/{gameid}/{forumid}/{commentid}", "Someone replyied to your comment"));
+        
+        //TODO: Send notification to all users that follow this forumEntry
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            user.addNotification(new Notification("/game/{gameid}/", "New forum entry in game {gameid}"));    
+        }
         
         ForumEntry forumEntry = forumEntryRepository.getOne(forumid);
         forumEntry.addComment(c);
