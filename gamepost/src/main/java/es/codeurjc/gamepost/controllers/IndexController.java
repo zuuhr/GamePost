@@ -109,29 +109,33 @@ public class IndexController {
         ForumEntry fe = new ForumEntry("Hello world", userRepository.findAll().get(0), g,
                         new Content("my firsst content", "url here"));
 
-        Comment comment = new Comment(userRepository.findAll().get(0), new Content(
+        Comment comment = new Comment(userRepository.findAll().get(0), 0, 
+                    new Content(
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                        "url here"), 0);
+                        "url here")
+                    );
 
-        Comment comment2 = new Comment(userRepository.findAll().get(1), new Content(
+        Comment comment2 = new Comment(userRepository.findAll().get(1), 0, 
+                    new Content(
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                        "url here"), 0);
+                        "url here")
+                    );
 
         fe.addComment(comment);
         fe.addComment(comment2);
         g.getForum().addForumEntry(fe);
-
         gameRepository.save(g);
-        contentRepository.save(new Content("Vaya juegazo", null));
-        contentRepository.save(new Content("No me gusta", null));
-        contentRepository.save(new Content("Me encanta", null));
-        contentRepository.save(new Content("Wow amazing", null));
-        contentRepository.save(new Content("suka blyat", null));
-        contentRepository.save(new Content("loooool goty", null));
-        contentRepository.save(new Content("omg", null));
+        
+        //contentRepository.save(new Content("Vaya juegazo", null));
+        //contentRepository.save(new Content("No me gusta", null));
+        //contentRepository.save(new Content("Me encanta", null));
+        //contentRepository.save(new Content("Wow amazing", null));
+        //contentRepository.save(new Content("suka blyat", null));
+        //contentRepository.save(new Content("loooool goty", null));
+        //contentRepository.save(new Content("omg", null));
 
-        notificationRepository.save(new Notification("Welcome!", "localhost:8080/index"));
-        notificationRepository.save(new Notification("Hello!", "localhost:8080/index"));
+        //notificationRepository.save(new Notification("Welcome!", "localhost:8080/index"));
+        //notificationRepository.save(new Notification("Hello!", "localhost:8080/index"));
 
         //CustomList<ListElement> customList = new CustomList<ListElement>("My Games");
         //customList.addElement((ListElement) g);

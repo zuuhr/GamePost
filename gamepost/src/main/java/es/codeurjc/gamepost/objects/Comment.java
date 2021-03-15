@@ -30,7 +30,7 @@ public class Comment extends ListElement{
     
     public Comment(){}
     
-    public Comment(User author, Content content, int parent) {
+    public Comment(User author, int parent, Content content) {
         this.author = author;
         this.content = content;
         this.parent = parent;
