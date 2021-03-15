@@ -26,7 +26,7 @@ public class SearchEngineController {
     @RequestMapping("/search")
     public String search(Model model, @RequestParam String searchText){
         
-        String[] words = searchText.split(""); 
+        String[] words = searchText.split(" "); 
         List<Description> descriptions = descriptionRepository.findByNameInKeywords(words);
         if(descriptions.size() > 0){
             List<Game> games = new ArrayList<Game>();

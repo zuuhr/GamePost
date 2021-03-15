@@ -38,7 +38,12 @@ public class CommentController {
     public String submitComment(Model model, @PathVariable int gameid, @PathVariable int forumid,
             @PathVariable int commentid, @RequestParam String contentText) {
         
-        User author = (User) model.getAttribute("user"); // TODO: Coger user de sesión
+        // TODO: Coger user de sesión
+        //User author = (User) model.getAttribute("user"); 
+        
+        User author = userRepository.findByName("Julen").get();
+        ForumEntry forumEntry = forumEntryRepository.findById(forumid).get();
+        
         
         //Generate content TODO: add images
         Content content = new Content(contentText, "");  
@@ -46,9 +51,9 @@ public class CommentController {
         Optional<Comment> parentComment = commentRepository.findById(commentid);
         Comment comment;
         if (parentComment.isPresent()) {
-            comment = new Comment(author, content, parentComment.get().getId());
+            comment = new Comment(author, parentComment.get().getId(), content);
         } else { // root comment
-            comment = new Comment(author, content, forumid);
+            comment = new Comment(author, forumid, content);
         }
 
         //Send notification to author
@@ -61,11 +66,10 @@ public class CommentController {
             user.addNotification(new Notification("/game/{gameid}/", "New forum entry in game {gameid}"));    
         }
         
-        ForumEntry fe = forumEntryRepository.findById(forumid).get();
-        fe.addComment(comment);
-        //forumEntryRepository.saveAndFlush(fe);
-        //forumEntryRepository.save(fe);
-        log.info("Comment submitted");
+        forumEntry.addComment(comment);
+        forumEntryRepository.saveAndFlush(forumEntry);
+
+        log.info("Comment submitted. Author:" + author.getId());
         
         // TODO: Update post within database
         //forumEntryRepository.save(forumEntryRepository.getOne(forumid));
