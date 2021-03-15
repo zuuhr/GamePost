@@ -45,13 +45,14 @@ public class CommentController {
         User author = (User) model.getAttribute("user"); // TODO: Coger user de sesión
         
         //Generate content TODO: add images
-        Content content = new Content(contentText, "");        
+        Content content = new Content(contentText, "");  
+
         Optional<Comment> parentComment = commentRepository.findById(commentid);
-        Comment c;
+        Comment comment;
         if (parentComment.isPresent()) {
-            c = new Comment(author, content, parentComment.get().getId());
+            comment = new Comment(author, content, parentComment.get().getId());
         } else { // root comment
-            c = new Comment(author, content, forumid);
+            comment = new Comment(author, content, forumid);
         }
 
         //Send notification to author
@@ -64,7 +65,7 @@ public class CommentController {
             user.addNotification(new Notification("/game/{gameid}/", "New forum entry in game {gameid}"));    
         }
         
-        forumEntryRepository.getOne(forumid).addComment(c);
+        forumEntryRepository.findById(forumid).get().addComment(comment);
         log.info("Comment submitted");
         
         // TODO: Update post within database
