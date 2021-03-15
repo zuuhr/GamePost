@@ -40,12 +40,12 @@ public class User {
         this.name = name;
         this.password = password;
 
-        this.forumEntries = new CustomList<ForumEntry>("ForumEntries");
-        this.comments = new CustomList<Comment>("Comments");
-        this.games = new CustomList<Game>("Games");
+        this.forumEntries = new CustomList<ForumEntry>("ForumEntries", this);
+        this.comments = new CustomList<Comment>("Comments", this);
+        this.games = new CustomList<Game>("Games", this);
         this.notifications = new ArrayList<Notification>();
 
-        this.followingForumEntries = new CustomList<ForumEntry>("Following ForumEntries");
+        this.followingForumEntries = new CustomList<ForumEntry>("Following ForumEntries", this);
         this.myLists = new ArrayList<CustomList<ListElement>>();
     }
 

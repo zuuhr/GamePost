@@ -29,8 +29,9 @@ public class CustomList<T> {
 
     public CustomList(){}
     
-    public CustomList(String name){
+    public CustomList(String name, User user){
         this.name = name;
+        this.user = user;
         elements = new ArrayList<T>();
     }
 

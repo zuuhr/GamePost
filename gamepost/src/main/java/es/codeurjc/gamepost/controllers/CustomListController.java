@@ -37,7 +37,7 @@ public class CustomListController {
         
         User author = userRepository.findAll().get(0);   //TODO: Coger user de sesión
         
-        CustomList<ListElement> cl = new CustomList<>(nameText);
+        CustomList<ListElement> cl = new CustomList<>(nameText, author);
         author.addMyList(cl);
         customListRepository.save(cl);
         return "redirect:/"; //TODO: Return a meaningfull html

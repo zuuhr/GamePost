@@ -137,12 +137,12 @@ public class IndexController {
         notificationRepository.save(new Notification("Welcome!", "localhost:8080/index"));
         notificationRepository.save(new Notification("Hello!", "localhost:8080/index"));
 
-        CustomList<ListElement> customList = new CustomList<ListElement>("My Games");
+        CustomList<ListElement> customList = new CustomList<ListElement>("My Games", user);
         customList.addElement((ListElement) g);
         user.addMyList(customList);
         customListRepository.save(customList);
 
-        CustomList<ListElement> customList2 = new CustomList<ListElement>("Random entries");
+        CustomList<ListElement> customList2 = new CustomList<ListElement>("Random entries", user);
         customList2.addElement((ListElement) fe);
         user.addMyList(customList2);
         customListRepository.save(customList2);
