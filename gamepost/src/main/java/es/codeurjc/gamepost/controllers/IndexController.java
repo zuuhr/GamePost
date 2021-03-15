@@ -49,9 +49,9 @@ public class IndexController {
     @GetMapping("/")
     public String enlace(Model model){
         List<Game> games = gameRepository.findAll();
-        Optional<User> user = userRepository.findByName("Mariam");
         //TODO: model.addAttribute("user", user);
         model.addAttribute("games", games);
+        Optional<User> user = userRepository.findByName("Mariam");
         if(user.isPresent()){
             List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get()); 
             model.addAttribute("list", customLists);
@@ -59,7 +59,7 @@ public class IndexController {
         }
 
         //Show forum entries
-        model.addAttribute("latestForumEntries", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
+        model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
 
         return "index";
     }
@@ -125,7 +125,7 @@ public class IndexController {
         fe.addComment(comment2);
         g.getForum().addForumEntry(fe);
         gameRepository.save(g);
-        
+
         //contentRepository.save(new Content("Vaya juegazo", null));
         //contentRepository.save(new Content("No me gusta", null));
         //contentRepository.save(new Content("Me encanta", null));
@@ -134,12 +134,17 @@ public class IndexController {
         //contentRepository.save(new Content("loooool goty", null));
         //contentRepository.save(new Content("omg", null));
 
-        //notificationRepository.save(new Notification("Welcome!", "localhost:8080/index"));
-        //notificationRepository.save(new Notification("Hello!", "localhost:8080/index"));
+        notificationRepository.save(new Notification("Welcome!", "localhost:8080/index"));
+        notificationRepository.save(new Notification("Hello!", "localhost:8080/index"));
 
-        //CustomList<ListElement> customList = new CustomList<ListElement>("My Games");
-        //customList.addElement((ListElement) g);
-        //user.addMyList(customList);
-        //customListRepository.save(customList);
+        CustomList<ListElement> customList = new CustomList<ListElement>("My Games");
+        customList.addElement((ListElement) g);
+        user.addMyList(customList);
+        customListRepository.save(customList);
+
+        CustomList<ListElement> customList2 = new CustomList<ListElement>("Random entries");
+        customList2.addElement((ListElement) fe);
+        user.addMyList(customList2);
+        customListRepository.save(customList2);
     }
 }

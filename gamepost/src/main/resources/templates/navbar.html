@@ -18,11 +18,19 @@
           <p class="text-white-50" style="font-family:Impact; font-size: 200%;">My lists</p>
         </li>
         <li class="mt-3">
-          <a class="text-white" href="/createlist" style="font-family:Impact; font-size: 100%;">Create list</a>
+          <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseList">Create List</button>
+                    <div class="collapse" id="collapseList">
+                        <div class="input-group">
+                            <form class="form-text" method="POST" action="/list/newlist">
+                                <textarea class="form-control" aria-label="Title: " name="nameText"></textarea>
+                                <button class="btn btn-secondary" type="submit">Create</button>
+                            </form>
+                        </div>
+                    </div>    
         </li>
         {{#list}}
         <li class="mt-3">
-          <a class="text-white" href="/list/{{user.name}}/{{id}}" style="font-family:Impact; font-size: 150%;">{{name}}</a>
+          <a class="text-white" href="/list/{{user.id}}/{{id}}" style="font-family:Impact; font-size: 150%;">{{name}}</a>
         </li>
         {{/list}}
       </ul>
