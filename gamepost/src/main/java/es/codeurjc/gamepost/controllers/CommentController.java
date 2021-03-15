@@ -61,8 +61,7 @@ public class CommentController {
             user.addNotification(new Notification("/game/{gameid}/", "New forum entry in game {gameid}"));    
         }
         
-        ForumEntry fe = forumEntryRepository.findById(forumid).get();
-        fe.addComment(comment);
+        forumEntryRepository.findById(forumid).get().addComment(comment);
         //forumEntryRepository.saveAndFlush(fe);
         //forumEntryRepository.save(fe);
         log.info("Comment submitted");
