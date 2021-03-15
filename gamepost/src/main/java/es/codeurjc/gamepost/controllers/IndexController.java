@@ -49,9 +49,9 @@ public class IndexController {
     @GetMapping("/")
     public String enlace(Model model){
         List<Game> games = gameRepository.findAll();
-        Optional<User> user = userRepository.findByName("Mariam");
         //TODO: model.addAttribute("user", user);
         model.addAttribute("games", games);
+        Optional<User> user = userRepository.findByName("Mariam");
         if(user.isPresent()){
             List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get()); 
             model.addAttribute("list", customLists);
@@ -59,7 +59,7 @@ public class IndexController {
         }
 
         //Show forum entries
-        model.addAttribute("latestForumEntries", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
+        model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
 
         return "index";
     }
@@ -139,5 +139,10 @@ public class IndexController {
         customList.addElement((ListElement) g);
         user.addMyList(customList);
         customListRepository.save(customList);
+
+        CustomList<ListElement> customList2 = new CustomList<ListElement>("Random entries");
+        customList2.addElement((ListElement) fe);
+        user.addMyList(customList2);
+        customListRepository.save(customList2);
     }
 }

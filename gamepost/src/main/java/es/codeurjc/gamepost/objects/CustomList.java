@@ -49,6 +49,10 @@ public class CustomList<T> {
     public T getElement(int index){
         return elements.get(index);
     }
+    
+    public List<T> getAllElements(){
+        return elements;
+    }
 
     //#endregion
 }
