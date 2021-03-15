@@ -8,29 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
-import es.codeurjc.gamepost.objects.Comment;
-import es.codeurjc.gamepost.objects.Content;
-import es.codeurjc.gamepost.objects.Description;
-import es.codeurjc.gamepost.objects.ForumEntry;
-import es.codeurjc.gamepost.objects.Game;
 import es.codeurjc.gamepost.objects.User;
-import es.codeurjc.gamepost.objects.enums.Genre;
-import es.codeurjc.gamepost.objects.enums.Platform;
-import es.codeurjc.gamepost.repositories.DescriptionRepository;
-import es.codeurjc.gamepost.repositories.ForumEntryRepository;
-import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
-import es.codeurjc.gamepost.repositories.enums.DeveloperRepository;
-import es.codeurjc.gamepost.repositories.enums.GenreRepository;
-import es.codeurjc.gamepost.repositories.enums.PlatformRepository;
-import es.codeurjc.gamepost.repositories.enums.PublisherRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
 
 import java.util.Optional;
 
