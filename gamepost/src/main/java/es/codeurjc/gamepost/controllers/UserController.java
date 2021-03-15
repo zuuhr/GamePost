@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
+import es.codeurjc.gamepost.objects.Notification;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.UserRepository;
 
@@ -67,5 +68,21 @@ public class UserController {
             log.info("INFO: The user can not be found.");
             return "login";
         }
+    }
+
+    @GetMapping("/notifications")
+    public String showNotifications(Model model){
+        //User user = (User) model.getAttribute("user");
+        User user = userRepository.findByName("Julen").get();
+        model.addAttribute("notifications", user.getNotifications());
+
+        //Debug
+        log.info("--NOTIFICATIONS--");
+        for (Notification notification : user.getNotifications()) {
+            log.info("Notification " + notification.getId() + ": " + notification.getTitle());
+        }
+
+        //TO DO: Return a meaningfull page that shows the notifications.
+        return "/";
     }
 }
