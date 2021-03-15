@@ -3,8 +3,8 @@ package es.codeurjc.gamepost.controllers;
 import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.PostConstruct;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,16 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.gamepost.objects.Comment;
 import es.codeurjc.gamepost.objects.Content;
-import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Notification;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.CommentRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
-import es.codeurjc.gamepost.repositories.NotificationRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Controller
 public class CommentController {
@@ -75,13 +70,5 @@ public class CommentController {
         String url = "redirect:/game/" + gameid + "/" + forumid;
 
         return url; // TODO: Return a meaningfull html
-    }
-
-    @PostConstruct
-    public void init() {
-        // List<ForumEntry> forumEntry = forumEntryRepository.findAll();
-        // Comment c = new Comment("title", forumEntry.get(0).getAuthor(), new
-        // Content(), forumEntry.get(0).getId());
-        // commentRepository.save(c);
     }
 }

@@ -1,7 +1,5 @@
 package es.codeurjc.gamepost.controllers;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +14,6 @@ public class NotificationController {
     
     @Autowired
     NotificationRepository notificationRepository;
-
-    @PostConstruct
-    public void init(){
-        notificationRepository.save(new Notification("Welcome!", "localhost:8080/index"));
-        notificationRepository.save(new Notification("Hello!", "localhost:8080/index"));
-    }
 
     //TODO: Associate this method with the form in the web
     @RequestMapping("/submit/Notification")

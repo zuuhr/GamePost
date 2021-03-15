@@ -1,5 +1,6 @@
 package es.codeurjc.gamepost.controllers;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,12 +10,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.codeurjc.gamepost.objects.CustomList;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.CustomListRepository;
+import es.codeurjc.gamepost.repositories.UserRepository;
 
 @Controller
 public class CustomListController {
     
     @Autowired
     CustomListRepository customListRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     //TODO: Associate this method with the form in the web
     @RequestMapping("/submit/CustomList")
@@ -27,4 +32,5 @@ public class CustomListController {
 
         return "index"; //TODO: Return a meaningfull html
     }
+
 }

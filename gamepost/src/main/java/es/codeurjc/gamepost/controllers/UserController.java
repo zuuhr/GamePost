@@ -44,50 +44,6 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private GameRepository gameRepository;
-
-    @Autowired
-    private GenreRepository genreRepository;
-
-    @Autowired
-    private PlatformRepository platformRepository;
-
-    @PostConstruct
-    public void init(){
-        userRepository.save(new User("Mariam", "password"));
-        userRepository.save(new User("Julen", "wordpass"));
-
-        Description d = new Description("Legend of Zelda: Breath of the wild",
-                                new ArrayList<Genre>(Arrays.asList(genreRepository.save(new Genre("Adventure")),
-                                                genreRepository.save(new Genre("RPG")))),
-                                1, new Date(),
-                                new ArrayList<Platform>(Arrays.asList(platformRepository.save(new Platform("Switch")))),
-                                "Nintendo", "Nintendo",
-                                "El jugador controla a Link, que despierta en un mundo postapocalíptico después de estar cien años durmiendo para derrotar a Ganon y salvar al reino de Hyrule.");
-
-        Game g = new Game(
-                        "https://eplakaty.pl/img/towary/1/2017_04/pp34131-the-legend-of-zelda-breath-of-the-wild-plakat-z-gry-jpg.jpg",
-                        d);
-
-        ForumEntry fe = new ForumEntry("Hello world", userRepository.findAll().get(0), g,
-                        new Content("my firsst content", "url here"));
-
-        Comment comment = new Comment(userRepository.findAll().get(0), new Content(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                        "url here"), 0);
-
-        Comment comment2 = new Comment(userRepository.findAll().get(0), new Content(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                        "url here"), 0);
-
-        fe.addComment(comment);
-        fe.addComment(comment2);
-        g.getForum().addForumEntry(fe);
-
-        gameRepository.save(g);
-    }
-
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers(){
         List<User> users = userRepository.findAll();
