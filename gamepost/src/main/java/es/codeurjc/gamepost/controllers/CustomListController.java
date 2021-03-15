@@ -32,15 +32,15 @@ public class CustomListController {
     UserRepository userRepository;
 
     //TODO: Associate this method with the form in the web
-    @RequestMapping("/list/create")
-    public String submitCustomList(Model model, @RequestParam String name){
+    @RequestMapping("/list/newlist")
+    public String submitCustomList(Model model, @RequestParam String nameText){
         
-        User author = (User) model.getAttribute("user");   //TODO: Coger user de sesión
+        User author = userRepository.findAll().get(0);   //TODO: Coger user de sesión
         
-        CustomList cl = customListRepository.save(new CustomList<>(name));
+        CustomList<ListElement> cl = new CustomList<>(nameText);
         author.addMyList(cl);
-
-        return "index"; //TODO: Return a meaningfull html
+        customListRepository.save(cl);
+        return "redirect:/"; //TODO: Return a meaningfull html
     }
 
     @GetMapping("list/{userid}/{listid}")
