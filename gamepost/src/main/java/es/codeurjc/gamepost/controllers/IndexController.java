@@ -122,8 +122,6 @@ public class IndexController {
         g.getForum().addForumEntry(fe);
 
         gameRepository.save(g);
-
-
         contentRepository.save(new Content("Vaya juegazo", null));
         contentRepository.save(new Content("No me gusta", null));
         contentRepository.save(new Content("Me encanta", null));
@@ -135,9 +133,9 @@ public class IndexController {
         notificationRepository.save(new Notification("Welcome!", "localhost:8080/index"));
         notificationRepository.save(new Notification("Hello!", "localhost:8080/index"));
 
-        CustomList<ListElement> customList = new CustomList<ListElement>("My Games");
-        customList.addElement((ListElement) g);
-        user.addMyList(customList);
-        customListRepository.save(customList);
+        //CustomList<ListElement> customList = new CustomList<ListElement>("My Games");
+        //customList.addElement((ListElement) g);
+        //user.addMyList(customList);
+        //customListRepository.save(customList);
     }
 }
