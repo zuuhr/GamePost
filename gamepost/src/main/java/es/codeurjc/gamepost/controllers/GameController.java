@@ -42,42 +42,10 @@ public class GameController {
         GameRepository gameRepository;
 
         @Autowired
-        DescriptionRepository descriptionRepository;
-
-        @Autowired
-        GenreRepository genreRepository;
-
-        @Autowired
-        PlatformRepository platformRepository;
-
-        @Autowired
-        DeveloperRepository developerRepository;
-
-        @Autowired
-        PublisherRepository publisherRepository;
-
-        @Autowired
         ForumEntryRepository forumEntryRepository;
-
-        @Autowired
-        UserRepository userRepository;
 
         @PostConstruct
         public void init() {
-                Description d = new Description("Legend of Zelda: Breath of the wild",
-                                new ArrayList<Genre>(Arrays.asList(genreRepository.save(new Genre("Adventure")),
-                                                genreRepository.save(new Genre("RPG")))),
-                                1, new Date(),
-                                new ArrayList<Platform>(Arrays.asList(platformRepository.save(new Platform("Switch")))),
-                                "Nintendo", "Nintendo",
-                                "El jugador controla a Link, que despierta en un mundo postapocalíptico después de estar cien años durmiendo para derrotar a Ganon y salvar al reino de Hyrule.");
-
-                Game g = new Game(
-                                "https://eplakaty.pl/img/towary/1/2017_04/pp34131-the-legend-of-zelda-breath-of-the-wild-plakat-z-gry-jpg.jpg",
-                                d);
-                gameRepository.save(g);
-
-                // g.getForum().addForumEntry(fe);
         }
 
         // TODO: Associate this method with the form in the web
@@ -120,23 +88,11 @@ public class GameController {
         @GetMapping("/game/{id}")
         public String getGame(Model model, @PathVariable int id) {
                 Optional<Game> game = gameRepository.findById(id);
-                List<User> users = userRepository.findAll();
 
                 if (game.isPresent()) {
                         model.addAttribute("game", game.get());
                         model.addAttribute("description", game.get().getDescription());
-                        ForumEntry fe = new ForumEntry("Hello world", users.get(0), game.get(),
-                                        new Content("my firsst content", "url here"));
-                        Comment comment = new Comment(users.get(0), new Content(
-                                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                                        "url here"), 0);
-                        Comment comment2 = new Comment(users.get(0), new Content(
-                                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                                        "url here"), 0);
 
-                        fe.addComment(comment);
-                        fe.addComment(comment2);
-                        forumEntryRepository.save(fe);
                         List<ForumEntry> posts = forumEntryRepository.findAll();
                         model.addAttribute("posts", posts);
                         // TODO: model.addAttribute("user", user);

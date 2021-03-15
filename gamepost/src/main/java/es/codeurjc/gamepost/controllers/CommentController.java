@@ -55,7 +55,8 @@ public class CommentController {
         }
 
         //Send notification to author
-        author.addNotification(new Notification("/game/{gameid}/{forumid}/{commentid}", "Someone replyied to your comment"));
+        if(parentComment.isPresent())
+            parentComment.get().getAuthor().addNotification(new Notification("/game/{gameid}/{forumid}/{commentid}", "Someone replyied to your comment"));
         
         //TODO: Send notification to all users that follow this forumEntry
         List<User> users = userRepository.findAll();
@@ -63,8 +64,7 @@ public class CommentController {
             user.addNotification(new Notification("/game/{gameid}/", "New forum entry in game {gameid}"));    
         }
         
-        ForumEntry forumEntry = forumEntryRepository.getOne(forumid);
-        forumEntry.addComment(c);
+        forumEntryRepository.getOne(forumid).addComment(c);
         log.info("Comment submitted");
         
         // TODO: Update post within database
