@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.gamepost.objects.Comment;
 import es.codeurjc.gamepost.objects.Content;
+import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Notification;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.CommentRepository;
@@ -60,11 +61,13 @@ public class CommentController {
             user.addNotification(new Notification("/game/{gameid}/", "New forum entry in game {gameid}"));    
         }
         
-        forumEntryRepository.findById(forumid).get().addComment(comment);
+        ForumEntry fe = forumEntryRepository.findById(forumid).get();
+        fe.addComment(comment);
+        //forumEntryRepository.saveAndFlush(fe);
+        //forumEntryRepository.save(fe);
         log.info("Comment submitted");
         
         // TODO: Update post within database
-        //forumEntryRepository.save(forumEntry);
         //forumEntryRepository.save(forumEntryRepository.getOne(forumid));
         
         String url = "redirect:/game/" + gameid + "/" + forumid;

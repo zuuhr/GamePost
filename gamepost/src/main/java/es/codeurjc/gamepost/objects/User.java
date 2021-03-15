@@ -114,6 +114,7 @@ public class User {
     }
 
     public boolean addMyList(CustomList<ListElement> myList) {
+        myList.user = this;
         return this.myLists.add(myList);
     }
 

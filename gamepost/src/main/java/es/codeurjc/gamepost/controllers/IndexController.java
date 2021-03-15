@@ -53,7 +53,7 @@ public class IndexController {
         //TODO: model.addAttribute("user", user);
         model.addAttribute("games", games);
         if(user.isPresent()){
-            List<CustomList> customLists = customListRepository.findByUser(user.get()); 
+            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get()); 
             model.addAttribute("list", customLists);
             model.addAttribute("user", user.get());
         }
@@ -91,7 +91,7 @@ public class IndexController {
 
         platformRepository.save(new Platform("Switch"));
 
-        userRepository.save(new User("Mariam", "password"));
+        User user = userRepository.save(new User("Mariam", "password"));
         userRepository.save(new User("Julen", "wordpass"));
 
         Description d = new Description("Legend of Zelda: Breath of the wild",
@@ -113,7 +113,7 @@ public class IndexController {
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
                         "url here"), 0);
 
-        Comment comment2 = new Comment(userRepository.findAll().get(0), new Content(
+        Comment comment2 = new Comment(userRepository.findAll().get(1), new Content(
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
                         "url here"), 0);
 
@@ -134,5 +134,10 @@ public class IndexController {
 
         notificationRepository.save(new Notification("Welcome!", "localhost:8080/index"));
         notificationRepository.save(new Notification("Hello!", "localhost:8080/index"));
+
+        CustomList<ListElement> customList = new CustomList<ListElement>("My Games");
+        customList.addElement((ListElement) g);
+        user.addMyList(customList);
+        customListRepository.save(customList);
     }
 }

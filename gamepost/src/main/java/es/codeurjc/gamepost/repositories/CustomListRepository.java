@@ -10,6 +10,6 @@ import es.codeurjc.gamepost.objects.User;
 
 public interface CustomListRepository extends JpaRepository<CustomList<ListElement>, Integer>{
     
-    List<CustomList> findByUser(User user);
+    List<CustomList<ListElement>> findByUser(User user);
 
 }
