@@ -18,6 +18,28 @@ GamePost es una página web dedicada a la difusión, discusión y puesta en com�
 
 # [Trello](https://trello.com/b/XFN4E5ZO)
 
+# Fase II
+![Navegación de Ventanas](https://user-images.githubusercontent.com/43469859/111301196-32a44a00-8652-11eb-84f9-fe3fdc67334b.png)
+
+![GamePost (UML)](https://user-images.githubusercontent.com/43469859/111301614-b5c5a000-8652-11eb-8790-044fb03b5981.png)
+
+- Index
+
+- Log In/Sign In
+
+- Notifications
+
+- Game
+
+- Forum Post
+
+- Submit Game
+
+- Search Results
+
+- List
+
+
 # Integrantes del desarrollo:
 - Julen Justo Neira: [j.justo.2017@alumnos.urjc.es](mailto:j.justo.2017@alumnos.urjc.es) ([GitHub](https://github.com/JulenJus))
 - Mariam Baradi Del Álamo: [m.baradi.2017@alumnos.urjc.es](mailto:m.baradi.2017@alumnos.urjc.es) ([GitHub](https://github.com/zuuhr))
