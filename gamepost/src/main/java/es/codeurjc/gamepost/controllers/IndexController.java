@@ -92,7 +92,15 @@ public class IndexController {
 
         platformRepository.save(new Platform("Switch"));
 
-        User user = userRepository.save(new User("Mariam", "password"));
+        User user = new User("Mariam", "password");
+
+        Notification n0 = new Notification("/","Welcome!");
+        Notification n1 = new Notification("/","Hello!"); 
+        user.addNotification(n0);
+        user.addNotification(n1);
+      
+
+        userRepository.save(user);
         userRepository.save(new User("Julen", "wordpass"));
 
         Description d = new Description("Legend of Zelda: Breath of the wild",
@@ -110,13 +118,13 @@ public class IndexController {
         ForumEntry fe = new ForumEntry("Hello world", userRepository.findAll().get(0), g,
                         new Content("my firsst content", "url here"));
 
-        Comment comment = new Comment(userRepository.findAll().get(0), null, 
+        Comment comment = new Comment(userRepository.findAll().get(0), fe, null, 
                     new Content(
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
                         "url here")
                     );
 
-        Comment comment2 = new Comment(userRepository.findAll().get(1), null, 
+        Comment comment2 = new Comment(userRepository.findAll().get(1), fe, null, 
                     new Content(
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
                         "url here")
@@ -135,8 +143,7 @@ public class IndexController {
         //contentRepository.save(new Content("loooool goty", null));
         //contentRepository.save(new Content("omg", null));
 
-        notificationRepository.save(new Notification("Welcome!", "localhost:8080/index"));
-        notificationRepository.save(new Notification("Hello!", "localhost:8080/index"));
+        
 
         CustomList<ListElement> customList = new CustomList<ListElement>("My Games", user);
         customList.addElement((ListElement) g);

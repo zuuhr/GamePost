@@ -1,25 +1,17 @@
 package es.codeurjc.gamepost.objects;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import es.codeurjc.gamepost.repositories.CommentRepository;
-
-import javax.persistence.Entity;
 
 @Entity
 public class Comment extends ListElement{
@@ -32,7 +24,7 @@ public class Comment extends ListElement{
     
     @ManyToOne User author;
     @OneToOne(cascade=CascadeType.ALL) Content content;
-    
+    @ManyToOne ForumEntry forumEntry;
     @ManyToMany List<Comment> parent = new ArrayList<Comment>();   //TODO: Define a strategy for root comments
     @ManyToMany (mappedBy = "parent") List<Comment> childs;
     Date postedOn;
@@ -43,8 +35,9 @@ public class Comment extends ListElement{
     
     public Comment(){}
     
-    public Comment(User author, Comment parent, Content content) {
+    public Comment(User author, ForumEntry forumEntry, Comment parent, Content content) {
         this.author = author;
+        this.forumEntry = forumEntry;
         this.content = content;
         this.parent.add(parent);
         this.postedOn = new Date();
@@ -88,5 +81,14 @@ public class Comment extends ListElement{
         return childs.add(child);
     }
 
+    public Date getPostedOn(){
+        return postedOn;
+    }
+    
+    public ForumEntry getForumEntry() {
+        return forumEntry;
+    }
+    
     //#endregion
+
 }

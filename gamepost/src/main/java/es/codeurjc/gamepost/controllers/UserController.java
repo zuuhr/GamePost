@@ -73,7 +73,8 @@ public class UserController {
     @GetMapping("/notifications")
     public String showNotifications(Model model){
         //User user = (User) model.getAttribute("user");
-        User user = userRepository.findByName("Julen").get();
+        User user = userRepository.findByName("Mariam").get();
+        
         model.addAttribute("notifications", user.getNotifications());
 
         //Debug
@@ -83,6 +84,6 @@ public class UserController {
         }
 
         //TO DO: Return a meaningfull page that shows the notifications.
-        return "/";
+        return "notifications";
     }
 }

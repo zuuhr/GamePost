@@ -19,7 +19,10 @@ import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Game;
 import es.codeurjc.gamepost.objects.ListElement;
 import es.codeurjc.gamepost.objects.User;
+import es.codeurjc.gamepost.repositories.CommentRepository;
 import es.codeurjc.gamepost.repositories.CustomListRepository;
+import es.codeurjc.gamepost.repositories.ForumEntryRepository;
+import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
 
 @Controller
@@ -28,8 +31,18 @@ public class CustomListController {
     @Autowired
     CustomListRepository customListRepository;
 
+    
+    @Autowired
+    GameRepository gameRepository;
+
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ForumEntryRepository forumEntryRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
 
     //TODO: Associate this method with the form in the web
     @RequestMapping("/list/newlist")
@@ -82,4 +95,68 @@ public class CustomListController {
         return "list";
     }
 
+    @GetMapping("/list/add/game/{listid}/{gameid}")
+    public String addGameToList(Model model, @PathVariable int listid, @PathVariable int gameid){
+        CustomList<ListElement> customList = customListRepository.findById(listid).get();
+        customList.addElement(gameRepository.findById(gameid).get());
+        customListRepository.save(customList);
+        return "redirect:/game/" + gameid;
+    }
+    @GetMapping("/list/add/forumentry/{listid}/{forumentryid}")
+    public String addForumEntryToList(Model model, @PathVariable int listid, @PathVariable int forumentryid){
+        CustomList<ListElement> customList = customListRepository.findById(listid).get();
+        ForumEntry forumEntry = forumEntryRepository.findById(forumentryid).get();
+        customList.addElement(forumEntry);
+        customListRepository.save(customList);
+        return "redirect:/game/" + forumEntry.getGame().getId();
+    }
+    @GetMapping("/list/add/comment/{listid}/{forumentryid}/{commentid}")
+    public String addToList(Model model, @PathVariable int listid, @PathVariable int forumentryid, @PathVariable int commentid){
+        CustomList<ListElement> customList = customListRepository.findById(listid).get();
+        ForumEntry forumEntry = forumEntryRepository.findById(forumentryid).get();
+        Comment comment = commentRepository.findById(commentid).get();
+        customList.addElement(comment);
+        customListRepository.save(customList);
+        return "redirect:/game/" + forumEntry.getGame().getId();
+    }
+
+
+    public List<CustomList<ListElement>> getUserCustomListsGame(User user){
+        
+        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
+        List<CustomList<ListElement>> gameLists = new LinkedList<CustomList<ListElement>>();
+        for (CustomList<ListElement> customList : customLists) {
+            if(customList.getAllElements().isEmpty() || customList.getElement(0) instanceof Game){
+                gameLists.add( customList);
+                
+            }
+        }
+        return gameLists;
+    }
+
+    public List<CustomList<ListElement>> getUserCustomListsForumEntry(User user){
+        
+        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
+        List<CustomList<ListElement>> forumEntryLists = new LinkedList<CustomList<ListElement>>();
+        for (CustomList<ListElement> customList : customLists) {
+            if(customList.getAllElements().isEmpty() || customList.getElement(0) instanceof ForumEntry){
+                forumEntryLists.add( customList);
+                
+            }
+        }
+        return forumEntryLists;
+    }
+
+    public List<CustomList<ListElement>> getUserCustomListsComment(User user){
+        
+        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
+        List<CustomList<ListElement>> commentLists = new LinkedList<CustomList<ListElement>>();
+        for (CustomList<ListElement> customList : customLists) {
+            if(customList.getAllElements().isEmpty() || customList.getElement(0) instanceof Comment){
+                commentLists.add( customList);
+                
+            }
+        }
+        return commentLists;
+    }
 }
