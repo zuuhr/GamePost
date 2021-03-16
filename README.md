@@ -23,21 +23,31 @@ GamePost es una página web dedicada a la difusión, discusión y puesta en com�
 
 ![GamePost (UML)](https://user-images.githubusercontent.com/43469859/111301614-b5c5a000-8652-11eb-8790-044fb03b5981.png)
 
+# Lista de Ventanas
 - Index
+![index](https://user-images.githubusercontent.com/43469859/111305252-fd4e2b00-8656-11eb-84f1-1feb3f1ac3a3.png)
 
 - Log In/Sign In
+![login](https://user-images.githubusercontent.com/43469859/111305271-02ab7580-8657-11eb-871b-b30762010ece.png)
+![signin](https://user-images.githubusercontent.com/43469859/111305283-06d79300-8657-11eb-9a81-3ad7ca892412.png)
 
 - Notifications
+![notifications](https://user-images.githubusercontent.com/43469859/111305297-0a6b1a00-8657-11eb-91af-8e6d9ce695aa.png)
 
 - Game
+![game](https://user-images.githubusercontent.com/43469859/111305306-0ccd7400-8657-11eb-8473-d1cf78d479a2.png)
 
 - Forum Post
+![forum](https://user-images.githubusercontent.com/43469859/111305343-1a82f980-8657-11eb-80e9-29603c558173.png)
 
 - Submit Game
+![uploadgame](https://user-images.githubusercontent.com/43469859/111305325-12c35500-8657-11eb-85e7-e1615200324c.png)
 
 - Search Results
+![searchresults](https://user-images.githubusercontent.com/43469859/111305333-1656dc00-8657-11eb-9159-9a354d47b28b.png)
 
 - List
+![list](https://user-images.githubusercontent.com/43469859/111305707-91b88d80-8657-11eb-8620-2e53719c15aa.png)
 
 
 # Integrantes del desarrollo:
