@@ -59,10 +59,10 @@ public class GameController {
                 String cover = "";
 
                 List<Genre> genres = new ArrayList<Genre>();
-                Boolean action = Boolean.parseBoolean(genreAction);
-                if (action) {
-                        titleText = "Action";
-                }
+                //Boolean action = Boolean.parseBoolean(genreAction);
+                //if (action) {
+                //        titleText = "Action";
+                //}
                 int numPlayers = Integer.parseInt(playersText);
 
                 List<Platform> platforms = new ArrayList<Platform>();
