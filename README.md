@@ -26,10 +26,12 @@ GamePost es una página web dedicada a la difusión, discusión y puesta en com�
 # Lista de Ventanas
 - Index
 ![index](https://user-images.githubusercontent.com/43469859/111305252-fd4e2b00-8656-11eb-84f1-1feb3f1ac3a3.png)
+Página principal. Muestra una lista de juegos de interés y desde esta se puede navegar por el resto de la web.
 
 - Log In/Sign In
 ![login](https://user-images.githubusercontent.com/43469859/111305271-02ab7580-8657-11eb-871b-b30762010ece.png)
 ![signin](https://user-images.githubusercontent.com/43469859/111305283-06d79300-8657-11eb-9a81-3ad7ca892412.png)
+Ambas páginas contienen formularios donde el usuario podrá hacerse una cuenta creando una contraseña o verificarse si ya tiene una hecha.
 
 - Notifications
 ![notifications](https://user-images.githubusercontent.com/43469859/111305297-0a6b1a00-8657-11eb-91af-8e6d9ce695aa.png)
@@ -40,6 +42,8 @@ Muestra las notificaciones recibidas para el usuario actual. Un usuario recibe u
 
 - Game
 ![game](https://user-images.githubusercontent.com/43469859/111305306-0ccd7400-8657-11eb-8473-d1cf78d479a2.png)
+Muestra la descripción del juego, detalles de interés y una lista de enradas de foro del mismo juego. 
+Además se pueden crear nuevas entradas de foro o acceder a las mismas.
 
 - Forum Entry
 ![forum](https://user-images.githubusercontent.com/43469859/111305343-1a82f980-8657-11eb-80e9-29603c558173.png)
