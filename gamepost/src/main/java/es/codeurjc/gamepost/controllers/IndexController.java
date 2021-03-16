@@ -91,7 +91,15 @@ public class IndexController {
 
         platformRepository.save(new Platform("Switch"));
 
-        User user = userRepository.save(new User("Mariam", "password"));
+        User user = new User("Mariam", "password");
+
+        Notification n0 = new Notification("/","Welcome!");
+        Notification n1 = new Notification("/","Hello!"); 
+        user.addNotification(n0);
+        user.addNotification(n1);
+      
+
+        userRepository.save(user);
         userRepository.save(new User("Julen", "wordpass"));
 
         Description d = new Description("Legend of Zelda: Breath of the wild",
@@ -134,8 +142,7 @@ public class IndexController {
         //contentRepository.save(new Content("loooool goty", null));
         //contentRepository.save(new Content("omg", null));
 
-        notificationRepository.save(new Notification("Welcome!", "localhost:8080/index"));
-        notificationRepository.save(new Notification("Hello!", "localhost:8080/index"));
+        
 
         CustomList<ListElement> customList = new CustomList<ListElement>("My Games", user);
         customList.addElement((ListElement) g);
