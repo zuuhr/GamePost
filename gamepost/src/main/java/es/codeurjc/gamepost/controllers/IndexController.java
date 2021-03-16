@@ -86,6 +86,7 @@ public class IndexController {
         return "profile";
     }
 
+    /*
     @PostConstruct
     public void init() throws ParseException {
         genreRepository.save(new Genre("Action"));
@@ -183,4 +184,5 @@ public class IndexController {
         user.addMyList(customList2);
         customListRepository.save(customList2);
     }
+    */
 }
