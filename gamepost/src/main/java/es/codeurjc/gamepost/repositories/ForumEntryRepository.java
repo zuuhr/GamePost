@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import es.codeurjc.gamepost.objects.Comment;
 import es.codeurjc.gamepost.objects.ForumEntry;
+import es.codeurjc.gamepost.objects.Game;
 
 public interface ForumEntryRepository extends JpaRepository<ForumEntry, Integer> {
     public List<ForumEntry> findAll(Sort sort);
+    public List<ForumEntry> findByGame(Game game);
 }

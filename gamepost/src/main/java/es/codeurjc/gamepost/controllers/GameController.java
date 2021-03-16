@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.gamepost.objects.CustomList;
 import es.codeurjc.gamepost.objects.Description;
@@ -49,6 +50,7 @@ public class GameController {
         public String submitGame(Model model, @RequestParam String titleText, // @RequestParam String cover,
                         // @RequestParam List<String> genreValues, @RequestParam List<String>
                         // platformValues,
+                        @RequestParam("imagefile") MultipartFile coverFile,
                         @RequestParam String genreAction, @RequestParam String playersText,
                         @RequestParam String developerText, @RequestParam String releaseText,
                         @RequestParam String publisherText, @RequestParam String descriptionText)
@@ -105,7 +107,7 @@ public class GameController {
                         model.addAttribute("game", game.get());
                         model.addAttribute("description", game.get().getDescription());
 
-                        List<ForumEntry> posts = forumEntryRepository.findAll();
+                        List<ForumEntry> posts = forumEntryRepository.findByGame(game.get());
                         model.addAttribute("posts", posts);
                         // TODO: model.addAttribute("user", user);
                         return "game";
