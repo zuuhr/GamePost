@@ -33,21 +33,31 @@ GamePost es una página web dedicada a la difusión, discusión y puesta en com�
 
 - Notifications
 ![notifications](https://user-images.githubusercontent.com/43469859/111305297-0a6b1a00-8657-11eb-91af-8e6d9ce695aa.png)
+Muestra las notificaciones recibidas para el usuario actual. Un usuario recibe una notificación en cualquiera de los siguientes casos:
+  - Alguien ha respondido a un comentario suyo
+  - Alguien ha creado un forumEntry en un juego que sigue
+  - Alguien ha creado un comentario en un forumEntry que sigue
 
 - Game
 ![game](https://user-images.githubusercontent.com/43469859/111305306-0ccd7400-8657-11eb-8473-d1cf78d479a2.png)
 
-- Forum Post
+- Forum Entry
 ![forum](https://user-images.githubusercontent.com/43469859/111305343-1a82f980-8657-11eb-80e9-29603c558173.png)
+Muestra los comentarios introducidos en el forumEntry así como el contenido principal del mismo.
+Los comentarios aparecen ordenados de manera que una respuesta figura debajo de su comentario padre.
 
 - Submit Game
 ![uploadgame](https://user-images.githubusercontent.com/43469859/111305325-12c35500-8657-11eb-85e7-e1615200324c.png)
+Herramienta enfocada a administradores para la subida de nuevos juegos a la página.
 
 - Search Results
 ![searchresults](https://user-images.githubusercontent.com/43469859/111305333-1656dc00-8657-11eb-9159-9a354d47b28b.png)
+Vista del resultado de una búsqueda por nombre. Se buscan coincidencias palabra a palabra y se ordenan los resultados en función del número de coincidencias encontradas.
+En la captura se puede ver el resultado al buscar "of".
 
 - List
 ![list](https://user-images.githubusercontent.com/43469859/111305707-91b88d80-8657-11eb-8620-2e53719c15aa.png)
+Muestra los elementos almacenados por el usuario en una lista personalizada. Los elementos a guardar pueden ser comentarios, entradas de foro o juegos.
 
 
 # Integrantes del desarrollo:
