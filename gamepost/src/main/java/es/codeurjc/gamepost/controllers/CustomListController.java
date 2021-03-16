@@ -63,7 +63,10 @@ public class CustomListController {
         
         model.addAttribute("customlist", cl.get());
 
-        if(cl.get().getElement(0) instanceof Game){
+        if(cl.get().getAllElements().isEmpty()){
+
+        }
+        else if(cl.get().getElement(0) instanceof Game){
             List<Game> games  = new LinkedList<Game>();
             for (ListElement lElement : cl.get().getAllElements()){
                 games.add((Game) lElement);
