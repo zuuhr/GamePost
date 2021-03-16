@@ -84,6 +84,7 @@ public class IndexController {
         return "profile";
     }
 
+    /*
     @PostConstruct
     public void init(){
         genreRepository.save(new Genre("Adventure"));
@@ -147,4 +148,5 @@ public class IndexController {
         user.addMyList(customList2);
         customListRepository.save(customList2);
     }
+    */
 }
