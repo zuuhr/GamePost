@@ -1,10 +1,15 @@
 package es.codeurjc.gamepost.objects;
 
+import java.sql.Blob;
+
 import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //import java.sql.Blob;
 
@@ -20,6 +25,11 @@ public class Game extends ListElement{
     int id;
 
     String cover;
+
+    @Lob
+    @JsonIgnore
+    Blob coverFile;
+
     @OneToOne(cascade=CascadeType.ALL) Description description;
     @OneToOne(cascade=CascadeType.ALL) Forum forum;
 
@@ -53,6 +63,14 @@ public class Game extends ListElement{
 
     public Forum getForum() {
         return forum;
+    }
+
+    public Blob getCoverFile() {
+        return coverFile;
+    }
+
+    public void setCoverFile(Blob coverFile) {
+        this.coverFile = coverFile;
     }
 
     //#endregion

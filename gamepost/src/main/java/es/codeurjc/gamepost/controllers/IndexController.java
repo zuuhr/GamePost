@@ -1,5 +1,7 @@
 package es.codeurjc.gamepost.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -45,107 +47,134 @@ public class IndexController {
 
     @Autowired
     NotificationRepository notificationRepository;
-    
+
     @GetMapping("/")
-    public String enlace(Model model){
+    public String enlace(Model model) {
         List<Game> games = gameRepository.findAll();
-        //TODO: model.addAttribute("user", user);
+        // TODO: model.addAttribute("user", user);
         model.addAttribute("games", games);
         Optional<User> user = userRepository.findByName("Mariam");
-        if(user.isPresent()){
-            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get()); 
+        if (user.isPresent()) {
+            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
             model.addAttribute("list", customLists);
             model.addAttribute("user", user.get());
         }
 
-        //Show forum entries
+        // Show forum entries
         model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
 
         return "index";
     }
-    
+
     @GetMapping("/signin")
-    public String signin(Model model){
+    public String signin(Model model) {
         return "signin";
     }
 
     @GetMapping("/login")
-    public String login(Model model){
+    public String login(Model model) {
         return "login";
     }
 
     @GetMapping("/profile")
-    public String profile(Model model){
+    public String profile(Model model) {
         Optional<User> user = userRepository.findByName("Mariam");
-        if(user.isPresent()){
+        if (user.isPresent()) {
             model.addAttribute("user", user.get());
         }
-        //TODO: model.addAttribute("user", user);
+        // TODO: model.addAttribute("user", user);
         return "profile";
     }
 
     @PostConstruct
-    public void init(){
+    public void init() throws ParseException {
+        genreRepository.save(new Genre("Action"));
         genreRepository.save(new Genre("Adventure"));
-        genreRepository.save(new Genre("RPG"));
+        genreRepository.save(new Genre("Fighting"));
+        genreRepository.save(new Genre("Role Playing"));
+        genreRepository.save(new Genre("Racing"));
+        genreRepository.save(new Genre("Simulation"));
+        genreRepository.save(new Genre("Sports"));
+        genreRepository.save(new Genre("Strategy"));
+        genreRepository.save(new Genre("Visual Novel"));
 
-        platformRepository.save(new Platform("Switch"));
+        platformRepository.save(new Platform("Windows"));
+        platformRepository.save(new Platform("Mac"));
+        platformRepository.save(new Platform("Linux"));
+        platformRepository.save(new Platform("Playstation 5"));
+        platformRepository.save(new Platform("Playstation 4"));
+        platformRepository.save(new Platform("Nintendo Switch"));
+        platformRepository.save(new Platform("Xbox Series X/S"));
+        platformRepository.save(new Platform("Android"));
+        platformRepository.save(new Platform("IOS"));
 
+        userRepository.save(new User("Julen", "wordpass"));
+        userRepository.save(new User("Dani", "123"));
+        userRepository.save(new User("Maria", "987"));
         User user = new User("Mariam", "password");
 
-        Notification n0 = new Notification("/","Welcome!");
-        Notification n1 = new Notification("/","Hello!"); 
+        Notification n0 = new Notification("/", "Welcome!");
+        Notification n1 = new Notification("/", "Hello!");
         user.addNotification(n0);
         user.addNotification(n1);
-      
 
         userRepository.save(user);
-        userRepository.save(new User("Julen", "wordpass"));
 
-        Description d = new Description("Legend of Zelda: Breath of the wild",
-                                new ArrayList<Genre>(Arrays.asList(genreRepository.save(new Genre("Adventure")),
-                                                genreRepository.save(new Genre("RPG")))),
-                                1, new Date(),
-                                new ArrayList<Platform>(Arrays.asList(platformRepository.save(new Platform("Switch")))),
-                                "Nintendo", "Nintendo",
-                                "El jugador controla a Link, que despierta en un mundo postapocalíptico después de estar cien años durmiendo para derrotar a Ganon y salvar al reino de Hyrule.");
+        Description description0 = new Description("Legend of Zelda: Breath of the wild",
+                new ArrayList<Genre>(Arrays.asList(genreRepository.findByText("Adventure").get(),
+                        genreRepository.findByText("Role Playing").get())),
+                1, new SimpleDateFormat("dd/MM/yyyy").parse("03/03/2017"),
+                new ArrayList<Platform>(Arrays.asList(platformRepository.findByText("Nintendo Switch").get())),
+                "Nintendo", "Nintendo",
+                "El jugador controla a Link, que despierta en un mundo postapocalíptico después de estar cien años durmiendo para derrotar a Ganon y salvar al reino de Hyrule.");
 
-        Game g = new Game(
-                        "https://eplakaty.pl/img/towary/1/2017_04/pp34131-the-legend-of-zelda-breath-of-the-wild-plakat-z-gry-jpg.jpg",
-                        d);
+        Game game0 = new Game(
+                "https://eplakaty.pl/img/towary/1/2017_04/pp34131-the-legend-of-zelda-breath-of-the-wild-plakat-z-gry-jpg.jpg",
+                description0);
 
-        ForumEntry fe = new ForumEntry("Hello world", userRepository.findAll().get(0), g,
-                        new Content("my firsst content", "url here"));
+        Description description1 = new Description("Dark Souls II: Scholar of the First Sin",
+                new ArrayList<Genre>(Arrays.asList(genreRepository.findByText("Action").get(),
+                        genreRepository.findByText("Role Playing").get())),
+                1, new SimpleDateFormat("dd/MM/yyyy").parse("04/03/2014"),
+                new ArrayList<Platform>(Arrays.asList(platformRepository.findByText("Windows").get(),
+                        platformRepository.findByText("Playstation 4").get())),
+                "FromSofware", "Bandai Namco Games",
+                "Once upon a time, the Kingdom of Drangleic was a majestic, thriving land. However, mysterious events led to the exile of King Vendrick, and the land became desolate... ");
 
-        Comment comment = new Comment(userRepository.findAll().get(0), fe, null, 
-                    new Content(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                        "url here")
-                    );
+        Game game1 = new Game("https://g2anewsprod02storage.s3.amazonaws.com/app/uploads/2019/03/Dark-Souls-II.jpg",
+                description1);
 
-        Comment comment2 = new Comment(userRepository.findAll().get(1), fe, null, 
-                    new Content(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                        "url here")
-                    );
+        Description description2 = new Description("Fire Emblem: Three Houses",
+                new ArrayList<Genre>(Arrays.asList(genreRepository.findByText("Strategy").get(),
+                        genreRepository.findByText("Role Playing").get())),
+                1, new SimpleDateFormat("dd/MM/yyyy").parse("26/07/2019"),
+                new ArrayList<Platform>(Arrays.asList(platformRepository.findByText("Nintendo Switch").get())),
+                "Intelligent Systems", "Nintendo",
+                "Here, order is maintained by the Church of Seiros, which hosts the prestigious Officer’s Academy within its headquarters. You are invited to teach one of its three mighty houses...");
+
+        Game game2 = new Game("https://www.justpushstart.com/wp-content/uploads/2019/08/fire-emblem-three-houses-switch-cover.jpg",
+                description2);
+
+        ForumEntry fe = new ForumEntry("Hello world", userRepository.findAll().get(0), game0,
+                new Content("my firsst content", "url here"));
+
+        Comment comment = new Comment(userRepository.findAll().get(0), fe, null, new Content(
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                "url here"));
+
+        Comment comment2 = new Comment(userRepository.findAll().get(1), fe, null, new Content(
+                "No estoy de acuerdo.",
+                "url here"));
 
         fe.addComment(comment);
         fe.addComment(comment2);
-        g.getForum().addForumEntry(fe);
-        gameRepository.save(g);
-
-        //contentRepository.save(new Content("Vaya juegazo", null));
-        //contentRepository.save(new Content("No me gusta", null));
-        //contentRepository.save(new Content("Me encanta", null));
-        //contentRepository.save(new Content("Wow amazing", null));
-        //contentRepository.save(new Content("suka blyat", null));
-        //contentRepository.save(new Content("loooool goty", null));
-        //contentRepository.save(new Content("omg", null));
-
-        
+        game0.getForum().addForumEntry(fe);
+        gameRepository.save(game0);
+        gameRepository.save(game1);
+        gameRepository.save(game2);
 
         CustomList<ListElement> customList = new CustomList<ListElement>("My Games", user);
-        customList.addElement((ListElement) g);
+        customList.addElement((ListElement) game0);
         user.addMyList(customList);
         customListRepository.save(customList);
 
