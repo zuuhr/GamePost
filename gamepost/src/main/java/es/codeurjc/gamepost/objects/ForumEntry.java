@@ -1,5 +1,6 @@
 package es.codeurjc.gamepost.objects;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -104,6 +105,7 @@ public class ForumEntry extends ListElement{
     }
     */
 
+    //TO DO: Upgrade this method by storing the childs and parents in Comment type instead of Integer.
     public List<Comment> getComments() {
         return comments;
     }
@@ -116,6 +118,26 @@ public class ForumEntry extends ListElement{
     public boolean removeComment(Comment comment){
         return comments.remove(comment);
     }
+
+    //#endregion
+
+    //#region Methods
+
+    //public List<Integer> sortCommentList(List<Integer> commentIdList){
+    //    List<Integer> result = new ArrayList<Integer>();
+//
+    //    for (Integer commentId : commentIdList) {
+    //        if(!result.contains(commentId)){
+    //            result.add(commentId);
+    //            List<Integer> subResult = sortCommentList(commentRepository.findById(commentId).get().getChilds());
+    //            for (Integer comment2 : subResult) {
+    //                result.add(comment2);
+    //            }
+    //        }
+    //    }
+//
+    //    return result;
+    //}
 
     //#endregion
 }

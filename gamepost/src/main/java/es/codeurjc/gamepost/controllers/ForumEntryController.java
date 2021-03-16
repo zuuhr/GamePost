@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.codeurjc.gamepost.objects.Comment;
 import es.codeurjc.gamepost.objects.Content;
 import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Game;
 import es.codeurjc.gamepost.objects.Notification;
 import es.codeurjc.gamepost.objects.User;
+import es.codeurjc.gamepost.repositories.CommentRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
@@ -30,6 +32,9 @@ public class ForumEntryController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     // TODO: Associate this method with the form in the web
     @RequestMapping("/game/{gameid}/submitforumentry")
@@ -51,13 +56,18 @@ public class ForumEntryController {
 
     @GetMapping("/game/{gameid}/{forumid}")
     public String getForumEntry(Model model, @PathVariable int gameid, @PathVariable int forumid) {
+        int forumEntryId = forumid;
+        
         Optional<Game> game = gameRepository.findById(gameid);
-        Optional<ForumEntry> forum = forumEntryRepository.findById(forumid);
+        Optional<ForumEntry> forumEntry = forumEntryRepository.findById(forumEntryId);
+        List<Comment> comments = forumEntry.get().getComments();
 
-        if (forum.isPresent()) {
+        List<Comment> sortedComments = commentRepository.sortComments(comments);
+
+        if (forumEntry.isPresent()) {
             model.addAttribute("game", game.get());
-            model.addAttribute("forumentry", forum.get());
-            model.addAttribute("comments", forum.get().getComments());
+            model.addAttribute("forumentry", forumEntry.get());
+            model.addAttribute("comments", sortedComments);
             // TODO: model.addAttribute("user", user);
 
             return "forum";
