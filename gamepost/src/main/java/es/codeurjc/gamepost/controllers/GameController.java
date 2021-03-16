@@ -51,7 +51,7 @@ public class GameController {
                         // @RequestParam List<String> genreValues, @RequestParam List<String>
                         // platformValues,
                        
-                        @RequestParam String genreAction, @RequestParam String playersText,
+                        @RequestParam String playersText,
                         @RequestParam String developerText, @RequestParam String releaseText,
                         @RequestParam String publisherText, @RequestParam String descriptionText)
                         throws ParseException {
