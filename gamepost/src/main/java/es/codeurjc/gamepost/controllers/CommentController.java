@@ -51,9 +51,9 @@ public class CommentController {
         Optional<Comment> parentComment = commentRepository.findById(commentid);
         Comment comment;
         if (parentComment.isPresent()) {
-            comment = new Comment(author, parentComment.get(), content);
+            comment = new Comment(author, forumEntry, parentComment.get(), content);
         } else { // root comment
-            comment = new Comment(author, null, content);
+            comment = new Comment(author, forumEntry, null, content);
         }
 
         //Send notification to author
