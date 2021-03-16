@@ -50,7 +50,7 @@ public class GameController {
         public String submitGame(Model model, @RequestParam String titleText, // @RequestParam String cover,
                         // @RequestParam List<String> genreValues, @RequestParam List<String>
                         // platformValues,
-                        @RequestParam("imagefile") MultipartFile coverFile,
+                       
                         @RequestParam String genreAction, @RequestParam String playersText,
                         @RequestParam String developerText, @RequestParam String releaseText,
                         @RequestParam String publisherText, @RequestParam String descriptionText)

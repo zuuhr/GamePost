@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.codeurjc.gamepost.objects.Comment;
 import es.codeurjc.gamepost.objects.Content;
 import es.codeurjc.gamepost.objects.ForumEntry;
+import es.codeurjc.gamepost.objects.Game;
 import es.codeurjc.gamepost.objects.Notification;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.CommentRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
+import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
 
 @Controller
@@ -33,6 +35,9 @@ public class CommentController {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private GameRepository gameRepository;
 
     @RequestMapping("/game/{gameid}/{forumid}/{commentid}/reply")
     public String submitComment(Model model, @PathVariable int gameid, @PathVariable int forumid,
@@ -57,13 +62,13 @@ public class CommentController {
         }
 
         //Send notification to author
-        if(parentComment.isPresent())
-            parentComment.get().getAuthor().addNotification(new Notification("/game/{gameid}/{forumid}/{commentid}", "Someone replyied to your comment"));
-        
-        //TODO: Send notification to all users that follow this forumEntry
+        //if(parentComment.isPresent())
+        //    parentComment.get().getAuthor().addNotification(new Notification("/game/{gameid}/{forumid}/{commentid}", "Someone replyied to your comment"));
+     
         List<User> users = userRepository.findAll();
+        Game game = gameRepository.findById(gameid).get();
         for (User user : users) {
-            user.addNotification(new Notification("/game/{gameid}/", "New forum entry in game {gameid}"));    
+            user.addNotification(new Notification("/game/" + gameid, "New forum entry in game" + game.getDescription().getName()));    
         }
         
         forumEntry.addComment(comment);
