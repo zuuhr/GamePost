@@ -25,6 +25,19 @@
           <p></p>
           <h4 class="text-white" style="font-family: Impact;">Publisher: {{description.publisher}}</h4>
           <p></p>
+          <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseAddList">Add to List</button>
+            <div class="collapse" id="collapseAddList">
+                <ul>
+                  {{#customlist}}
+                  <li class="mt-2">
+                    <a href="/list/add/{{id}}/{{game.id}}">
+                      <button class="btn btn-secondary btn-block" type="button">{{name}}</button>
+                    </a>
+                  </li>
+                  {{/customlist}}
+                </ul>
+                </div>
+            </div> 
         </div>
       </div>
       <h4 class="text-white" style="font-family: Impact;">Description: {{description.synopsis}}</h4>

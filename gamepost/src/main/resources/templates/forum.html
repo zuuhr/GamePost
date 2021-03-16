@@ -43,7 +43,15 @@
                 </li>
                 {{/comments}}
             </ul>
-
+            <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseList{{forumentry.id}}">Reply</button>
+            <div class="collapse" id="collapseReply{{forumentry.id}}">
+                <div class="input-group">
+                    <form class="form-text" method="POST" action="/game/{{game.id}}/{{forumentry.id}}/{{forumentry.id}}/reply">
+                        <textarea class="form-control" aria-label="Reply: " name="contentText"></textarea>
+                        <button class="btn btn-secondary" type="submit">Post</button>
+                    </form>
+                </div>
+            </div> 
 
         </div>
 
