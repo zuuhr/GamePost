@@ -31,7 +31,7 @@ public class ForumEntry extends ListElement{
     int votes;
     int replies;
     @OneToOne(cascade=CascadeType.ALL) Content content;
-    @OneToMany(cascade=CascadeType.ALL) List<Comment> comments;
+    @OneToMany(mappedBy = "forumEntry",cascade=CascadeType.ALL) List<Comment> comments;
 
     //#endregion
 
@@ -69,6 +69,10 @@ public class ForumEntry extends ListElement{
 
     public User getAuthor() {
         return author;
+    }
+
+    public Game getGame(){
+        return game;
     }
 
     public Date getCreatedOn() {

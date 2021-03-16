@@ -109,13 +109,13 @@ public class IndexController {
         ForumEntry fe = new ForumEntry("Hello world", userRepository.findAll().get(0), g,
                         new Content("my firsst content", "url here"));
 
-        Comment comment = new Comment(userRepository.findAll().get(0), null, 
+        Comment comment = new Comment(userRepository.findAll().get(0), fe, null, 
                     new Content(
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
                         "url here")
                     );
 
-        Comment comment2 = new Comment(userRepository.findAll().get(1), null, 
+        Comment comment2 = new Comment(userRepository.findAll().get(1), fe, null, 
                     new Content(
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
                         "url here")

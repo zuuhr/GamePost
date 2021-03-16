@@ -12,15 +12,30 @@
             <p class="mb-1 text-white">{{forumentry.content.text}}</p>
             <!-- <button class="button"
                 onclick="window.location.href='/reply/{{game.id}}/{{forumentry.id}}/{{forumentry.id}}';">Reply</button> -->
-            <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseReply{{forumentry.id}}">Reply</button>
+            <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse"
+                href="#collapseReply{{forumentry.id}}">Reply</button>
             <div class="collapse" id="collapseReply{{forumentry.id}}">
                 <div class="input-group">
-                    <form class="form-text" method="POST" action="/game/{{game.id}}/{{forumentry.id}}/{{forumentry.id}}/reply">
+                    <form class="form-text" method="POST"
+                        action="/game/{{game.id}}/{{forumentry.id}}/{{forumentry.id}}/reply">
                         <textarea class="form-control" aria-label="Reply: " name="contentText"></textarea>
                         <button class="btn btn-secondary" type="submit">Post</button>
                     </form>
                 </div>
-            </div> 
+            </div>
+            <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseAddListFE">Add to
+                List</button>
+            <div class="collapse" id="collapseAddListFE">
+                <ul>
+                    {{#customcommentlist}}
+                    <li class="mt-2">
+                        <a href="/list/add/forumentry/{{id}}/{{forumentry.id}}">
+                            <button class="btn btn-secondary btn-block" type="button">{{name}}</button>
+                        </a>
+                    </li>
+                    {{/customcommentlist}}
+                </ul>
+            </div>
             <ul class="list-group">
                 {{#comments}}
                 <li class="list-group-item " style="margin-left: 0px;">
@@ -30,37 +45,81 @@
                     </div>
                     <p class="mb-1">{{content.text}}</p>
                     <!-- <button class="button"
-                        onclick="window.location.href='/reply/{{game.id}}/{{forumentry.id}}/{{id}}';">Reply</button> -->
-                    <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseReply{{id}}">Reply</button>
-                    <div class="collapse" id="collapseReply{{id}}">
+                        onclick="window.location.href='/reply/{{game.id}}/{{forumentry.id}}/{{commentid}}';">Reply</button> -->
+                    <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse"
+                        href="#collapseReply{{commentid}}">Reply</button>
+                    <div class="collapse" id="collapseReply{{commentid}}">
                         <div class="input-group">
-                            <form class="form-text" method="POST" action="/game/{{game.id}}/{{forumentry.id}}/{{id}}/reply">
+                            <form class="form-text" method="POST"
+                                action="/game/{{game.id}}/{{forumentry.id}}/{{commentid}}/reply">
                                 <textarea class="form-control" aria-label="Reply: " name="contentText"></textarea>
                                 <button class="btn btn-secondary" type="submit">Post</button>
                             </form>
                         </div>
-                    </div>    
+                    </div>
+                    <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseAddList{{commentid}}">Add to
+                        List</button>
+                    <div class="collapse" id="collapseAddList{{commentid}}">
+                        <ul>
+                            {{#customcommentlist}}
+                            <li class="mt-2">
+                                <a href="/list/add/comment/{{id}}/{{forumEntry.id}}/{{commentid}}" >
+                                    <button class="btn btn-secondary btn-block" type="button">{{name}}</button>
+                                </a>
+                            </li>
+                            {{/customcommentlist}}
+                        </ul>
+                    </div>
+                    </div>
                 </li>
-                {{/comments}}
+            {{/comments}}
             </ul>
-            <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseList{{forumentry.id}}">Reply</button>
-            <div class="collapse" id="collapseReply{{forumentry.id}}">
-                <div class="input-group">
-                    <form class="form-text" method="POST" action="/game/{{game.id}}/{{forumentry.id}}/{{forumentry.id}}/reply">
-                        <textarea class="form-control" aria-label="Reply: " name="contentText"></textarea>
-                        <button class="btn btn-secondary" type="submit">Post</button>
-                    </form>
-                </div>
-            </div> 
-
         </div>
-
     </div>
 </div>
 
 {{>latestposts}}
 </div>
+<script>
+     Context.prototype.lookup = function (name) {
+    var cache = this.cache;
 
+    var value;
+    if (name in cache) {
+      console.log(name + ' found');
+      value = cache[name];
+    } else {
+      var context = this, names, index;
+
+      while (context) {
+        if (name.indexOf('.') > 0) {
+          value = context.view;
+          names = name.split('.');
+          index = 0;
+
+          while (value != null && index < names.length)
+            value = value[names[index++]];
+        } else if(name.match(/^\.\.\//)) {
+          name = name.replace(/^\.\.\//, '');
+        } else {
+          value = context.view[name];
+        }
+
+        if (value != null)
+          break;
+
+        context = context.parent;
+      }
+
+      cache[name] = value;
+    }
+
+    if (isFunction(value))
+      value = value.call(this.view);
+
+    return value;
+  };
+</script>
 
 <!-- Optional JavaScript; keep it at last-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>

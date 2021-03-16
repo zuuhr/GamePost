@@ -19,6 +19,7 @@ import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Game;
 import es.codeurjc.gamepost.objects.ListElement;
 import es.codeurjc.gamepost.objects.User;
+import es.codeurjc.gamepost.repositories.CommentRepository;
 import es.codeurjc.gamepost.repositories.CustomListRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
@@ -39,6 +40,9 @@ public class CustomListController {
 
     @Autowired
     ForumEntryRepository forumEntryRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
 
     //TODO: Associate this method with the form in the web
     @RequestMapping("/list/newlist")
@@ -91,12 +95,29 @@ public class CustomListController {
         return "list";
     }
 
-    @GetMapping("/list/add/{listid}/{gameid}")
-    public String addToList(Model model, @PathVariable int listid, @PathVariable int gameid){
+    @GetMapping("/list/add/game/{listid}/{gameid}")
+    public String addGameToList(Model model, @PathVariable int listid, @PathVariable int gameid){
         CustomList<ListElement> customList = customListRepository.findById(listid).get();
         customList.addElement(gameRepository.findById(gameid).get());
         customListRepository.save(customList);
         return "redirect:/game/" + gameid;
+    }
+    @GetMapping("/list/add/forumentry/{listid}/{forumentryid}")
+    public String addForumEntryToList(Model model, @PathVariable int listid, @PathVariable int forumentryid){
+        CustomList<ListElement> customList = customListRepository.findById(listid).get();
+        ForumEntry forumEntry = forumEntryRepository.findById(forumentryid).get();
+        customList.addElement(forumEntry);
+        customListRepository.save(customList);
+        return "redirect:/game/" + forumEntry.getGame().getId();
+    }
+    @GetMapping("/list/add/comment/{listid}/{forumentryid}/{commentid}")
+    public String addToList(Model model, @PathVariable int listid, @PathVariable int forumentryid, @PathVariable int commentid){
+        CustomList<ListElement> customList = customListRepository.findById(listid).get();
+        ForumEntry forumEntry = forumEntryRepository.findById(forumentryid).get();
+        Comment comment = commentRepository.findById(commentid).get();
+        customList.addElement(comment);
+        customListRepository.save(customList);
+        return "redirect:/game/" + forumEntry.getGame().getId();
     }
 
 

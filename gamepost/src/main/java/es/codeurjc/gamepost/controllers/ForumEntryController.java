@@ -1,5 +1,8 @@
 package es.codeurjc.gamepost.controllers;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.gamepost.objects.Comment;
 import es.codeurjc.gamepost.objects.Content;
+import es.codeurjc.gamepost.objects.CustomList;
 import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Game;
+import es.codeurjc.gamepost.objects.ListElement;
 import es.codeurjc.gamepost.objects.Notification;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.CommentRepository;
+import es.codeurjc.gamepost.repositories.CustomListRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
@@ -35,6 +41,9 @@ public class ForumEntryController {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    CustomListRepository customListRepository;
 
     // TODO: Associate this method with the form in the web
     @RequestMapping("/game/{gameid}/submitforumentry")
@@ -57,18 +66,46 @@ public class ForumEntryController {
     @GetMapping("/game/{gameid}/{forumid}")
     public String getForumEntry(Model model, @PathVariable int gameid, @PathVariable int forumid) {
         int forumEntryId = forumid;
-        
-        Optional<Game> game = gameRepository.findById(gameid);
-        Optional<ForumEntry> forumEntry = forumEntryRepository.findById(forumEntryId);
-        List<Comment> comments = forumEntry.get().getComments();
 
-        List<Comment> sortedComments = commentRepository.sortComments(comments);
+        Optional<ForumEntry> forumEntry = forumEntryRepository.findById(forumEntryId);
 
         if (forumEntry.isPresent()) {
+            Optional<Game> game = gameRepository.findById(gameid);
+            List<Comment> comments = forumEntry.get().getComments();
+
+            List<Comment> sortedComments = commentRepository.sortComments(comments);
+
+            List<CustomComment> customComments = new ArrayList<CustomComment>();
+            for (Comment comment : sortedComments) {
+                customComments.add(new CustomComment(comment));
+            }
+            Optional<User> user = userRepository.findByName("Mariam");
+            if (user.isPresent()) {
+                List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
+                model.addAttribute("list", customLists);
+                model.addAttribute("user", user.get());
+                // get forumentry lists
+                List<CustomList<ListElement>> forumEntryLists = new LinkedList<CustomList<ListElement>>();
+                for (CustomList<ListElement> customList : customLists) {
+                    if (customList.getAllElements().isEmpty() || customList.getElement(0) instanceof ForumEntry) {
+                        forumEntryLists.add(customList);
+
+                    }
+                }
+                model.addAttribute("customforumentrylist", forumEntryLists);
+                // get comment lists
+                List<CustomList<ListElement>> commentLists = new LinkedList<CustomList<ListElement>>();
+                for (CustomList<ListElement> customList : customLists) {
+                    if (customList.getAllElements().isEmpty() || customList.getElement(0) instanceof Comment) {
+                        commentLists.add(customList);
+
+                    }
+                }
+                model.addAttribute("customcommentlist", commentLists);
+            }
             model.addAttribute("game", game.get());
             model.addAttribute("forumentry", forumEntry.get());
-            model.addAttribute("comments", sortedComments);
-            // TODO: model.addAttribute("user", user);
+            model.addAttribute("comments", customComments);
 
             return "forum";
         } else {
@@ -82,5 +119,25 @@ public class ForumEntryController {
         model.addAttribute("game", game.get());
 
         return "submitforum";
+    }
+}
+
+class CustomComment {
+
+    int commentid;
+    User author;
+    ForumEntry forumEntry;
+    Content content;
+    List<Comment> parent = new ArrayList<Comment>();
+    List<Comment> childs;
+    Date postedOn;
+
+    public CustomComment(Comment comment) {
+        this.commentid = comment.getId();
+        this.author = comment.getAuthor();
+        this.forumEntry = comment.getForumEntry();
+        this.content = comment.getContent();
+        this.parent.add(comment.getParent());
+        this.postedOn = comment.getPostedOn();
     }
 }
