@@ -62,14 +62,14 @@ public class CommentController {
         }
 
         //Send notification to author
-        //if(parentComment.isPresent())
-        //    parentComment.get().getAuthor().addNotification(new Notification("/game/{gameid}/{forumid}/{commentid}", "Someone replyied to your comment"));
-     
-        List<User> users = userRepository.findAll();
         Game game = gameRepository.findById(gameid).get();
-        for (User user : users) {
-            user.addNotification(new Notification("/game/" + gameid, "New forum entry in game" + game.getDescription().getName()));    
-        }
+        if(parentComment.isPresent())
+            parentComment.get().getAuthor().addNotification(new Notification("/game/"+ gameid +"/"+ comment.getForumEntry().getId(), "New forum entry in game" + game.getDescription().getName()));
+     
+        //List<User> users = userRepository.findAll();
+        //for (User user : users) {
+        //    user.addNotification(new Notification("/game/" + gameid, "New forum entry in game" + game.getDescription().getName()));    
+        //}
         
         forumEntry.addComment(comment);
         forumEntryRepository.saveAndFlush(forumEntry);
