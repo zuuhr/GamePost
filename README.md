@@ -18,12 +18,19 @@ GamePost es una página web dedicada a la difusión, discusión y puesta en com�
 - Procesamiento de gustos de usuario
 
 ### [Trello](https://trello.com/b/XFN4E5ZO)
+
 ---
 ## Fase II
+
+### Diagrama de Navegación
 ![Navegación de Ventanas](https://user-images.githubusercontent.com/43469859/111301196-32a44a00-8652-11eb-84f9-fe3fdc67334b.png)
-
+---
+### Diagrama UML
 ![GamePost (UML)](https://user-images.githubusercontent.com/43469859/111301614-b5c5a000-8652-11eb-8790-044fb03b5981.png)
-
+---
+### Diagram E/R
+![Gamepost_ER](https://user-images.githubusercontent.com/43469859/111310324-40ab9800-865d-11eb-9c03-f577c8b2f9c4.png)
+---
 ### Lista de Ventanas
 1. **Index**
 ![index](https://user-images.githubusercontent.com/43469859/111305252-fd4e2b00-8656-11eb-84f1-1feb3f1ac3a3.png)
