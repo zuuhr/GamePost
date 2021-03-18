@@ -16,6 +16,7 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>{
             if(!result.contains(comment)){
                 Comment parent = comment.getParent();
                 
+                //Comment raíz
                 if(parent == null){
                     result.add(comment);
                     continue;
@@ -42,9 +43,5 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>{
         }
 
         return result;
-
-        //Sort them
-
-        //Return 
     }
 }
