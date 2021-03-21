@@ -122,7 +122,18 @@ public class CustomListController {
         customListRepository.save(customList);
         return "redirect:/game/" + forumEntry.getGame().getId();
     }
-
+    
+    @GetMapping("/list/games/add/game/{gameid}")
+    public String followGame(Model model, @PathVariable int gameid){
+        User user = userRepository.findByName("Mariam").get(); //TODO: get user from session
+        Game game = gameRepository.findById(gameid).get();
+        CustomList<ListElement> customList = customListRepository.findById(user.getGames().getId()).get();
+        if(!user.getGames().getAllElements().contains(game)){
+            customList.addElement(game);
+            customListRepository.save(customList);
+        }
+        return "redirect:/game/" + gameid;
+    }
 
     public List<CustomList<ListElement>> getUserCustomListsGame(User user){
         
@@ -162,4 +173,6 @@ public class CustomListController {
         }
         return commentLists;
     }
+
+
 }
