@@ -120,46 +120,46 @@ public class CustomListController {
         Comment comment = commentRepository.findById(commentid).get();
         customList.addElement(comment);
         customListRepository.save(customList);
-        return "redirect:/game/" + forumEntry.getGame().getId();
+        return "redirect:/game/" + forumEntry.getGame().getId() + "/" + forumentryid;
     }
-
-
-    public List<CustomList<ListElement>> getUserCustomListsGame(User user){
-        
-        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
-        List<CustomList<ListElement>> gameLists = new LinkedList<CustomList<ListElement>>();
-        for (CustomList<ListElement> customList : customLists) {
-            if(customList.getAllElements().isEmpty() || customList.getElement(0) instanceof Game){
-                gameLists.add( customList);
-                
-            }
+    
+    @GetMapping("/list/games/add/game/{gameid}")
+    public String followGame(Model model, @PathVariable int gameid){
+        User user = userRepository.findByName("Mariam").get(); //TODO: get user from session
+        Game game = gameRepository.findById(gameid).get();
+        CustomList<ListElement> customList = customListRepository.findById(user.getGames().getId()).get();
+        if(!user.getGames().getAllElements().contains(game)){
+            customList.addElement(game);
+            customListRepository.save(customList);
         }
-        return gameLists;
+        return "redirect:/game/" + gameid;
     }
 
-    public List<CustomList<ListElement>> getUserCustomListsForumEntry(User user){
-        
-        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
-        List<CustomList<ListElement>> forumEntryLists = new LinkedList<CustomList<ListElement>>();
-        for (CustomList<ListElement> customList : customLists) {
-            if(customList.getAllElements().isEmpty() || customList.getElement(0) instanceof ForumEntry){
-                forumEntryLists.add( customList);
-                
-            }
+    @GetMapping("/list/forumentries/add/forumentry/{forumentryid}")
+    public String followForumEntry(Model model, @PathVariable int forumentryid){
+        User user = userRepository.findByName("Mariam").get(); //TODO: get user from session
+        ForumEntry forumEntry = forumEntryRepository.findById(forumentryid).get();
+        CustomList<ListElement> customList = customListRepository.findById(user.getForumEntries().getId()).get();
+        if(!user.getForumEntries().getAllElements().contains(forumEntry)){
+            customList.addElement(forumEntry);
+            customListRepository.save(customList);
         }
-        return forumEntryLists;
+        return "redirect:/game/" + forumEntry.getGame().getId() + "/" + forumentryid;
     }
 
-    public List<CustomList<ListElement>> getUserCustomListsComment(User user){
-        
-        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
-        List<CustomList<ListElement>> commentLists = new LinkedList<CustomList<ListElement>>();
-        for (CustomList<ListElement> customList : customLists) {
-            if(customList.getAllElements().isEmpty() || customList.getElement(0) instanceof Comment){
-                commentLists.add( customList);
-                
-            }
+    @GetMapping("/list/comments/add/comment/{forumentryid}/{commentid}")
+    public String followComment(Model model, @PathVariable int forumentryid, @PathVariable int commentid){
+        User user = userRepository.findByName("Mariam").get(); //TODO: get user from session
+        Comment comment = commentRepository.findById(commentid).get();
+        CustomList<ListElement> customList = customListRepository.findById(user.getComments().getId()).get();
+        if(!user.getComments().getAllElements().contains(comment)){
+            customList.addElement(comment);
+            customListRepository.save(customList);
         }
-        return commentLists;
+        return "redirect:/game/" + comment.getForumEntry().getGame().getId() + "/" + forumentryid;
     }
+
+   
+
+
 }

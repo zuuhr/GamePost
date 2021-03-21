@@ -93,13 +93,7 @@ public class GameController {
                         model.addAttribute("list", customLists);
                         model.addAttribute("user", user.get());
                         // get game lists
-                        List<CustomList<ListElement>> gameLists = new LinkedList<CustomList<ListElement>>();
-                        for (CustomList<ListElement> customList : customLists) {
-                                if (customList.getAllElements().isEmpty() || customList.getElement(0) instanceof Game) {
-                                        gameLists.add(customList);
-
-                                }
-                        }
+                        List<CustomList<ListElement>> gameLists = getUserCustomListsGame(user.get());
                         model.addAttribute("customlist", gameLists);
                 }
 
@@ -115,4 +109,18 @@ public class GameController {
                         return "redirect:/";
                 }
         }
+
+        
+        public List<CustomList<ListElement>> getUserCustomListsGame(User user){
+        
+        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
+        List<CustomList<ListElement>> gameLists = new LinkedList<CustomList<ListElement>>();
+        for (CustomList<ListElement> customList : customLists) {
+            if(customList.getAllElements().isEmpty() || customList.getElement(0) instanceof Game){
+                if(!customList.getName().equals("[ForumEntries]") && !customList.getName().equals("[Comments]"))
+                gameLists.add( customList);
+            }
+        }
+        return gameLists;
+    }
 }

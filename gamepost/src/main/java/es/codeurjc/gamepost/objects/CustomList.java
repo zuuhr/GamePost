@@ -55,5 +55,12 @@ public class CustomList<T> {
         return elements;
     }
 
+    public int getId(){
+        return id;
+    }
+
+    public String getName(){
+        return name;
+    }
     //#endregion
 }
