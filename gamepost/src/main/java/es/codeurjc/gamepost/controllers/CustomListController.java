@@ -120,7 +120,7 @@ public class CustomListController {
         Comment comment = commentRepository.findById(commentid).get();
         customList.addElement(comment);
         customListRepository.save(customList);
-        return "redirect:/game/" + forumEntry.getGame().getId();
+        return "redirect:/game/" + forumEntry.getGame().getId() + "/" + forumentryid;
     }
     
     @GetMapping("/list/games/add/game/{gameid}")
@@ -133,6 +133,30 @@ public class CustomListController {
             customListRepository.save(customList);
         }
         return "redirect:/game/" + gameid;
+    }
+
+    @GetMapping("/list/forumentries/add/forumentry/{forumentryid}")
+    public String followForumEntry(Model model, @PathVariable int forumentryid){
+        User user = userRepository.findByName("Mariam").get(); //TODO: get user from session
+        ForumEntry forumEntry = forumEntryRepository.findById(forumentryid).get();
+        CustomList<ListElement> customList = customListRepository.findById(user.getForumEntries().getId()).get();
+        if(!user.getForumEntries().getAllElements().contains(forumEntry)){
+            customList.addElement(forumEntry);
+            customListRepository.save(customList);
+        }
+        return "redirect:/game/" + forumEntry.getGame().getId() + "/" + forumentryid;
+    }
+
+    @GetMapping("/list/comments/add/comment/{forumentryid}/{commentid}")
+    public String followComment(Model model, @PathVariable int forumentryid, @PathVariable int commentid){
+        User user = userRepository.findByName("Mariam").get(); //TODO: get user from session
+        Comment comment = commentRepository.findById(commentid).get();
+        CustomList<ListElement> customList = customListRepository.findById(user.getComments().getId()).get();
+        if(!user.getComments().getAllElements().contains(comment)){
+            customList.addElement(comment);
+            customListRepository.save(customList);
+        }
+        return "redirect:/game/" + comment.getForumEntry().getGame().getId() + "/" + forumentryid;
     }
 
     public List<CustomList<ListElement>> getUserCustomListsGame(User user){

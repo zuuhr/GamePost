@@ -5,38 +5,45 @@
         <div class="container rounded border p-4">
             <h1 class="text-white text-center" style="font-family: Impact;">{{game.description.name}} </h1>
             <h2 class="text-white text-center" style="font-family: Impact;">{{forumentry.title}} </h2>
+            
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1 text-white">{{forumentry.author.name}}</h5>
                 <small class="text-white">{{forumentry.createdOn}}</small>
+                <div>
+                    <a href="/list/forumentries/add/forumentry/{{forumentry.id}}">
+                        <button class="btn btn-secondary btn-block" type="button">Follow</button>
+                    </a>
+                    <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseAddListFE">Add to
+                        List</button>
+                    <div class="collapse" id="collapseAddListFE">
+                        <ul>
+                            {{#customcommentlist}}
+                            <li class="mt-2">
+                                <a href="/list/add/forumentry/{{id}}/{{forumentry.id}}">
+                                    <button class="btn btn-secondary btn-block" type="button">{{name}}</button>
+                                </a>
+                            </li>
+                            {{/customcommentlist}}
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <p class="mb-1 text-white">{{forumentry.content.text}}</p>
+            <p class="mb-1 bg-light mt-1">{{forumentry.content.text}}</p>
             <!-- <button class="button"
                 onclick="window.location.href='/reply/{{game.id}}/{{forumentry.id}}/{{forumentry.id}}';">Reply</button> -->
             <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse"
                 href="#collapseReply{{forumentry.id}}">Reply</button>
             <div class="collapse" id="collapseReply{{forumentry.id}}">
-                <div class="input-group">
-                    <form class="form-text" method="POST"
+                <div class="input-group row">
+                    <form class="form-text row mx-auto" method="POST"
                         action="/game/{{game.id}}/{{forumentry.id}}/{{forumentry.id}}/reply">
                         <textarea class="form-control" aria-label="Reply: " name="contentText"></textarea>
                         <button class="btn btn-secondary" type="submit">Post</button>
                     </form>
                 </div>
             </div>
-            <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseAddListFE">Add to
-                List</button>
-            <div class="collapse" id="collapseAddListFE">
-                <ul>
-                    {{#customcommentlist}}
-                    <li class="mt-2">
-                        <a href="/list/add/forumentry/{{id}}/{{forumentry.id}}">
-                            <button class="btn btn-secondary btn-block" type="button">{{name}}</button>
-                        </a>
-                    </li>
-                    {{/customcommentlist}}
-                </ul>
-            </div>
-            <ul class="list-group">
+            
+            <ul class="list-group mt-4">
                 {{#comments}}
                 <li class="list-group-item " style="margin-left: 0px;">
                     <div class="d-flex w-100 justify-content-between">
@@ -49,14 +56,17 @@
                     <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse"
                         href="#collapseReply{{commentid}}">Reply</button>
                     <div class="collapse" id="collapseReply{{commentid}}">
-                        <div class="input-group">
-                            <form class="form-text" method="POST"
+                        <div class="input-group row">
+                            <form class="form-text row mx-auto mb-1 mt-1" method="POST"
                                 action="/game/{{game.id}}/{{forumentry.id}}/{{commentid}}/reply">
-                                <textarea class="form-control" aria-label="Reply: " name="contentText"></textarea>
+                                <textarea class="form-control " aria-label="Reply: " name="contentText"></textarea>
                                 <button class="btn btn-secondary" type="submit">Post</button>
                             </form>
                         </div>
                     </div>
+                    <a href="/list/comments/add/comment/{{forumentry.id}}/{{commentid}}">
+                        <button class="btn btn-secondary btn-block" type="button">Follow</button>
+                    </a>
                     <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseAddList{{commentid}}">Add to
                         List</button>
                     <div class="collapse" id="collapseAddList{{commentid}}">
