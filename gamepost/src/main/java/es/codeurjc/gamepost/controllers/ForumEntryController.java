@@ -85,22 +85,11 @@ public class ForumEntryController {
                 model.addAttribute("list", customLists);
                 model.addAttribute("user", user.get());
                 // get forumentry lists
-                List<CustomList<ListElement>> forumEntryLists = new LinkedList<CustomList<ListElement>>();
-                for (CustomList<ListElement> customList : customLists) {
-                    if (customList.getAllElements().isEmpty() || customList.getElement(0) instanceof ForumEntry) {
-                        forumEntryLists.add(customList);
-
-                    }
-                }
+                List<CustomList<ListElement>> forumEntryLists = getUserCustomListsForumEntry(user.get());
                 model.addAttribute("customforumentrylist", forumEntryLists);
-                // get comment lists
-                List<CustomList<ListElement>> commentLists = new LinkedList<CustomList<ListElement>>();
-                for (CustomList<ListElement> customList : customLists) {
-                    if (customList.getAllElements().isEmpty() || customList.getElement(0) instanceof Comment) {
-                        commentLists.add(customList);
 
-                    }
-                }
+                // get comment lists
+                List<CustomList<ListElement>> commentLists = getUserCustomListsComment(user.get());
                 model.addAttribute("customcommentlist", commentLists);
             }
             model.addAttribute("game", game.get());
@@ -119,6 +108,35 @@ public class ForumEntryController {
         model.addAttribute("game", game.get());
 
         return "submitforum";
+    }
+
+
+
+    public List<CustomList<ListElement>> getUserCustomListsForumEntry(User user){
+        
+        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
+        List<CustomList<ListElement>> forumEntryLists = new LinkedList<CustomList<ListElement>>();
+        for (CustomList<ListElement> customList : customLists) {
+            if(customList.getAllElements().isEmpty() || customList.getElement(0) instanceof ForumEntry){
+                if(!customList.getName().equals("[Comments]") && !customList.getName().equals("[Games]"))
+                forumEntryLists.add( customList);
+            }
+
+        }
+        return forumEntryLists;
+    }
+
+    public List<CustomList<ListElement>> getUserCustomListsComment(User user){
+        
+        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
+        List<CustomList<ListElement>> commentLists = new LinkedList<CustomList<ListElement>>();
+        for (CustomList<ListElement> customList : customLists) {
+            if(customList.getAllElements().isEmpty() || customList.getElement(0) instanceof Comment){
+                if(!customList.getName().equals("[ForumEntries]") && !customList.getName().equals("[Games]"))
+                commentLists.add( customList);
+            }
+        }
+        return commentLists;
     }
 }
 
@@ -140,4 +158,7 @@ class CustomComment {
         this.parent.add(comment.getParent());
         this.postedOn = comment.getPostedOn();
     }
+
+
+    
 }

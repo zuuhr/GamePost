@@ -159,44 +159,7 @@ public class CustomListController {
         return "redirect:/game/" + comment.getForumEntry().getGame().getId() + "/" + forumentryid;
     }
 
-    public List<CustomList<ListElement>> getUserCustomListsGame(User user){
-        
-        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
-        List<CustomList<ListElement>> gameLists = new LinkedList<CustomList<ListElement>>();
-        for (CustomList<ListElement> customList : customLists) {
-            if(customList.getAllElements().isEmpty() || customList.getElement(0) instanceof Game){
-                gameLists.add( customList);
-                
-            }
-        }
-        return gameLists;
-    }
-
-    public List<CustomList<ListElement>> getUserCustomListsForumEntry(User user){
-        
-        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
-        List<CustomList<ListElement>> forumEntryLists = new LinkedList<CustomList<ListElement>>();
-        for (CustomList<ListElement> customList : customLists) {
-            if(customList.getAllElements().isEmpty() || customList.getElement(0) instanceof ForumEntry){
-                forumEntryLists.add( customList);
-                
-            }
-        }
-        return forumEntryLists;
-    }
-
-    public List<CustomList<ListElement>> getUserCustomListsComment(User user){
-        
-        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
-        List<CustomList<ListElement>> commentLists = new LinkedList<CustomList<ListElement>>();
-        for (CustomList<ListElement> customList : customLists) {
-            if(customList.getAllElements().isEmpty() || customList.getElement(0) instanceof Comment){
-                commentLists.add( customList);
-                
-            }
-        }
-        return commentLists;
-    }
+   
 
 
 }
