@@ -116,7 +116,31 @@ public class ForumEntry extends ListElement{
 
     public boolean addComment(Comment comment){
         lastUpdatedOn = new Date();
-        return comments.add(comment);
+
+        //Insert comment
+        Comment parent = comment.getParent();
+        Boolean result = false;
+                
+        //Comment raíz
+        if(parent == null){
+            result = comments.add(comment);
+        }
+
+        //If the parent already is in the result List, insert the child after him.
+        else
+        {
+            int index = comments.indexOf(parent) + 1;
+            if (index == comments.size()){
+                result = comments.add(comment);
+            }
+            else
+            {
+                comments.add(index, comment);
+                result = true;
+            }
+        }
+
+        return result;
     }
 
     public boolean removeComment(Comment comment){

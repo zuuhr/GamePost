@@ -24,10 +24,12 @@ public class Comment extends ListElement{
     
     @ManyToOne User author;
     @OneToOne(cascade=CascadeType.ALL) Content content;
+    Date postedOn;
     @ManyToOne ForumEntry forumEntry;
+    
     @ManyToMany List<Comment> parent = new ArrayList<Comment>();   //TODO: Define a strategy for root comments
     @ManyToMany (mappedBy = "parent") List<Comment> childs;
-    Date postedOn;
+    int childness;
 
     //#endregion
 
@@ -42,8 +44,12 @@ public class Comment extends ListElement{
         this.parent.add(parent);
         this.postedOn = new Date();
 
-        if (parent!=null)
+        if (parent!=null){
+            this.childness = parent.getChildness() + 1;
             parent.addChild(this);
+        }else{
+            this.childness = 0;
+        }
     }
 
     //#endregion
@@ -75,6 +81,10 @@ public class Comment extends ListElement{
 
     public List<Comment> getChilds(){
         return childs;
+    }
+
+    public int getChildness(){
+        return childness;
     }
 
     public boolean addChild(Comment child){

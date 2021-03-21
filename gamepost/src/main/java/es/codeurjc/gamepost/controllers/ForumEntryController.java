@@ -82,7 +82,8 @@ public class ForumEntryController {
             Optional<Game> game = gameRepository.findById(gameid);
             List<Comment> comments = forumEntry.get().getComments();
 
-            List<Comment> sortedComments = commentRepository.sortComments(comments);
+            //List<Comment> sortedComments = commentRepository.sortComments(comments);
+            List<Comment> sortedComments = comments;
 
             List<CustomComment> customComments = new ArrayList<CustomComment>();
             for (Comment comment : sortedComments) {
