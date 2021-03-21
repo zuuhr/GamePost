@@ -55,5 +55,8 @@ public class CustomList<T> {
         return elements;
     }
 
+    public int getId(){
+        return id;
+    }
     //#endregion
 }
