@@ -26,8 +26,6 @@ public class User {
     @OneToOne(cascade=CascadeType.ALL) CustomList<Comment> comments;
     @OneToOne(cascade=CascadeType.ALL) CustomList<Game> games;
     @OneToMany(cascade=CascadeType.ALL) List<Notification> notifications;
-
-    @OneToOne(cascade=CascadeType.ALL) CustomList<ForumEntry> followingForumEntries;
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL) List<CustomList<ListElement>> myLists;    
 
     //#endregion
@@ -39,13 +37,11 @@ public class User {
     public User(String name, String password){
         this.name = name;
         this.password = password;
-
-        this.forumEntries = new CustomList<ForumEntry>("ForumEntries", this);
-        this.comments = new CustomList<Comment>("Comments", this);
-        this.games = new CustomList<Game>("Games", this);
+        
+        this.forumEntries = new CustomList<ForumEntry>("[ForumEntries]", this);
+        this.comments = new CustomList<Comment>("[Comments]", this);
+        this.games = new CustomList<Game>("[Games]", this);
         this.notifications = new ArrayList<Notification>();
-
-        this.followingForumEntries = new CustomList<ForumEntry>("Following ForumEntries", this);
         this.myLists = new ArrayList<CustomList<ListElement>>();
     }
 
@@ -77,20 +73,28 @@ public class User {
         return forumEntries;
     }
 
+    public void followForumEntry(ForumEntry fe){
+        forumEntries.addElement(fe);
+    }
+
     public CustomList<Comment> getComments() {
         return comments;
+    }
+
+    public void followComment(Comment c){
+        comments.addElement(c);
     }
 
     public CustomList<Game> getGames() {
         return games;
     }
 
-    public List<Notification> getNotifications() {
-        return notifications;
+    public void followGame(Game game){
+        games.addElement(game);
     }
 
-    public CustomList<ForumEntry> getFollowingForumEntries() {
-        return followingForumEntries;
+    public List<Notification> getNotifications() {
+        return notifications;
     }
 
     public List<CustomList<ListElement>> getMyLists() {
