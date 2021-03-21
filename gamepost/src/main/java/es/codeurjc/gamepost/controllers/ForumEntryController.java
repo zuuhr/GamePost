@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,9 +66,17 @@ public class ForumEntryController {
 
     @GetMapping("/game/{gameid}/{forumid}")
     public String getForumEntry(Model model, @PathVariable int gameid, @PathVariable int forumid) {
-        int forumEntryId = forumid;
+        // TODO: get user from session
+        Optional<User> user = userRepository.findByName("Mariam");
+        if (user.isPresent()) {
+            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
+            model.addAttribute("list", customLists);
+            model.addAttribute("user", user.get());
+        }
+        // Show forum entries
+        model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
 
-        Optional<ForumEntry> forumEntry = forumEntryRepository.findById(forumEntryId);
+        Optional<ForumEntry> forumEntry = forumEntryRepository.findById(forumid);
 
         if (forumEntry.isPresent()) {
             Optional<Game> game = gameRepository.findById(gameid);
@@ -79,7 +88,6 @@ public class ForumEntryController {
             for (Comment comment : sortedComments) {
                 customComments.add(new CustomComment(comment));
             }
-            Optional<User> user = userRepository.findByName("Mariam");
             if (user.isPresent()) {
                 List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
                 model.addAttribute("list", customLists);
@@ -104,6 +112,15 @@ public class ForumEntryController {
 
     @GetMapping("/game/{gameid}/newforumentry")
     public String newForumEntry(Model model, @PathVariable int gameid) {
+        // TODO: get user from session
+        Optional<User> user = userRepository.findByName("Mariam");
+        if (user.isPresent()) {
+            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
+            model.addAttribute("list", customLists);
+            model.addAttribute("user", user.get());
+        }
+        // Show forum entries
+        model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
         Optional<Game> game = gameRepository.findById(gameid);
         model.addAttribute("game", game.get());
 

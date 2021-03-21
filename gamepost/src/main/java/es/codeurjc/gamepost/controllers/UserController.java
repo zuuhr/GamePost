@@ -26,6 +26,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+        /*
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers(){
         List<User> users = userRepository.findAll();
@@ -35,7 +36,7 @@ public class UserController {
         }else{
             return ResponseEntity.ok(users);
         }
-    }
+    }*/
 
     @RequestMapping("/signIn")
     public String signIn(Model model, @RequestParam String username, @RequestParam String password){
@@ -70,6 +71,7 @@ public class UserController {
         }
     }
 
+    /*
     @GetMapping("/notifications")
     public String showNotifications(Model model){
         //User user = (User) model.getAttribute("user");
@@ -85,5 +87,5 @@ public class UserController {
 
         //TO DO: Return a meaningfull page that shows the notifications.
         return "notifications";
-    }
+    }*/
 }

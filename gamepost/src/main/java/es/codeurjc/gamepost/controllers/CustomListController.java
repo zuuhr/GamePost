@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,6 +60,16 @@ public class CustomListController {
     @GetMapping("list/{userid}/{listid}")
     public String viewList(Model model, @PathVariable int userid, @PathVariable int listid){
 
+        // TODO: get user from session
+        Optional<User> user = userRepository.findByName("Mariam");
+        if (user.isPresent()) {
+            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
+            model.addAttribute("list", customLists);
+            model.addAttribute("user", user.get());
+        }
+        // Show forum entries
+        model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
+        
         Optional<CustomList<ListElement>> cl = customListRepository.findById(listid);
         
         model.addAttribute("customlist", cl.get());

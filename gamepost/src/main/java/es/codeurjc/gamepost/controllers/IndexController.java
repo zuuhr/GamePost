@@ -51,15 +51,14 @@ public class IndexController {
     @GetMapping("/")
     public String enlace(Model model) {
         List<Game> games = gameRepository.findAll();
-        // TODO: model.addAttribute("user", user);
         model.addAttribute("games", games);
+        // TODO: get user from session
         Optional<User> user = userRepository.findByName("Mariam");
         if (user.isPresent()) {
             List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
             model.addAttribute("list", customLists);
             model.addAttribute("user", user.get());
         }
-
         // Show forum entries
         model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
 
@@ -78,11 +77,15 @@ public class IndexController {
 
     @GetMapping("/profile")
     public String profile(Model model) {
+        // TODO: get user from session
         Optional<User> user = userRepository.findByName("Mariam");
         if (user.isPresent()) {
+            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
+            model.addAttribute("list", customLists);
             model.addAttribute("user", user.get());
         }
-        // TODO: model.addAttribute("user", user);
+        // Show forum entries
+        model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
         return "profile";
     }
 

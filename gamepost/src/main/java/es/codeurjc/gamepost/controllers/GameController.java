@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,19 +51,18 @@ public class GameController {
         public String submitGame(Model model, @RequestParam String titleText, // @RequestParam String cover,
                         // @RequestParam List<String> genreValues, @RequestParam List<String>
                         // platformValues,
-                       
-                        @RequestParam String playersText,
-                        @RequestParam String developerText, @RequestParam String releaseText,
-                        @RequestParam String publisherText, @RequestParam String descriptionText)
-                        throws ParseException {
+
+                        @RequestParam String playersText, @RequestParam String developerText,
+                        @RequestParam String releaseText, @RequestParam String publisherText,
+                        @RequestParam String descriptionText) throws ParseException {
 
                 String cover = "";
 
                 List<Genre> genres = new ArrayList<Genre>();
-                //Boolean action = Boolean.parseBoolean(genreAction);
-                //if (action) {
-                //        titleText = "Action";
-                //}
+                // Boolean action = Boolean.parseBoolean(genreAction);
+                // if (action) {
+                // titleText = "Action";
+                // }
                 int numPlayers = Integer.parseInt(playersText);
 
                 List<Platform> platforms = new ArrayList<Platform>();
@@ -75,11 +75,6 @@ public class GameController {
                 Game g = new Game(cover, d);
 
                 gameRepository.save(g);
-                return "submitgame";
-        }
-
-        @GetMapping("/game/newgame")
-        public String newGame(Model model) {
                 return "submitgame";
         }
 
@@ -96,6 +91,8 @@ public class GameController {
                         List<CustomList<ListElement>> gameLists = getUserCustomListsGame(user.get());
                         model.addAttribute("customlist", gameLists);
                 }
+                // Show forum entries
+                model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
 
                 if (game.isPresent()) {
                         model.addAttribute("game", game.get());
