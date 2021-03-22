@@ -98,12 +98,12 @@ public class CustomListController {
             model.addAttribute("comments", comments);
 
         }
-        Optional<User> user = userRepository.findByName("Mariam");
-        if(user.isPresent()){
-            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get()); 
-            model.addAttribute("list", customLists);
-            model.addAttribute("user", user.get());
-        }
+        //Optional<User> user = userRepository.findByName("Mariam");
+        //if(user.isPresent()){
+        //    List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get()); 
+        //    model.addAttribute("list", customLists);
+        //    model.addAttribute("user", user.get());
+        //}
         
         
         return "list";
