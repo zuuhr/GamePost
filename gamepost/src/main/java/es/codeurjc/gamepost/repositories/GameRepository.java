@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import es.codeurjc.gamepost.objects.Game;
 
 public interface GameRepository extends JpaRepository<Game, Integer>{
-    List<Game> findFirst20(Sort sort);
+    //List<Game> findFirst20(Sort sort);
 }

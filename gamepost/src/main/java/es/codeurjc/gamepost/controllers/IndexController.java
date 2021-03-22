@@ -50,7 +50,8 @@ public class IndexController {
 
     @GetMapping("/")
     public String enlace(Model model) {
-        List<Game> games = gameRepository.findFirst20(Sort.by("GamePublishedOn"));
+        //List<Game> games = gameRepository.findFirst20(Sort.by("GamePublishedOn"));
+        List<Game> games = gameRepository.findAll();
         model.addAttribute("games", games);
         // TODO: get user from session
         Optional<User> user = userRepository.findByName("Mariam");
