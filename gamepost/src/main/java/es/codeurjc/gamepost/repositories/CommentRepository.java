@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import es.codeurjc.gamepost.objects.Comment;
 
 public interface CommentRepository extends JpaRepository<Comment, Integer>{
-    default public List<Comment> sortComments(List<Comment> comments){
+    /*default public List<Comment> sortComments(List<Comment> comments){
         List<Comment> result = new ArrayList<Comment>();
 
         for (Comment comment : comments) {
@@ -44,4 +44,5 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>{
 
         return result;
     }
+    */
 }
