@@ -22,6 +22,7 @@ import es.codeurjc.gamepost.repositories.CommentRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
+import es.codeurjc.gamepost.services.FollowersService;
 
 @Controller
 public class CommentController {
@@ -38,6 +39,9 @@ public class CommentController {
     
     @Autowired
     private GameRepository gameRepository;
+
+    @Autowired
+    private FollowersService followersService;
 
     @RequestMapping("/game/{gameid}/{forumid}/{commentid}/reply")
     public String submitComment(Model model, @PathVariable int gameid, @PathVariable int forumid,
@@ -66,11 +70,11 @@ public class CommentController {
         if(parentComment.isPresent())
             parentComment.get().getAuthor().addNotification(new Notification("/game/"+ gameid +"/"+ comment.getForumEntry().getId(), "New forum entry in game" + game.getDescription().getName()));
      
-        //TODO: Send notification to all users following this game
-        //List<User> users = userRepository.findAll();
-        //for (User user : users) {
-        //    user.addNotification(new Notification("/game/" + gameid, "New forum entry in game" + game.getDescription().getName()));    
-        //}
+        //Send notification to all users following this game
+        List<User> users = followersService.getFollowers(comment);
+        for (User user : users) {
+            user.addNotification(new Notification("/game/" + gameid, "New forum entry in game" + game.getDescription().getName()));    
+        }
         
         forumEntry.addComment(comment);
         forumEntryRepository.saveAndFlush(forumEntry);

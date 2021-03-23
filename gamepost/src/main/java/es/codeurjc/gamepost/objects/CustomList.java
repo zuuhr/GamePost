@@ -62,5 +62,9 @@ public class CustomList<T> {
     public String getName(){
         return name;
     }
+
+    public boolean contains(T element){
+        return elements.contains(element);
+    }
     //#endregion
 }

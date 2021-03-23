@@ -74,7 +74,7 @@ public class ForumEntryController {
             model.addAttribute("user", user.get());
         }
         // Show forum entries
-        model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
+        model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
 
         Optional<ForumEntry> forumEntry = forumEntryRepository.findById(forumid);
 
@@ -121,7 +121,7 @@ public class ForumEntryController {
             model.addAttribute("user", user.get());
         }
         // Show forum entries
-        model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
+        model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
         Optional<Game> game = gameRepository.findById(gameid);
         model.addAttribute("game", game.get());
 
