@@ -50,9 +50,10 @@ public class IndexController {
 
     @GetMapping("/")
     public String enlace(Model model) {
-        //List<Game> games = gameRepository.findFirst20(Sort.by("GamePublishedOn"));
-        List<Game> games = gameRepository.findAll();
+        List<Game> games = gameRepository.findTop20ByOrderByForumLastUpdatedOnDesc();
+        //List<Game> games = gameRepository.findAll();
         model.addAttribute("games", games);
+        
         // TODO: get user from session
         Optional<User> user = userRepository.findByName("Mariam");
         if (user.isPresent()) {
@@ -60,6 +61,7 @@ public class IndexController {
             model.addAttribute("list", customLists);
             model.addAttribute("user", user.get());
         }
+        
         // Show forum entries
         model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
 
@@ -90,7 +92,7 @@ public class IndexController {
         return "profile";
     }
 
-    
+    /*
     @PostConstruct
     public void init() throws ParseException {
         genreRepository.save(new Genre("Action"));
@@ -188,5 +190,6 @@ public class IndexController {
         user.addMyList(customList2);
         customListRepository.save(customList2);
     }
+    */
     
 }

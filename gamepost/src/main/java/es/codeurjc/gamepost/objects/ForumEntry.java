@@ -44,7 +44,7 @@ public class ForumEntry extends ListElement{
         this.author = author;
         this.game = game;
         this.createdOn = new Date();
-        this.lastUpdatedOn = new Date();
+        setLastUpdatedOn(new Date());
         this.votes = 0;
         this.replies = 0;
         this.content = content;
@@ -84,6 +84,7 @@ public class ForumEntry extends ListElement{
     }
 
     public void setLastUpdatedOn(Date lastUpdatedOn) {
+        game.forum.setLastUpdatedOn(lastUpdatedOn);
         this.lastUpdatedOn = lastUpdatedOn;
     }
 

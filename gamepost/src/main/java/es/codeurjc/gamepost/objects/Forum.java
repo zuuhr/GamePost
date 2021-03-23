@@ -1,6 +1,7 @@
 package es.codeurjc.gamepost.objects;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,6 +21,7 @@ public class Forum {
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
     @OneToMany(cascade=CascadeType.ALL) List<ForumEntry> forumEntries;    
+    Date lastUpdatedOn;
 
     //#endregion
 
@@ -27,6 +29,7 @@ public class Forum {
     
     public Forum(){
         forumEntries = new ArrayList<ForumEntry>();
+        lastUpdatedOn = new Date();
     }
 
     //#endregion
@@ -39,6 +42,11 @@ public class Forum {
 
     public boolean removeForumEntry(ForumEntry forumEntry){
         return forumEntries.remove(forumEntry);
+    }
+
+    public void setLastUpdatedOn(Date lastUpdatedOn) {
+        if (this.lastUpdatedOn.compareTo(lastUpdatedOn) < 0)
+            this.lastUpdatedOn = lastUpdatedOn;
     }
 
     //#endregion
