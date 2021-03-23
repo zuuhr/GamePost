@@ -77,24 +77,24 @@ public class CommentController {
         //Parent comment followers
         for (User user : users.get(0)) {
             user.addNotification(new Notification("/game/" + gameid, 
-            "New comment" +
-            "in thread" + comment.getParent().getContent().getText().substring(0, 10) + "..." +
-            "in forum entry " + comment.getForumEntry().getTitle() + 
-            "in game " + game.getDescription().getName()));  
+            "New comment " +
+            "in thread " + comment.getParent().getContent().getText().substring(0, 10) + "..." +
+            " in forum entry " + comment.getForumEntry().getTitle() + 
+            " in game " + game.getDescription().getName()));  
         }
 
         //ForumEntry followers
         for (User user : users.get(1)) {
             user.addNotification(new Notification("/game/" + gameid, 
-            "New comment" + 
+            "New comment " + 
             "in forum entry " + comment.getForumEntry().getTitle() + 
-            "in game " + game.getDescription().getName()));    
+            " in game " + game.getDescription().getName()));    
         }
 
         //Game followers
         for (User user : users.get(2)) {
             user.addNotification(new Notification("/game/" + gameid, 
-            "New comment" + 
+            "New comment " + 
             "in game " + game.getDescription().getName()));  
         }
         

@@ -30,8 +30,13 @@ import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
 import es.codeurjc.gamepost.services.FollowersService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 public class ForumEntryController {
+    private Logger log = LoggerFactory.getLogger(ForumEntryController.class);
+
     @Autowired
     private ForumEntryRepository forumEntryRepository;
 
@@ -65,9 +70,13 @@ public class ForumEntryController {
         List<User> users = followersService.getFollowersGame(game.get());
         for (User user : users) {
             user.addNotification(new Notification("/game/" + gameid, 
-            "New forum entry" + 
+            "New forum entry " + 
             "in game " + game.get().getDescription().getName()));  
+
+            userRepository.saveAndFlush(user);
+            //log.info("Username: " + user.getName());
         }
+        //log.info("Done");
 
         String url = "redirect:/game/" + gameid;
         return url; // TODO: Return a meaningfull html
