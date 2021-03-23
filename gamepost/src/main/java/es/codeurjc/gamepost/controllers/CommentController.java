@@ -54,7 +54,8 @@ public class CommentController {
         ForumEntry forumEntry = forumEntryRepository.findById(forumid).get();
         
         
-        //Generate content TODO: add images
+        //Generate content 
+        //TODO: add images
         Content content = new Content(contentText, "");  
 
         Optional<Comment> parentComment = commentRepository.findById(commentid);
@@ -71,18 +72,38 @@ public class CommentController {
             parentComment.get().getAuthor().addNotification(new Notification("/game/"+ gameid +"/"+ comment.getForumEntry().getId(), "New forum entry in game" + game.getDescription().getName()));
      
         //Send notification to all users following this game
-        List<User> users = followersService.getFollowers(comment);
-        for (User user : users) {
-            user.addNotification(new Notification("/game/" + gameid, "New forum entry in game" + game.getDescription().getName()));    
+        List<List<User>> users = followersService.getFollowersSeparated(comment);
+        
+        //Parent comment followers
+        for (User user : users.get(0)) {
+            user.addNotification(new Notification("/game/" + gameid, 
+            "New comment" +
+            "in thread" + comment.getParent().getContent().getText().substring(0, 10) + "..." +
+            "in forum entry " + comment.getForumEntry().getTitle() + 
+            "in game " + game.getDescription().getName()));  
+        }
+
+        //ForumEntry followers
+        for (User user : users.get(1)) {
+            user.addNotification(new Notification("/game/" + gameid, 
+            "New comment" + 
+            "in forum entry " + comment.getForumEntry().getTitle() + 
+            "in game " + game.getDescription().getName()));    
+        }
+
+        //Game followers
+        for (User user : users.get(2)) {
+            user.addNotification(new Notification("/game/" + gameid, 
+            "New comment" + 
+            "in game " + game.getDescription().getName()));  
         }
         
+        //Add the comment to the database
         forumEntry.addComment(comment);
         forumEntryRepository.saveAndFlush(forumEntry);
 
+        // Return
         log.info("Comment submitted. Author:" + author.getId());
-        
-        // TODO: Update post within database
-        //forumEntryRepository.save(forumEntryRepository.getOne(forumid));
         
         String url = "redirect:/game/" + gameid + "/" + forumid;
 
