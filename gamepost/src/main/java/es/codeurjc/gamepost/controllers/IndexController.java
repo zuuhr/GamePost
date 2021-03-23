@@ -63,7 +63,7 @@ public class IndexController {
         }
         
         // Show forum entries
-        model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
+        model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
 
         return "index";
     }
@@ -88,7 +88,7 @@ public class IndexController {
             model.addAttribute("user", user.get());
         }
         // Show forum entries
-        model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
+        model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
         return "profile";
     }
 

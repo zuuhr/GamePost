@@ -28,9 +28,15 @@ import es.codeurjc.gamepost.repositories.CustomListRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
+import es.codeurjc.gamepost.services.FollowersService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class ForumEntryController {
+    private Logger log = LoggerFactory.getLogger(ForumEntryController.class);
+
     @Autowired
     private ForumEntryRepository forumEntryRepository;
 
@@ -46,19 +52,31 @@ public class ForumEntryController {
     @Autowired
     CustomListRepository customListRepository;
 
+    @Autowired
+    FollowersService followersService;
+
     // TODO: Associate this method with the form in the web
     @RequestMapping("/game/{gameid}/submitforumentry")
     public String submitForumEntry(Model model, @PathVariable int gameid, @RequestParam String titleText,
             @RequestParam String bodyText) {
-        List<User> users = userRepository.findAll();
+        
+        //TODO: pick user from session
+        List<User> users_session = userRepository.findAll();
         Content content = new Content(bodyText, "");
         Optional<Game> game = gameRepository.findById(gameid);
-        forumEntryRepository.save(new ForumEntry(titleText, users.get(0), game.get(), content));
+        forumEntryRepository.save(new ForumEntry(titleText, users_session.get(0), game.get(), content));
 
         // TODO: Send a notification to all the users that follow this game
+        List<User> users = followersService.getFollowersGame(game.get());
         for (User user : users) {
-            user.addNotification(new Notification("/game/{gameid}/", "New forum entry in game {gameid}"));
+            user.addNotification(new Notification("/game/" + gameid, 
+            "New forum entry " + 
+            "in game " + game.get().getDescription().getName()));  
+
+            userRepository.saveAndFlush(user);
+            //log.info("Username: " + user.getName());
         }
+        //log.info("Done");
 
         String url = "redirect:/game/" + gameid;
         return url; // TODO: Return a meaningfull html
@@ -74,7 +92,7 @@ public class ForumEntryController {
             model.addAttribute("user", user.get());
         }
         // Show forum entries
-        model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
+        model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
 
         Optional<ForumEntry> forumEntry = forumEntryRepository.findById(forumid);
 
@@ -121,7 +139,7 @@ public class ForumEntryController {
             model.addAttribute("user", user.get());
         }
         // Show forum entries
-        model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
+        model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
         Optional<Game> game = gameRepository.findById(gameid);
         model.addAttribute("game", game.get());
 

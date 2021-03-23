@@ -92,7 +92,7 @@ public class GameController {
                         model.addAttribute("customlist", gameLists);
                 }
                 // Show forum entries
-                model.addAttribute("latestposts", forumEntryRepository.findAll(Sort.by("lastUpdatedOn")));
+                model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
 
                 if (game.isPresent()) {
                         model.addAttribute("game", game.get());
