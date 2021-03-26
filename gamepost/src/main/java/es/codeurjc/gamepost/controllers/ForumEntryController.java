@@ -185,6 +185,7 @@ class CustomComment {
     List<Comment> parent = new ArrayList<Comment>();
     List<Comment> childs;
     Date postedOn;
+    int childness;
 
     public CustomComment(Comment comment) {
         this.commentid = comment.getId();
@@ -193,6 +194,7 @@ class CustomComment {
         this.content = comment.getContent();
         this.parent.add(comment.getParent());
         this.postedOn = comment.getPostedOn();
+        this.childness = comment.getChildness(); 
     }
 
 

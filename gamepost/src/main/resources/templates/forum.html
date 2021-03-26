@@ -45,7 +45,8 @@
             
             <ul class="list-group mt-4">
                 {{#comments}}
-                <li class="list-group-item " style="margin-left: 0px;">
+             
+                <li class="list-group-item ms-{{childness}}" style="margin-left: 1px;">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{author.name}}</h5>
                         <small>{{postedOn}}</small>
