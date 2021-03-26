@@ -92,7 +92,22 @@ public class IndexController {
         return "profile";
     }
 
-    /*
+    @GetMapping("notifications")
+    public String notifications(Model model){
+        // TODO: get user from session
+        Optional<User> user = userRepository.findByName("Mariam");
+        if (user.isPresent()) {
+            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
+            model.addAttribute("list", customLists);
+            model.addAttribute("user", user.get());
+        }
+        // Show forum entries
+        model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
+        List<Notification> notifications = user.get().getNotifications();
+        model.addAttribute("notification", notifications);
+        return "notifications";
+    }
+/*
     @PostConstruct
     public void init() throws ParseException {
         genreRepository.save(new Genre("Action"));
@@ -190,6 +205,6 @@ public class IndexController {
         user.addMyList(customList2);
         customListRepository.save(customList2);
     }
-    */
     
+    */
 }
