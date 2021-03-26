@@ -56,6 +56,10 @@ public class Game extends ListElement{
     public String getCover() {
         return cover;
     }
+    
+    public void setCover(String cover){
+        this.cover = cover;
+    }
 
     public Description getDescription() {
         return description;
