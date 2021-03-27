@@ -128,6 +128,7 @@ public class ForumEntry extends ListElement{
         }
 
         //If the parent already is in the result List, insert the child after him.
+        //TODO: This does not work. It seems it doesn't propagate the order to the database.
         else
         {
             int index = comments.indexOf(parent) + 1;

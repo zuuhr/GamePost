@@ -16,7 +16,7 @@ import es.codeurjc.gamepost.repositories.UserRepository;
 public class FollowersService {
     
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     
     public List<User> getFollowers(Comment comment){
         List<User> matches = new ArrayList<User>();
