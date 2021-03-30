@@ -29,6 +29,7 @@ import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
 import es.codeurjc.gamepost.services.FollowersService;
+import es.codeurjc.gamepost.services.SortCommentsService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,10 +48,10 @@ public class ForumEntryController {
     private UserRepository userRepository;
 
     @Autowired
-    private CommentRepository commentRepository;
+    CustomListRepository customListRepository;
 
     @Autowired
-    CustomListRepository customListRepository;
+    private SortCommentsService sortCommentsService;
 
     @Autowired
     FollowersService followersService;
@@ -100,8 +101,8 @@ public class ForumEntryController {
             Optional<Game> game = gameRepository.findById(gameid);
             List<Comment> comments = forumEntry.get().getComments();
 
-            //List<Comment> sortedComments = commentRepository.sortComments(comments);
-            List<Comment> sortedComments = comments;
+            List<Comment> sortedComments = sortCommentsService.sortComments(comments);
+            //List<Comment> sortedComments = comments;
 
             List<CustomComment> customComments = new ArrayList<CustomComment>();
             for (Comment comment : sortedComments) {

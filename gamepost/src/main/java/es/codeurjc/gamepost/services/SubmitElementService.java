@@ -12,6 +12,7 @@ import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.CommentRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
+import es.codeurjc.gamepost.repositories.ContentRepository;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,7 +37,16 @@ public class SubmitElementService {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private ContentRepository contentRepository;
+
     //#endregion
+
+    //#region Methods
+
+    public Content submitContent(String text, String media){
+        return contentRepository.save(new Content(text, media));
+    }
 
     public Comment submitComment(/*HttpSession httpSession,*/ int gameId, int forumId, int commentId, String contentText){
         // TODO: Coger user de sesión
@@ -69,4 +79,6 @@ public class SubmitElementService {
 
         return comment;
     }
+
+    //#endregion
 }
