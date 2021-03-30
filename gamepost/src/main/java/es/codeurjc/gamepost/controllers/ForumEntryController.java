@@ -29,7 +29,7 @@ import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
 import es.codeurjc.gamepost.services.FollowersService;
-import es.codeurjc.gamepost.services.SortCommentsService;
+import es.codeurjc.gamepost.services.CommentService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +51,7 @@ public class ForumEntryController {
     CustomListRepository customListRepository;
 
     @Autowired
-    private SortCommentsService sortCommentsService;
+    private CommentService sortCommentsService;
 
     @Autowired
     FollowersService followersService;

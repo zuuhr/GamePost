@@ -11,21 +11,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import es.codeurjc.gamepost.services.SubmitElementService;
+import es.codeurjc.gamepost.services.CommentService;
 
 @Controller
 public class CommentController {
     private Logger log = LoggerFactory.getLogger(CommentController.class);
 
     @Autowired
-    private SubmitElementService submitElementService;
+    private CommentService commentService;
 
     @RequestMapping("/game/{gameid}/{forumid}/{commentid}/reply")
     public String submitComment(Model model, @PathVariable int gameid, 
             @PathVariable int forumid, @PathVariable int commentid, @RequestParam String contentText) {
         
         // Submit
-        submitElementService.submitComment(/*httpSession,*/ gameid, forumid, commentid, contentText);
+        commentService.submitComment(/*httpSession,*/ gameid, forumid, commentid, contentText);
 
         // Return
         log.info("Comment submitted.");

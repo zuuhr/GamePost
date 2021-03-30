@@ -1,9 +1,12 @@
 package es.codeurjc.gamepost.services;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import es.codeurjc.gamepost.objects.Comment;
 import es.codeurjc.gamepost.objects.Content;
@@ -12,41 +15,25 @@ import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.CommentRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
-import es.codeurjc.gamepost.repositories.ContentRepository;
-
-import javax.servlet.http.HttpSession;
 
 @Service
-public class SubmitElementService {
+public class CommentService {
 
-    //#region Services
+    //#region Dependencies
 
     @Autowired
-    private NotificationService notificationService;
+    UserRepository userRepository;
+
+    @Autowired
+    ForumEntryRepository forumEntryRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
+
+    @Autowired
+    NotificationService notificationService;
 
     //#endregion
-
-    //#region Repositories
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ForumEntryRepository forumEntryRepository;
-
-    @Autowired
-    private CommentRepository commentRepository;
-
-    @Autowired
-    private ContentRepository contentRepository;
-
-    //#endregion
-
-    //#region Methods
-
-    public Content submitContent(String text, String media){
-        return contentRepository.save(new Content(text, media));
-    }
 
     public Comment submitComment(/*HttpSession httpSession,*/ int gameId, int forumId, int commentId, String contentText){
         // TODO: Coger user de sesión
@@ -79,6 +66,40 @@ public class SubmitElementService {
 
         return comment;
     }
+    
+    public List<Comment> sortComments(List<Comment> comments){
+        List<Comment> result = new ArrayList<Comment>();
 
-    //#endregion
+        for (Comment comment : comments) {
+            if(!result.contains(comment)){
+                Comment parent = comment.getParent();
+                
+                //Comment raíz
+                if(parent == null){
+                    result.add(comment);
+                    continue;
+                }
+
+                //If the parent already is in the result List, insert the child after him.
+                if(result.contains(parent)){
+                    if(result.size() == result.indexOf(parent) + 1)
+                        result.add(comment);
+                    else
+                        result.add(result.indexOf(parent) + 1, comment);
+                }
+
+                //Else, make the correspondant subcalls.
+                else
+                {
+                    List<Comment> subResult = sortComments(new ArrayList<Comment>(Arrays.asList(comment.getParent())));
+                    for (Comment comment2 : subResult) {
+                        result.add(comment2);
+                    }
+                    result.add(comment);
+                }
+            }
+        }
+
+        return result;
+    }
 }

@@ -40,6 +40,9 @@ public class CustomList<T> {
     //#region Methods
 
     public boolean addElement(T element){
+        if(elements.contains(element))
+            return false;
+
         return elements.add(element);
     }
 
