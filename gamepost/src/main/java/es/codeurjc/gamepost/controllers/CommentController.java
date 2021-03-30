@@ -25,7 +25,7 @@ public class CommentController {
             @PathVariable int forumid, @PathVariable int commentid, @RequestParam String contentText) {
         
         // Submit
-        commentService.submitComment(/*httpSession,*/ gameid, forumid, commentid, contentText);
+        commentService.submit(/*httpSession,*/ gameid, forumid, commentid, contentText);
 
         // Return
         log.info("Comment submitted.");

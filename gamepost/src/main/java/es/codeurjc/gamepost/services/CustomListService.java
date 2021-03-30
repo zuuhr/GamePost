@@ -42,7 +42,7 @@ public class CustomListService {
 
     //#endregion
 
-    public CustomList<ListElement> submitCustomList(String nameText){
+    public CustomList<ListElement> submit(String nameText){
         User author = userRepository.findAll().get(0);   //TODO: Coger user de sesión
         
         CustomList<ListElement> cl = new CustomList<ListElement>(nameText, author);
@@ -52,7 +52,7 @@ public class CustomListService {
         return cl;
     }
 
-    public void viewList(Model model, int userId, int listId){
+    public void view(Model model, int userId, int listId){
 
         // TODO: get user from session
         Optional<User> user = userRepository.findByName("Mariam");
@@ -123,5 +123,5 @@ public class CustomListService {
 
         return;
     }
-    
+
 }

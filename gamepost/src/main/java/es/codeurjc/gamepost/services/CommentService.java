@@ -35,7 +35,7 @@ public class CommentService {
 
     //#endregion
 
-    public Comment submitComment(/*HttpSession httpSession,*/ int gameId, int forumId, int commentId, String contentText){
+    public Comment submit(/*HttpSession httpSession,*/ int gameId, int forumId, int commentId, String contentText){
         // TODO: Coger user de sesión
         //User author = (User) model.getAttribute("user"); 
         
@@ -67,7 +67,7 @@ public class CommentService {
         return comment;
     }
     
-    public List<Comment> sortComments(List<Comment> comments){
+    public List<Comment> sort(List<Comment> comments){
         List<Comment> result = new ArrayList<Comment>();
 
         for (Comment comment : comments) {
@@ -91,7 +91,7 @@ public class CommentService {
                 //Else, make the correspondant subcalls.
                 else
                 {
-                    List<Comment> subResult = sortComments(new ArrayList<Comment>(Arrays.asList(comment.getParent())));
+                    List<Comment> subResult = sort(new ArrayList<Comment>(Arrays.asList(comment.getParent())));
                     for (Comment comment2 : subResult) {
                         result.add(comment2);
                     }

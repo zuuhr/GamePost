@@ -17,7 +17,7 @@ public class ContentController {
     @RequestMapping("/submit/Content")
     public String submitContent(@RequestParam String text, @RequestParam String media)
     {
-        contentService.submitContent(text, media);
+        contentService.submit(text, media);
 
         return "index"; //TODO: Return a meaningfull html
     }

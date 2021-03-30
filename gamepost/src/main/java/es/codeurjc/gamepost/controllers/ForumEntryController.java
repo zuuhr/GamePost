@@ -29,6 +29,7 @@ import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
 import es.codeurjc.gamepost.services.FollowersService;
+import es.codeurjc.gamepost.services.ForumEntryService;
 import es.codeurjc.gamepost.services.CommentService;
 
 import org.slf4j.Logger;
@@ -56,28 +57,15 @@ public class ForumEntryController {
     @Autowired
     FollowersService followersService;
 
+    @Autowired
+    ForumEntryService forumEntryService;
+
     // TODO: Associate this method with the form in the web
     @RequestMapping("/game/{gameid}/submitforumentry")
     public String submitForumEntry(Model model, @PathVariable int gameid, @RequestParam String titleText,
             @RequestParam String bodyText) {
         
-        //TODO: pick user from session
-        List<User> users_session = userRepository.findAll();
-        Content content = new Content(bodyText, "");
-        Optional<Game> game = gameRepository.findById(gameid);
-        forumEntryRepository.save(new ForumEntry(titleText, users_session.get(0), game.get(), content));
-
-        // TODO: Send a notification to all the users that follow this game
-        List<User> users = followersService.getFollowersGame(game.get());
-        for (User user : users) {
-            user.addNotification(new Notification("/game/" + gameid, 
-            "New forum entry " + 
-            "in game " + game.get().getDescription().getName()));  
-
-            userRepository.saveAndFlush(user);
-            //log.info("Username: " + user.getName());
-        }
-        //log.info("Done");
+        forumEntryService.submit(gameid, titleText, bodyText);
 
         String url = "redirect:/game/" + gameid;
         return url; // TODO: Return a meaningfull html
@@ -101,7 +89,7 @@ public class ForumEntryController {
             Optional<Game> game = gameRepository.findById(gameid);
             List<Comment> comments = forumEntry.get().getComments();
 
-            List<Comment> sortedComments = sortCommentsService.sortComments(comments);
+            List<Comment> sortedComments = sortCommentsService.sort(comments);
             //List<Comment> sortedComments = comments;
 
             List<CustomComment> customComments = new ArrayList<CustomComment>();

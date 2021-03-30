@@ -12,7 +12,7 @@ public class ContentService {
     @Autowired
     private ContentRepository contentRepository;
 
-    public Content submitContent(String text, String media){
+    public Content submit(String text, String media){
         return contentRepository.save(new Content(text, media));
     }
 }

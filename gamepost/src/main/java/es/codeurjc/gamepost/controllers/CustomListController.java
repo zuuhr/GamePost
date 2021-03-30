@@ -29,7 +29,7 @@ public class CustomListController {
     @RequestMapping("/list/newlist")
     public String submitCustomList(Model model, @RequestParam String nameText){
         
-        customListService.submitCustomList(nameText);
+        customListService.submit(nameText);
 
         return "redirect:/"; //TODO: Return a meaningfull html
     }
@@ -37,7 +37,7 @@ public class CustomListController {
     @GetMapping("list/{userid}/{listid}")
     public String viewList(Model model, @PathVariable int userid, @PathVariable int listid){
         
-        customListService.viewList(model, userid, listid);
+        customListService.view(model, userid, listid);
         
         return "list";
     }
