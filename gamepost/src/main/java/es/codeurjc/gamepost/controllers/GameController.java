@@ -40,6 +40,9 @@ import es.codeurjc.gamepost.repositories.CustomListRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
+import es.codeurjc.gamepost.services.CustomListService;
+import es.codeurjc.gamepost.services.ForumEntryService;
+import es.codeurjc.gamepost.services.GameService;
 
 
 @Controller
@@ -57,6 +60,15 @@ public class GameController {
         @Autowired
         UserRepository userRepository;
 
+        @Autowired
+        GameService gameService;
+
+        @Autowired
+        CustomListService customListService;
+
+        @Autowired
+        ForumEntryService forumEntryService;
+
 
         @RequestMapping(value = "/game/submitgame", method = RequestMethod.POST)
         public String submitGame(Model model, @RequestParam String titleText,
@@ -67,22 +79,9 @@ public class GameController {
         @RequestParam String releaseText, @RequestParam String publisherText,
         @RequestParam String descriptionText) throws ParseException, IOException {
 
-                //Description
-                List<Genre> genres = new ArrayList<Genre>();
-                int numPlayers = Integer.parseInt(playersText);
-                List<Platform> platforms = new ArrayList<Platform>();
-                Date releaseDate = new SimpleDateFormat("dd/MM/yyyy").parse(releaseText);
-                Description d = new Description(titleText, genres, numPlayers, releaseDate, platforms, developerText, publisherText, descriptionText);           
-                Game game = new Game("", d);
-
-                //Cover
-                game.setCoverFile(BlobProxy.generateProxy(coverFile.getInputStream(), coverFile.getSize()));
+                gameService.submit(titleText, coverFile, playersText, 
+                        developerText, releaseText, publisherText, descriptionText);
                 
-                URI location = fromCurrentRequest().build().toUri();
-                game.setCover(location.toString());
-                ResponseEntity.created(location).build();
-                
-                gameRepository.save(game);
                 return "submitgame";
         }
 
@@ -93,44 +92,12 @@ public class GameController {
 
         @GetMapping("/game/{id}")
         public String getGame(Model model, @PathVariable int id) {
-                Optional<Game> game = gameRepository.findById(id);
-
-                Optional<User> user = userRepository.findByName("Mariam");
-                if (user.isPresent()) {
-                        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
-                        model.addAttribute("list", customLists);
-                        model.addAttribute("user", user.get());
-                        // get game lists
-                        List<CustomList<ListElement>> gameLists = getUserCustomListsGame(user.get());
-                        model.addAttribute("customlist", gameLists);
-                }
-                // Show forum entries
-                model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
-
-                if (game.isPresent()) {
-                        model.addAttribute("game", game.get());
-                        model.addAttribute("description", game.get().getDescription());
-
-                        List<ForumEntry> posts = forumEntryRepository.findByGame(game.get());
-                        model.addAttribute("posts", posts);
-                        // TODO: model.addAttribute("user", user);
+                customListService.showIndex(model);
+                forumEntryService.showIndexLatestForumEntries(model);
+                
+                if(gameService.get(model, id))
                         return "game";
-                } else {
+                else
                         return "redirect:/";
-                }
-        }
-
-        public List<CustomList<ListElement>> getUserCustomListsGame(User user) {
-
-                List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
-                List<CustomList<ListElement>> gameLists = new LinkedList<CustomList<ListElement>>();
-                for (CustomList<ListElement> customList : customLists) {
-                        if (customList.getAllElements().isEmpty() || customList.getElement(0) instanceof Game) {
-                                if (!customList.getName().equals("[ForumEntries]")
-                                                && !customList.getName().equals("[Comments]"))
-                                        gameLists.add(customList);
-                        }
-                }
-                return gameLists;
         }
 }

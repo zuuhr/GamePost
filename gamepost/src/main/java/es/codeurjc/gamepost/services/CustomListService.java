@@ -52,14 +52,33 @@ public class CustomListService {
         return cl;
     }
 
+    // TODO: Check this methods modularity.
     public void showIndex(Model model){
         // TODO: get user from session
         Optional<User> user = userRepository.findByName("Mariam");
         if (user.isPresent()) {
+            model.addAttribute("user", user.get());
+
             List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
             model.addAttribute("list", customLists);
-            model.addAttribute("user", user.get());
+
+            List<CustomList<ListElement>> gameLists = getUserCustomListsGame(user.get());
+            model.addAttribute("customlist", gameLists);
         }
+    }
+
+    private List<CustomList<ListElement>> getUserCustomListsGame(User user) {
+
+        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
+        List<CustomList<ListElement>> gameLists = new LinkedList<CustomList<ListElement>>();
+        for (CustomList<ListElement> customList : customLists) {
+                if (customList.getAllElements().isEmpty() || customList.getElement(0) instanceof Game) {
+                        if (!customList.getName().equals("[ForumEntries]")
+                                        && !customList.getName().equals("[Comments]"))
+                                gameLists.add(customList);
+                }
+        }
+        return gameLists;
     }
 
     public void view(Model model, int userId, int listId){
