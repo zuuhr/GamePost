@@ -31,6 +31,7 @@ import es.codeurjc.gamepost.repositories.UserRepository;
 import es.codeurjc.gamepost.services.FollowersService;
 import es.codeurjc.gamepost.services.ForumEntryService;
 import es.codeurjc.gamepost.services.CommentService;
+import es.codeurjc.gamepost.services.CustomListService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,10 +56,26 @@ public class ForumEntryController {
     private CommentService sortCommentsService;
 
     @Autowired
-    FollowersService followersService;
+    private FollowersService followersService;
 
     @Autowired
-    ForumEntryService forumEntryService;
+    private ForumEntryService forumEntryService;
+
+    @Autowired
+    private CustomListService customListService;
+
+    @GetMapping("/game/{gameid}/newforumentry")
+    public String newForumEntry(Model model, @PathVariable int gameid) {
+        
+        customListService.showIndex(model);
+        forumEntryService.showIndexLatestForumEntries(model);
+
+        // Show forum entries
+        Optional<Game> game = gameRepository.findById(gameid);
+        model.addAttribute("game", game.get());
+
+        return "submitforum";
+    }
 
     // TODO: Associate this method with the form in the web
     @RequestMapping("/game/{gameid}/submitforumentry")
@@ -73,119 +90,11 @@ public class ForumEntryController {
 
     @GetMapping("/game/{gameid}/{forumid}")
     public String getForumEntry(Model model, @PathVariable int gameid, @PathVariable int forumid) {
-        // TODO: get user from session
-        Optional<User> user = userRepository.findByName("Mariam");
-        if (user.isPresent()) {
-            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
-            model.addAttribute("list", customLists);
-            model.addAttribute("user", user.get());
-        }
-        // Show forum entries
-        model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
-
-        Optional<ForumEntry> forumEntry = forumEntryRepository.findById(forumid);
-
-        if (forumEntry.isPresent()) {
-            Optional<Game> game = gameRepository.findById(gameid);
-            List<Comment> comments = forumEntry.get().getComments();
-
-            List<Comment> sortedComments = sortCommentsService.sort(comments);
-            //List<Comment> sortedComments = comments;
-
-            List<CustomComment> customComments = new ArrayList<CustomComment>();
-            for (Comment comment : sortedComments) {
-                customComments.add(new CustomComment(comment));
-            }
-            if (user.isPresent()) {
-                List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
-                model.addAttribute("list", customLists);
-                model.addAttribute("user", user.get());
-                // get forumentry lists
-                List<CustomList<ListElement>> forumEntryLists = getUserCustomListsForumEntry(user.get());
-                model.addAttribute("customforumentrylist", forumEntryLists);
-
-                // get comment lists
-                List<CustomList<ListElement>> commentLists = getUserCustomListsComment(user.get());
-                model.addAttribute("customcommentlist", commentLists);
-            }
-            model.addAttribute("game", game.get());
-            model.addAttribute("forumentry", forumEntry.get());
-            model.addAttribute("comments", customComments);
-
-            return "forum";
-        } else {
-            return "redirect:/";
-        }
-    }
-
-    @GetMapping("/game/{gameid}/newforumentry")
-    public String newForumEntry(Model model, @PathVariable int gameid) {
-        // TODO: get user from session
-        Optional<User> user = userRepository.findByName("Mariam");
-        if (user.isPresent()) {
-            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
-            model.addAttribute("list", customLists);
-            model.addAttribute("user", user.get());
-        }
-        // Show forum entries
-        model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
-        Optional<Game> game = gameRepository.findById(gameid);
-        model.addAttribute("game", game.get());
-
-        return "submitforum";
-    }
-
-
-
-    public List<CustomList<ListElement>> getUserCustomListsForumEntry(User user){
         
-        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
-        List<CustomList<ListElement>> forumEntryLists = new LinkedList<CustomList<ListElement>>();
-        for (CustomList<ListElement> customList : customLists) {
-            if(customList.getAllElements().isEmpty() || customList.getElement(0) instanceof ForumEntry){
-                if(!customList.getName().equals("[Comments]") && !customList.getName().equals("[Games]"))
-                forumEntryLists.add( customList);
-            }
+        customListService.showIndex(model);
+        forumEntryService.showIndexLatestForumEntries(model);
 
-        }
-        return forumEntryLists;
-    }
-
-    public List<CustomList<ListElement>> getUserCustomListsComment(User user){
-        
-        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
-        List<CustomList<ListElement>> commentLists = new LinkedList<CustomList<ListElement>>();
-        for (CustomList<ListElement> customList : customLists) {
-            if(customList.getAllElements().isEmpty() || customList.getElement(0) instanceof Comment){
-                if(!customList.getName().equals("[ForumEntries]") && !customList.getName().equals("[Games]"))
-                commentLists.add( customList);
-            }
-        }
-        return commentLists;
+        return forumEntryService.view(model, gameid, forumid);
     }
 }
 
-class CustomComment {
-
-    int commentid;
-    User author;
-    ForumEntry forumEntry;
-    Content content;
-    List<Comment> parent = new ArrayList<Comment>();
-    List<Comment> childs;
-    Date postedOn;
-    int childness;
-
-    public CustomComment(Comment comment) {
-        this.commentid = comment.getId();
-        this.author = comment.getAuthor();
-        this.forumEntry = comment.getForumEntry();
-        this.content = comment.getContent();
-        this.parent.add(comment.getParent());
-        this.postedOn = comment.getPostedOn();
-        this.childness = comment.getChildness(); 
-    }
-
-
-    
-}
