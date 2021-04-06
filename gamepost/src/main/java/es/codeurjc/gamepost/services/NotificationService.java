@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import es.codeurjc.gamepost.objects.Comment;
 import es.codeurjc.gamepost.objects.ForumEntry;
@@ -29,6 +30,17 @@ public class NotificationService {
 
     @Autowired
     private UserRepository userRepository;
+
+    public void show(Model model){
+        
+        Optional<User> user = userRepository.findByName("Mariam");
+        if(user.isPresent()){
+            List<Notification> notifications = user.get().getNotifications();
+            model.addAttribute("notification", notifications);
+        }
+
+        return;
+    }
 
     public void sendNotificationToAuthor(int gameId, int parentCommentId, Comment comment){
         Game game = gameRepository.findById(gameId).get();

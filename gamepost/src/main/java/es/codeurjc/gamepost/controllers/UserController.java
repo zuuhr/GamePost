@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import es.codeurjc.gamepost.objects.Notification;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.UserRepository;
+import es.codeurjc.gamepost.services.UserService;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class UserController {
     private Logger log = LoggerFactory.getLogger(UserController.class);
     
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
         /*
     @GetMapping("/users")
@@ -40,24 +41,19 @@ public class UserController {
 
     @RequestMapping("/signIn")
     public String signIn(Model model, @RequestParam String username, @RequestParam String password){
-        Optional<User> user = userRepository.findByName(username);
+        Optional<User> user = userService.get(username);
         if(user.isPresent()){
            //model.repeatedUser = true --> Displays a message in the Sign in page "The name is not available." 
            return "signin";
         }else{
-            log.info("INFO: The name is available");
-            userRepository.save(new User(
-                username, 
-                //new BCryptPasswordEncoder().encode(password));
-                password
-            ));
+            userService.submit(username, password);
             return "redirect:/";
         }
     }
 
     @RequestMapping("/logIn")
     public String logIn(Model model, @RequestParam String username, @RequestParam String password){
-        Optional<User> user = userRepository.findByName(username);
+        Optional<User> user = userService.get(username);
         if(user.isPresent()){
             if(user.get().getPassword().compareTo(password) == 0){
                 log.info("INFO: User logged.");

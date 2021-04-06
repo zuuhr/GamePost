@@ -26,6 +26,7 @@ import es.codeurjc.gamepost.objects.ListElement;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.objects.enums.Genre;
 import es.codeurjc.gamepost.objects.enums.Platform;
+import es.codeurjc.gamepost.repositories.DescriptionRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 
@@ -36,6 +37,9 @@ public class GameService {
 
     @Autowired
     GameRepository gameRepository;
+
+    @Autowired
+    DescriptionRepository descriptionRepository;
 
     @Autowired
     ForumEntryRepository forumEntryRepository;
@@ -83,5 +87,29 @@ public class GameService {
         } else {
                 return false;
         }
+    }
+
+    public void showIndexLatestUpdatedGames(Model model){
+        List<Game> games = gameRepository.findTop20ByOrderByForumLastUpdatedOnDesc();
+        model.addAttribute("games", games);
+
+        return;
+    }
+
+    public void search(Model model, String searchText){
+        
+        String[] words = searchText.split(" "); 
+        List<Description> descriptions = descriptionRepository.findByNameInKeywords(words);
+        if(descriptions.size() > 0){
+            List<Game> games = new ArrayList<Game>();
+            for (Description description : descriptions) {
+                games.add(description.getGame());
+            }
+            model.addAttribute("games", games);
+        }
+
+        model.addAttribute("searchText", searchText);
+
+        return;
     }
 }

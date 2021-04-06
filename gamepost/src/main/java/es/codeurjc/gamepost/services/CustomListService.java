@@ -90,6 +90,7 @@ public class CustomListService {
             model.addAttribute("list", customLists);
             model.addAttribute("user", user.get());
         }
+        
         // Show forum entries
         model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
         
@@ -111,7 +112,7 @@ public class CustomListService {
             for (ListElement lElement : cl.get().getAllElements()){
                 forumEntries.add((ForumEntry) lElement);
             }
-          model.addAttribute("posts", forumEntries);
+            model.addAttribute("posts", forumEntries);
             
         } else if(cl.get().getElement(0) instanceof Comment){
             List<Comment> comments  = new LinkedList<Comment>();

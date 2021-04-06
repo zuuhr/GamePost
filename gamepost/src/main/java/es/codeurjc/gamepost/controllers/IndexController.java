@@ -20,50 +20,32 @@ import es.codeurjc.gamepost.objects.*;
 import es.codeurjc.gamepost.objects.enums.*;
 import es.codeurjc.gamepost.repositories.*;
 import es.codeurjc.gamepost.repositories.enums.*;
+import es.codeurjc.gamepost.services.CustomListService;
+import es.codeurjc.gamepost.services.ForumEntryService;
+import es.codeurjc.gamepost.services.GameService;
+import es.codeurjc.gamepost.services.NotificationService;
 
 @Controller
 public class IndexController {
 
     @Autowired
-    GameRepository gameRepository;
+    CustomListService customListService;
 
     @Autowired
-    UserRepository userRepository;
+    ForumEntryService forumEntryService;
 
     @Autowired
-    ForumEntryRepository forumEntryRepository;
+    NotificationService notificationService;
 
     @Autowired
-    CustomListRepository customListRepository;
-
-    @Autowired
-    GenreRepository genreRepository;
-
-    @Autowired
-    PlatformRepository platformRepository;
-
-    @Autowired
-    ContentRepository contentRepository;
-
-    @Autowired
-    NotificationRepository notificationRepository;
+    GameService gameService;
 
     @GetMapping("/")
     public String enlace(Model model) {
-        List<Game> games = gameRepository.findTop20ByOrderByForumLastUpdatedOnDesc();
-        //List<Game> games = gameRepository.findAll();
-        model.addAttribute("games", games);
         
-        // TODO: get user from session
-        Optional<User> user = userRepository.findByName("Mariam");
-        if (user.isPresent()) {
-            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
-            model.addAttribute("list", customLists);
-            model.addAttribute("user", user.get());
-        }
-        
-        // Show forum entries
-        model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
+        gameService.showIndexLatestUpdatedGames(model);
+        customListService.showIndex(model);
+        forumEntryService.showIndexLatestForumEntries(model);
 
         return "index";
     }
@@ -80,31 +62,20 @@ public class IndexController {
 
     @GetMapping("/profile")
     public String profile(Model model) {
-        // TODO: get user from session
-        Optional<User> user = userRepository.findByName("Mariam");
-        if (user.isPresent()) {
-            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
-            model.addAttribute("list", customLists);
-            model.addAttribute("user", user.get());
-        }
-        // Show forum entries
-        model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
+
+        customListService.showIndex(model);
+        forumEntryService.showIndexLatestForumEntries(model);
+
         return "profile";
     }
 
     @GetMapping("notifications")
     public String notifications(Model model){
-        // TODO: get user from session
-        Optional<User> user = userRepository.findByName("Mariam");
-        if (user.isPresent()) {
-            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
-            model.addAttribute("list", customLists);
-            model.addAttribute("user", user.get());
-        }
-        // Show forum entries
-        model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
-        List<Notification> notifications = user.get().getNotifications();
-        model.addAttribute("notification", notifications);
+        
+        customListService.showIndex(model);
+        forumEntryService.showIndexLatestForumEntries(model);
+        notificationService.show(model);
+
         return "notifications";
     }
 
