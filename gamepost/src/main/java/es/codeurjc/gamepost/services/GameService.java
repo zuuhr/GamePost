@@ -46,13 +46,11 @@ public class GameService {
 
     //#endregion
 
-    public void submit(String titleText, MultipartFile coverFile, String playersText, String developerText, 
+    public void submit(String titleText, List<Genre> genres, List<Platform> platforms, MultipartFile coverFile, String playersText, String developerText, 
         String releaseText, String publisherText, String descriptionText){
 
         //Description
-        List<Genre> genres = new ArrayList<Genre>();
         int numPlayers = Integer.parseInt(playersText);
-        List<Platform> platforms = new ArrayList<Platform>();
         Date releaseDate;
         try {
             releaseDate = new SimpleDateFormat("dd/MM/yyyy").parse(releaseText);
