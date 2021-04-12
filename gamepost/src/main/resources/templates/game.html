@@ -25,6 +25,7 @@
           <p></p>
           <h4 class="text-white" style="font-family: Impact;">Publisher: {{description.publisher}}</h4>
           <p></p>
+          {{#user}}
           <a href="/list/games/add/game/{{game.id}}">
             <button class="btn btn-secondary btn-block" type="button">Follow</button>
           </a>
@@ -41,6 +42,7 @@
               {{/customlist}}
             </ul>
           </div>
+          {{/user}}
         </div>
         <h4 class="text-white" style="font-family: Impact;">Description: {{description.synopsis}}</h4>
       </div>
@@ -58,9 +60,14 @@
             <th scope="col">Replies</th>
             <th scope="col">Likes</th>
             <th scope="col">
+              {{#user}}
               <a href="/game/{{game.id}}/newforumentry">
                 <button class="btn btn-secondary" type="button">New</button>
               </a>
+              {{/user}}
+              {{^user}}
+              -
+              {{/user}}
             </th>
           </tr>
         </thead>
