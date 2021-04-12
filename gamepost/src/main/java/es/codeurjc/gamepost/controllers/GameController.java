@@ -1,24 +1,11 @@
 package es.codeurjc.gamepost.controllers;
 
 import java.io.IOException;
-import java.net.URI;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.springframework.web.servlet
-        .support.ServletUriComponentsBuilder.fromCurrentRequest;
-
-import org.hibernate.engine.jdbc.BlobProxy;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.util.StreamUtils;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,39 +15,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import es.codeurjc.gamepost.objects.CustomList;
-import es.codeurjc.gamepost.objects.Description;
-import es.codeurjc.gamepost.objects.ForumEntry;
-import es.codeurjc.gamepost.objects.Game;
-import es.codeurjc.gamepost.objects.ListElement;
-import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.objects.enums.Genre;
 import es.codeurjc.gamepost.objects.enums.Platform;
-import es.codeurjc.gamepost.repositories.CustomListRepository;
-import es.codeurjc.gamepost.repositories.ForumEntryRepository;
-import es.codeurjc.gamepost.repositories.GameRepository;
-import es.codeurjc.gamepost.repositories.UserRepository;
 import es.codeurjc.gamepost.repositories.enums.GenreRepository;
 import es.codeurjc.gamepost.repositories.enums.PlatformRepository;
 import es.codeurjc.gamepost.services.CustomListService;
 import es.codeurjc.gamepost.services.ForumEntryService;
+import es.codeurjc.gamepost.services.GameEnumService;
 import es.codeurjc.gamepost.services.GameService;
+import es.codeurjc.gamepost.services.UserService;
 
 
 @Controller
 public class GameController {
-
-        @Autowired
-        GameRepository gameRepository;
-
-        @Autowired
-        ForumEntryRepository forumEntryRepository;
-
-        @Autowired
-        CustomListRepository customListRepository;
-
-        @Autowired
-        UserRepository userRepository;
 
         @Autowired
         GenreRepository genreRepository;
@@ -72,10 +39,16 @@ public class GameController {
         GameService gameService;
 
         @Autowired
+        GameEnumService gameEnumService;
+
+        @Autowired
         CustomListService customListService;
 
         @Autowired
         ForumEntryService forumEntryService;
+
+        @Autowired 
+        UserService userService;
 
 
         @RequestMapping(value = "/game/submitgame", method = RequestMethod.POST)
@@ -106,32 +79,8 @@ public class GameController {
         @RequestParam String releaseText, @RequestParam String publisherText,
         @RequestParam String descriptionText) throws ParseException, IOException {
 
-                List<Genre> genres = new ArrayList<Genre>();
-
-                if(genreAction != null) genres.add(genreRepository.findByText("Action").get());
-                if(genreAdventure != null) genres.add(genreRepository.findByText("Adventure").get());
-                if(genreFighting != null) genres.add(genreRepository.findByText("Fighting").get());
-                if(genreRolePlaying != null) genres.add(genreRepository.findByText("Role Playing").get());
-                if(genreRacing != null) genres.add(genreRepository.findByText("Racing").get());
-                if(genreSimulation != null) genres.add(genreRepository.findByText("Simulation").get());
-                if(genreSports != null) genres.add(genreRepository.findByText("Sports").get());
-                if(genreStrategy != null) genres.add(genreRepository.findByText("Strategy").get());
-                if(genreVisualNovel != null) genres.add(genreRepository.findByText("Visual Novel").get());
-
-                List<Platform> platforms = new ArrayList<Platform>();
-                if(platformWindows != null) platforms.add(platformRepository.findByText("Windows").get());
-                if(platformMac != null) platforms.add(platformRepository.findByText("Mac").get());
-                if(platformLinux != null) platforms.add(platformRepository.findByText("Linux").get());
-                if(platformPS5 != null) platforms.add(platformRepository.findByText("Playstation 5").get());
-                if(platformPS4 != null) platforms.add(platformRepository.findByText("Playstation 4").get());
-                if(platformSwitch != null) platforms.add(platformRepository.findByText("Nintendo Switch").get());
-                if(platformXboxSeriesXS != null) platforms.add(platformRepository.findByText("Xbox Series X/S").get());
-                if(platformAndroid != null) platforms.add(platformRepository.findByText("Android").get());
-                if(platformIOS != null) platforms.add(platformRepository.findByText("IOS").get());
-
-
-
-
+                List<Genre> genres = gameEnumService.getGenreList(genreAction, genreAdventure, genreFighting, genreRolePlaying, genreRacing, genreSimulation, genreSports, genreStrategy, genreVisualNovel);
+                List<Platform> platforms = gameEnumService.getPlatformList(platformWindows, platformMac, platformLinux, platformPS5, platformPS4, platformSwitch, platformXboxSeriesXS, platformAndroid, platformIOS);                
 
                 gameService.submit(titleText, genres, platforms, coverFile, playersText, 
                         developerText, releaseText, publisherText, descriptionText);
@@ -145,8 +94,8 @@ public class GameController {
         }
 
         @GetMapping("/game/{id}")
-        public String getGame(Model model, @PathVariable int id) {
-                customListService.showIndex(model);
+        public String getGame(Model model, HttpSession session, @PathVariable int id) {
+                customListService.showIndex(model, userService.getSessionUser(session));
                 forumEntryService.showIndexLatestForumEntries(model);
                 
                 if(gameService.get(model, id))

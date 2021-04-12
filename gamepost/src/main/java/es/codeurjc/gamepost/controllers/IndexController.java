@@ -1,51 +1,38 @@
 package es.codeurjc.gamepost.controllers;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import es.codeurjc.gamepost.objects.*;
-import es.codeurjc.gamepost.objects.enums.*;
-import es.codeurjc.gamepost.repositories.*;
-import es.codeurjc.gamepost.repositories.enums.*;
-import es.codeurjc.gamepost.services.CustomListService;
 import es.codeurjc.gamepost.services.ForumEntryService;
 import es.codeurjc.gamepost.services.GameService;
-import es.codeurjc.gamepost.services.NotificationService;
+import es.codeurjc.gamepost.services.UserService;
 
 @Controller
 public class IndexController {
 
     @Autowired
-    CustomListService customListService;
-
-    @Autowired
     ForumEntryService forumEntryService;
 
     @Autowired
-    NotificationService notificationService;
+    UserService userService;
 
     @Autowired
     GameService gameService;
 
     @GetMapping("/")
-    public String enlace(Model model) {
+    public String enlace(Model model, HttpSession session) {
         
+        if(session.isNew()){
+                session.setAttribute("logged", false);
+        }
+
         gameService.showIndexLatestUpdatedGames(model);
-        customListService.showIndex(model);
         forumEntryService.showIndexLatestForumEntries(model);
+        userService.loadInfo(model, session);
 
         return "index";
     }
@@ -61,21 +48,20 @@ public class IndexController {
     }
 
     @GetMapping("/profile")
-    public String profile(Model model) {
-
-        customListService.showIndex(model);
+    public String profile(Model model, HttpSession session) {
+        
         forumEntryService.showIndexLatestForumEntries(model);
+        userService.loadInfo(model, session);
 
         return "profile";
     }
 
     @GetMapping("notifications")
-    public String notifications(Model model){
+    public String notifications(Model model, HttpSession session){
         
-        customListService.showIndex(model);
         forumEntryService.showIndexLatestForumEntries(model);
-        notificationService.show(model);
-
+        userService.loadInfo(model, session);
+        
         return "notifications";
     }
 

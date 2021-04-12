@@ -1,5 +1,7 @@
 package es.codeurjc.gamepost.controllers;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.gamepost.objects.User;
-import es.codeurjc.gamepost.repositories.UserRepository;
 import es.codeurjc.gamepost.services.CustomListService;
 import es.codeurjc.gamepost.services.ForumEntryService;
+import es.codeurjc.gamepost.services.UserService;
 
 @Controller
 public class CustomListController {
@@ -23,21 +25,23 @@ public class CustomListController {
     ForumEntryService forumEntryService;
 
     @Autowired
-    UserRepository userRepository;  //TODO: Remove this when implemented system of HttpSession user.
+    UserService userService;
 
     //TODO: Associate this method with the form in the web
     @RequestMapping("/list/newlist")
-    public String submitCustomList(Model model, @RequestParam String nameText){
+    public String submitCustomList(Model model, HttpSession session, @RequestParam String nameText){
         
-        customListService.submit(nameText);
+        customListService.submit(session, nameText);
 
-        return "redirect:/"; //TODO: Return a meaningfull html
+        return "redirect:/";
     }
 
     @GetMapping("list/{userid}/{listid}")
-    public String viewList(Model model, @PathVariable int userid, @PathVariable int listid){
+    public String viewList(Model model, HttpSession session, @PathVariable int userid, @PathVariable int listid){
         
-        customListService.view(model, userid, listid);
+        //TODO: Avoid someone being able to snoop into other user's customLists.
+        User user = userService.getSessionUser(session);
+        customListService.view(model, user, listid);
         
         return "list";
     }
@@ -67,27 +71,27 @@ public class CustomListController {
     }
     
     @GetMapping("/list/games/add/game/{gameid}")
-    public String followGame(Model model, @PathVariable int gameid){
+    public String followGame(Model model, HttpSession session, @PathVariable int gameid){
 
-        User user = userRepository.findByName("Mariam").get(); //TODO: get user from session
+        User user = userService.getSessionUser(session);
         customListService.addGame(gameid, user.getGames().getId());
         
         return "redirect:/game/" + gameid;
     }
 
     @GetMapping("/list/forumentries/add/forumentry/{forumentryid}")
-    public String followForumEntry(Model model, @PathVariable int forumentryid){
+    public String followForumEntry(Model model, HttpSession session, @PathVariable int forumentryid){
         
-        User user = userRepository.findByName("Mariam").get(); //TODO: get user from session
+        User user = userService.getSessionUser(session);
         customListService.addForumEntry(forumentryid, user.getForumEntries().getId());
 
         return "redirect:/game/" + forumEntryService.get(forumentryid).getGame().getId() + "/" + forumentryid;
     }
 
     @GetMapping("/list/comments/add/comment/{forumentryid}/{commentid}")
-    public String followComment(Model model, @PathVariable int forumentryid, @PathVariable int commentid){
+    public String followComment(Model model, HttpSession session, @PathVariable int forumentryid, @PathVariable int commentid){
         
-        User user = userRepository.findByName("Mariam").get(); //TODO: get user from session
+        User user = userService.getSessionUser(session);
         customListService.addComment(commentid, user.getComments().getId());
 
         return "redirect:/game/" + forumEntryService.get(forumentryid).getGame().getId() + "/" + forumentryid;

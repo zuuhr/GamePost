@@ -50,12 +50,4 @@ public class Forum {
     }
 
     //#endregion
-
-    //#region Methods
-
-    public void sortBy(){
-        //TODO: pues eso. Hacer el método sortBy.
-    }
-
-    //#endregion
 }

@@ -18,12 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import static org.springframework.web.servlet
         .support.ServletUriComponentsBuilder.fromCurrentRequest;
 
-import es.codeurjc.gamepost.objects.CustomList;
 import es.codeurjc.gamepost.objects.Description;
 import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Game;
-import es.codeurjc.gamepost.objects.ListElement;
-import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.objects.enums.Genre;
 import es.codeurjc.gamepost.objects.enums.Platform;
 import es.codeurjc.gamepost.repositories.DescriptionRepository;
@@ -79,7 +76,6 @@ public class GameService {
 
                 List<ForumEntry> posts = forumEntryRepository.findByGame(game.get());
                 model.addAttribute("posts", posts);
-                // TODO: model.addAttribute("user", user);
                 
                 return true;
         } else {

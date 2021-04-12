@@ -1,21 +1,17 @@
 package es.codeurjc.gamepost.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
-import es.codeurjc.gamepost.objects.Notification;
 import es.codeurjc.gamepost.objects.User;
-import es.codeurjc.gamepost.repositories.UserRepository;
 import es.codeurjc.gamepost.services.UserService;
 
-import java.util.List;
-
 import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +23,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-        /*
+    /*
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers(){
         List<User> users = userRepository.findAll();
@@ -40,27 +36,29 @@ public class UserController {
     }*/
 
     @RequestMapping("/signIn")
-    public String signIn(Model model, @RequestParam String username, @RequestParam String password){
+    public String signIn(Model model, HttpSession session, @RequestParam String username, @RequestParam String password){
         Optional<User> user = userService.get(username);
         if(user.isPresent()){
            //model.repeatedUser = true --> Displays a message in the Sign in page "The name is not available." 
            return "signin";
         }else{
-            userService.submit(username, password);
+            userService.submit(session, username, password);
             return "redirect:/";
         }
     }
 
     @RequestMapping("/logIn")
-    public String logIn(Model model, @RequestParam String username, @RequestParam String password){
+    public String logIn(Model model, HttpSession session, @RequestParam String username, @RequestParam String password){
         Optional<User> user = userService.get(username);
         if(user.isPresent()){
             if(user.get().getPassword().compareTo(password) == 0){
                 log.info("INFO: User logged.");
+                userService.logIn(session, user.get());
+                return "redirect:/";
             }else{
                 log.info("INFO: Wrong password.");
+                return "login";
             }
-           return "redirect:/";
         }else{
             log.info("INFO: The user can not be found.");
             return "login";

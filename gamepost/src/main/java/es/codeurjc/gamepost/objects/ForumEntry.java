@@ -1,6 +1,5 @@
 package es.codeurjc.gamepost.objects;
 
-import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -128,7 +127,8 @@ public class ForumEntry extends ListElement{
         }
 
         //If the parent already is in the result List, insert the child after him.
-        //TODO: This does not work. It seems it doesn't propagate the order to the database.
+        //This does not work. It seems it doesn't propagate the order to the database.
+        // Thus, sort method will be used in CommentService
         else
         {
             int index = comments.indexOf(parent) + 1;
@@ -141,6 +141,7 @@ public class ForumEntry extends ListElement{
                 result = true;
             }
         }
+        
 
         return result;
     }

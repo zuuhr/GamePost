@@ -31,14 +31,11 @@ public class NotificationService {
     @Autowired
     private UserRepository userRepository;
 
-    public void show(Model model){
+    public void show(Model model, User user){
         
-        Optional<User> user = userRepository.findByName("Mariam");
-        if(user.isPresent()){
-            List<Notification> notifications = user.get().getNotifications();
-            model.addAttribute("notification", notifications);
-        }
-
+        List<Notification> notifications = user.getNotifications();
+        model.addAttribute("notification", notifications);
+        
         return;
     }
 
