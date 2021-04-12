@@ -21,11 +21,11 @@ public class CommentController {
     private CommentService commentService;
 
     @RequestMapping("/game/{gameid}/{forumid}/{commentid}/reply")
-    public String submitComment(Model model, @PathVariable int gameid, 
+    public String submitComment(Model model, HttpSession session, @PathVariable int gameid, 
             @PathVariable int forumid, @PathVariable int commentid, @RequestParam String contentText) {
         
         // Submit
-        commentService.submit(/*httpSession,*/ gameid, forumid, commentid, contentText);
+        commentService.submit(session, gameid, forumid, commentid, contentText);
 
         // Return
         log.info("Comment submitted.");

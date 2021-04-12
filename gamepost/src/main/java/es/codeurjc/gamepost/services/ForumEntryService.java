@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -16,7 +18,6 @@ import es.codeurjc.gamepost.objects.CustomList;
 import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Game;
 import es.codeurjc.gamepost.objects.ListElement;
-import es.codeurjc.gamepost.objects.Notification;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.CustomListRepository;
 import es.codeurjc.gamepost.repositories.ForumEntryRepository;
@@ -39,6 +40,9 @@ public class ForumEntryService {
     CustomListRepository customListRepository;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     FollowersService followersService;
 
     @Autowired
@@ -59,16 +63,15 @@ public class ForumEntryService {
             return null;
     }
 
-    public ForumEntry submit(int gameid, String titleText, String bodyText){
+    public ForumEntry submit(HttpSession session, int gameid, String titleText, String bodyText){
         
-        //TODO: pick user from session
-        User users_session = userRepository.findByName("Mariam").get();
+        User user = userService.getSessionUser(session);
         Content content = new Content(bodyText, "");
         Game game = gameRepository.findById(gameid).get();
         
-        ForumEntry fe = forumEntryRepository.save(new ForumEntry(titleText, users_session, game, content));
+        ForumEntry fe = forumEntryRepository.save(new ForumEntry(titleText, user, game, content));
 
-        // TODO: Send a notification to all the users that follow this game
+        //Send a notification to the users that follow this game
         notificationService.sendNotificationToFollowers(gameid, fe);
 
         return fe;

@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -40,10 +42,13 @@ public class CustomListService {
     @Autowired
     CommentRepository commentRepository;
 
+    @Autowired
+    UserService userService;
+
     //#endregion
 
-    public CustomList<ListElement> submit(String nameText){
-        User author = userRepository.findAll().get(0);   //TODO: Coger user de sesión
+    public CustomList<ListElement> submit(HttpSession session, String nameText){
+        User author = userService.getSessionUser(session);
         
         CustomList<ListElement> cl = new CustomList<ListElement>(nameText, author);
         author.addMyList(cl);
@@ -53,18 +58,16 @@ public class CustomListService {
     }
 
     // TODO: Check this methods modularity.
-    public void showIndex(Model model){
-        // TODO: get user from session
-        Optional<User> user = userRepository.findByName("Mariam");
-        if (user.isPresent()) {
-            model.addAttribute("user", user.get());
+    public void showIndex(Model model, User user){
 
-            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
-            model.addAttribute("list", customLists);
+        model.addAttribute("user", user);
 
-            List<CustomList<ListElement>> gameLists = getUserCustomListsGame(user.get());
-            model.addAttribute("customlist", gameLists);
-        }
+        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
+        model.addAttribute("list", customLists);
+
+        List<CustomList<ListElement>> gameLists = getUserCustomListsGame(user);
+        model.addAttribute("customlist", gameLists);
+        
     }
 
     private List<CustomList<ListElement>> getUserCustomListsGame(User user) {
@@ -81,15 +84,11 @@ public class CustomListService {
         return gameLists;
     }
 
-    public void view(Model model, int userId, int listId){
+    public void view(Model model, User user, int listId){
 
-        // TODO: get user from session
-        Optional<User> user = userRepository.findByName("Mariam");
-        if (user.isPresent()) {
-            List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
-            model.addAttribute("list", customLists);
-            model.addAttribute("user", user.get());
-        }
+        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
+        model.addAttribute("list", customLists);
+        model.addAttribute("user", user);
         
         // Show forum entries
         model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());

@@ -1,5 +1,7 @@
 package es.codeurjc.gamepost.controllers;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.codeurjc.gamepost.services.CustomListService;
 import es.codeurjc.gamepost.services.ForumEntryService;
 import es.codeurjc.gamepost.services.GameService;
+import es.codeurjc.gamepost.services.UserService;
 
 @Controller
 public class SearchEngineController {
@@ -22,11 +25,14 @@ public class SearchEngineController {
     @Autowired
     ForumEntryService forumEntryService;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping("/search")
-    public String search(Model model, @RequestParam String searchText){
+    public String search(Model model, HttpSession session, @RequestParam String searchText){
         
         gameService.search(model, searchText);
-        customListService.showIndex(model);
+        customListService.showIndex(model, userService.getSessionUser(session));
         forumEntryService.showIndexLatestForumEntries(model);
         
         return "searchresults";

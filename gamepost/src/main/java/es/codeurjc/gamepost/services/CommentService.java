@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,9 @@ public class CommentService {
     //#region Dependencies
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     UserRepository userRepository;
 
     @Autowired
@@ -35,11 +40,10 @@ public class CommentService {
 
     //#endregion
 
-    public Comment submit(/*HttpSession httpSession,*/ int gameId, int forumId, int commentId, String contentText){
-        // TODO: Coger user de sesión
-        //User author = (User) model.getAttribute("user"); 
+    public Comment submit(HttpSession session, int gameId, int forumId, int commentId, String contentText){        
         
-        User author = userRepository.findByName("Julen").get();
+        User author = userService.getSessionUser(session);
+        //User author = userRepository.findByName("Julen").get();
         ForumEntry forumEntry = forumEntryRepository.findById(forumId).get();
         
         //Generate content 
