@@ -24,9 +24,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // TODO: configure password encoder.
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
-    
 
 
     @Override
