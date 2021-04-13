@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +22,8 @@ public class User {
     int id;
     
     String name;
-    String password; //hashed
+    String password;
+    private String role;
 
     @OneToOne(cascade=CascadeType.ALL) CustomList<ForumEntry> forumEntries;
     @OneToOne(cascade=CascadeType.ALL) CustomList<Comment> comments;
@@ -34,9 +37,10 @@ public class User {
 
     public User() {}
 
-    public User(String name, String password){
+    public User(String name, String password, String role){
         this.name = name;
         this.password = password;
+        this.role = role;
         
         this.forumEntries = new CustomList<ForumEntry>("[ForumEntries]", this);
         this.comments = new CustomList<Comment>("[Comments]", this);
@@ -67,6 +71,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole(){
+        return role;
     }
 
     public CustomList<ForumEntry> getForumEntries() {

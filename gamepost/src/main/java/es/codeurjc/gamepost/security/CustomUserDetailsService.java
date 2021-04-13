@@ -30,9 +30,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         userBuilder = org.springframework.security.core.userdetails.User.withUsername(username);
         userBuilder.disabled(false);
         userBuilder.password(user.get().getPassword());
-        userBuilder.authorities(new SimpleGrantedAuthority("ROLE_USER"));
+        userBuilder.authorities(new SimpleGrantedAuthority(user.get().getRole()));
         
         return userBuilder.build();
     }
-    
 }

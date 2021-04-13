@@ -15,6 +15,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Autowired
     private CustomUserDetailsService userDetailsService;
+    
+    //private CustomUserAuthenticationProvider authenticationProvider;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
@@ -25,6 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        //auth.authenticationProvider(authenticationProvider);
     }
 
 
@@ -33,25 +36,32 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // TODO: Assign public pages.
         // Public pages
         http.authorizeRequests().antMatchers("/").permitAll();
+        http.authorizeRequests().antMatchers("/login").permitAll();
+        http.authorizeRequests().antMatchers("/signin").permitAll();
+        http.authorizeRequests().antMatchers("/signIn").permitAll();
         //http.authorizeRequests().antMatchers("/").permitAll();
         //http.authorizeRequests().antMatchers("/").permitAll();
+        
+        //http.authorizeRequests().anyRequest().authenticated();    //All public
 
         // TODO: Assign private pages.
+        // TODO: Assign roles.
         // Private pages
-        http.authorizeRequests().antMatchers("/").hasAnyRole("USER");   // TODO: Assign roles.
-        //http.authorizeRequests().antMatchers("/").hasAnyRole("ADMIN");
+        //http.authorizeRequests().antMatchers("/").hasAnyRole("USER");   // Testing
+        http.authorizeRequests().antMatchers("/notifications").hasAnyRole("ROLE_USER");
+        http.authorizeRequests().antMatchers("/game/newGame").hasAnyRole("ROLE_ADMIN");
 
         // Login form
-        http.formLogin().loginPage("/login");
+        http.formLogin().loginPage("/logIn").permitAll();
         http.formLogin().usernameParameter("username");
         http.formLogin().passwordParameter("password");
-        http.formLogin().defaultSuccessUrl("/");
-        http.formLogin().failureUrl("/login");
+        http.formLogin().defaultSuccessUrl("/logInSuccess", true);
+        http.formLogin().failureUrl("/login").permitAll();
 
         // TODO: Define propper logout.
         // Logout
-        http.logout().logoutUrl("/logout");
-        http.logout().logoutSuccessUrl("/");
+        http.logout().logoutUrl("/logOut").permitAll();
+        http.logout().logoutSuccessUrl("/").permitAll();
 
         // Disable CSRF at the moment
         http.csrf().disable();

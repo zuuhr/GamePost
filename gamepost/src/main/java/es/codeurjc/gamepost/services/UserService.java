@@ -2,6 +2,7 @@ package es.codeurjc.gamepost.services;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -35,13 +36,14 @@ public class UserService {
         return userRepository.findByName(username);
     }
 
-    public void submit(HttpSession session, String username, String password){
+    public void submit(Model model, HttpServletRequest request, HttpSession session, String username, String password){
         User user = userRepository.save(new User(
                 username, 
-                passwordEncoder.encode(password)
+                passwordEncoder.encode(password),
+                "ROLE_USER"
             ));
 
-        logIn(session, user);
+        logIn(model, request, session, user);
     }
 
     public boolean checkPassword(String username, String password){
@@ -60,9 +62,24 @@ public class UserService {
         }
     }
 
-    public void logIn(HttpSession session, User user){
+    //TODO: Check propper role assignment
+    public void logIn(Model model, HttpServletRequest request, HttpSession session, User user){
+        setRoleUserOrAdmin(model, request);
+
         session.setAttribute("username", user.getName());
         session.setAttribute("logged", true);
+    }
+
+    public void setRoleAnonymous(Model model, HttpServletRequest request){
+        model.addAttribute("anonymous", true);
+        model.addAttribute("user", false);
+        model.addAttribute("admin", false);
+    }
+
+    public void setRoleUserOrAdmin(Model model, HttpServletRequest request){
+        model.addAttribute("anonymous", false);
+        model.addAttribute("user", request.isUserInRole("USER"));
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
     }
 
     public void loadInfo(Model model, HttpSession session){
