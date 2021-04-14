@@ -1,27 +1,9 @@
 package es.codeurjc.gamepost;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
-import es.codeurjc.gamepost.objects.Comment;
-import es.codeurjc.gamepost.objects.Content;
-import es.codeurjc.gamepost.objects.CustomList;
-import es.codeurjc.gamepost.objects.Description;
-import es.codeurjc.gamepost.objects.ForumEntry;
-import es.codeurjc.gamepost.objects.Game;
-import es.codeurjc.gamepost.objects.ListElement;
-import es.codeurjc.gamepost.objects.Notification;
-import es.codeurjc.gamepost.objects.User;
-import es.codeurjc.gamepost.objects.enums.Genre;
-import es.codeurjc.gamepost.objects.enums.Platform;
 import es.codeurjc.gamepost.repositories.CustomListRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;

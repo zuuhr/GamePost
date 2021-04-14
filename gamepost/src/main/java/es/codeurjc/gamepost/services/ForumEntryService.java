@@ -106,7 +106,7 @@ public class ForumEntryService {
             if (user.isPresent()) {
                 List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
                 model.addAttribute("list", customLists);
-                model.addAttribute("user", user.get());
+                //model.addAttribute("user", user.get());
                 // get forumentry lists
                 List<CustomList<ListElement>> forumEntryLists = getUserCustomListsForumEntry(user.get());
                 model.addAttribute("customforumentrylist", forumEntryLists);
