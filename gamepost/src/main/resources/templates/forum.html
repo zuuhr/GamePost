@@ -9,7 +9,7 @@
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1 text-white">{{forumentry.author.name}}</h5>
                 <small class="text-white">{{forumentry.createdOn}}</small>
-                {{#user}}
+                {{#roleUser}}
                 <div>
                     <a href="/list/forumentries/add/forumentry/{{forumentry.id}}">
                         <button class="btn btn-secondary btn-block" type="button">Follow</button>
@@ -28,14 +28,14 @@
                         </ul>
                     </div>
                 </div>
-                {{/user}}
+                {{/roleUser}}
             </div>
             <p class="mb-1 bg-light mt-1">{{forumentry.content.text}}</p>
-            {{#admin}}
+            {{#roleAdmin}}
             <button class="button"
                 onclick="window.location.href='/game/{{game.id}}/{{forumentry.id}}/{{forumentry.id}}/delete';">Delete</button>
-            {{/admin}}
-            {{#user}}
+            {{/roleAdmin}}
+            {{#roleUser}}
             <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse"
                 href="#collapseReply{{forumentry.id}}">Reply</button>
             <div class="collapse" id="collapseReply{{forumentry.id}}">
@@ -47,7 +47,7 @@
                     </form>
                 </div>
             </div>
-            {{/user}}
+            {{/roleUser}}
             <ul class="list-group mt-4">
                 {{#comments}}
 
@@ -57,11 +57,11 @@
                         <small>{{postedOn}}</small>
                     </div>
                     <p class="mb-1">{{content.text}}</p>
-                    {{#admin}}
+                    {{#roleAdmin}}
                     <button class="button"
                         onclick="window.location.href='/game/{{game.id}}/{{forumentry.id}}/{{commentid}}/delete';">Delete</button>
-                    {{/admin}}
-                    {{#user}}
+                    {{/roleAdmin}}
+                    {{#roleUser}}
                     <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse"
                         href="#collapseReply{{commentid}}">Reply</button>
                     <div class="collapse" id="collapseReply{{commentid}}">
@@ -90,7 +90,7 @@
                             {{/customcommentlist}}
                         </ul>
                     </div>
-                    {{/user}}
+                    {{/roleUser}}
                 </li>
                 {{/comments}}
             </ul>
