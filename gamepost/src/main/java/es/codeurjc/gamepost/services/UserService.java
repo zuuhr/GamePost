@@ -64,23 +64,30 @@ public class UserService {
 
     //TODO: Check propper role assignment
     public void logIn(Model model, HttpServletRequest request, HttpSession session, User user){
-        setRoleUserOrAdmin(model, request);
+        setRoleUserOrAdmin(model, request, user);
 
         session.setAttribute("username", user.getName());
         session.setAttribute("logged", true);
     }
 
     public void setRoleAnonymous(Model model, HttpServletRequest request){
-        model.addAttribute("anonymous", true);
-        model.addAttribute("user", false);
-        model.addAttribute("admin", false);
+        model.addAttribute("roleAnonymous", true);
+        model.addAttribute("roleUser", false);
+        model.addAttribute("user", null);
+        model.addAttribute("roleAdmin", false);
+
+        log.info("INFO: Role anonymous: " + model.getAttribute("roleAnonymous"));
+        log.info("INFO: Role user: " + request.isUserInRole("ROLE_USER"));
+        log.info("INFO: Role admin: " + request.isUserInRole("ROLE_ADMIN"));
     }
 
-    public void setRoleUserOrAdmin(Model model, HttpServletRequest request){
-        model.addAttribute("anonymous", false);
-        model.addAttribute("user", request.isUserInRole("ROLE_USER"));
-        model.addAttribute("admin", request.isUserInRole("ROLE_ADMIN"));
+    public void setRoleUserOrAdmin(Model model, HttpServletRequest request, User user){
+        model.addAttribute("roleAnonymous", false);
+        model.addAttribute("roleUser", request.isUserInRole("ROLE_USER"));
+        model.addAttribute("user", user);
+        model.addAttribute("roleAdmin", request.isUserInRole("ROLE_ADMIN"));
 
+        log.info("INFO: Role anonymous: " + model.getAttribute("roleAnonymous"));
         log.info("INFO: Role user: " + request.isUserInRole("ROLE_USER"));
         log.info("INFO: Role admin: " + request.isUserInRole("ROLE_ADMIN"));
     }

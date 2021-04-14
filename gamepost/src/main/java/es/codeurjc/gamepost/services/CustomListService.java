@@ -60,7 +60,7 @@ public class CustomListService {
     // TODO: Check this methods modularity.
     public void showIndex(Model model, User user){
 
-        model.addAttribute("user", user);
+        //model.addAttribute("user", user);
 
         List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
         model.addAttribute("list", customLists);
@@ -88,7 +88,7 @@ public class CustomListService {
 
         List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
         model.addAttribute("list", customLists);
-        model.addAttribute("user", user);
+        //model.addAttribute("user", user);
         
         // Show forum entries
         model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
