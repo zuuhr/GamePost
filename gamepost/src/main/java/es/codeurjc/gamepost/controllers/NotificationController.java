@@ -3,6 +3,7 @@ package es.codeurjc.gamepost.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,7 +17,7 @@ public class NotificationController {
     NotificationRepository notificationRepository;
 
     //TODO: Associate this method with the form in the web
-    @RequestMapping("/submit/Notification")
+    @PostMapping("/submit/Notification")
     public String submitNotification(Model model, @RequestParam String title, 
         @RequestParam String origin)
         {        

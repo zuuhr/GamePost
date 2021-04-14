@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,7 +21,7 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @RequestMapping("/game/{gameid}/{forumid}/{commentid}/reply")
+    @PostMapping("/game/{gameid}/{forumid}/{commentid}/reply")
     public String submitComment(Model model, HttpSession session, @PathVariable int gameid, 
             @PathVariable int forumid, @PathVariable int commentid, @RequestParam String contentText) {
         

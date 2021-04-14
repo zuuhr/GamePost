@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -47,7 +48,7 @@ public class ForumEntryController {
     }
 
     // TODO: Associate this method with the form in the web
-    @RequestMapping("/game/{gameid}/submitforumentry")
+    @PostMapping("/game/{gameid}/submitforumentry")
     public String submitForumEntry(Model model, HttpSession session, @PathVariable int gameid, @RequestParam String titleText,
             @RequestParam String bodyText) {
         
