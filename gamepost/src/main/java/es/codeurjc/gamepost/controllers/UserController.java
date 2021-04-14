@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
@@ -39,7 +40,7 @@ public class UserController {
         }
     }*/
 
-    @RequestMapping("/signIn")
+    @PostMapping("/signin")
     public String signIn(Model model, HttpServletRequest request, HttpSession session, @RequestParam String username, @RequestParam String password){
         Optional<User> user = userService.get(username);
         if(user.isPresent()){
@@ -52,7 +53,7 @@ public class UserController {
     }
 
     /*
-    @RequestMapping("/logIn")
+    @PostMapping("/login")
     public String logIn(Model model, HttpServletRequest request, HttpSession session, @RequestParam String username, @RequestParam String password){
         
         if(userService.checkPassword(username, password)){
@@ -67,13 +68,13 @@ public class UserController {
     }
     */
 
-    @GetMapping("logInSuccess")
+    @GetMapping("/loginSuccess")
     public String logInSuccess(Model model, Authentication auth, HttpServletRequest request, HttpSession session){
         userService.logIn(model, request, session, userService.get(auth.getName()).get());
         return "redirect:/";
     }
 
-    @GetMapping("/logOut")
+    @GetMapping("/logout")
     public String logOut(HttpSession session){
         
         session.invalidate();

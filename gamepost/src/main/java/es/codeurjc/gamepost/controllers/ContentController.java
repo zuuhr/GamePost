@@ -2,7 +2,7 @@ package es.codeurjc.gamepost.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.gamepost.services.ContentService;
@@ -14,7 +14,7 @@ public class ContentController {
     private ContentService contentService;
 
     //TODO: Associate this method with the form in the web
-    @RequestMapping("/submit/Content")
+    @PostMapping("/submit/Content")
     public String submitContent(@RequestParam String text, @RequestParam String media)
     {
         contentService.submit(text, media);

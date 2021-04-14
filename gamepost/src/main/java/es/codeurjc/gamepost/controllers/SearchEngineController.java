@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,7 +29,7 @@ public class SearchEngineController {
     @Autowired
     UserService userService;
 
-    @RequestMapping("/search")
+    @PostMapping("/search")
     public String search(Model model, HttpSession session, @RequestParam String searchText){
         
         gameService.search(model, searchText);

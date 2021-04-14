@@ -8,6 +8,7 @@ import java.util.Arrays;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
 import es.codeurjc.gamepost.objects.Comment;
@@ -43,19 +44,23 @@ public class InitInfoController {
     UserRepository userRepository;
 
     @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
     CustomListRepository customListRepository;
     
     /*
     @PostConstruct
     public void initUsers(){
         userRepository.save(
-            new User("user", "pass", "ROLE_USER")
+            new User("user", passwordEncoder.encode("pass"), "ROLE_USER")
         );
 
         userRepository.save(
-            new User("admin", "adminpass", "ROLE_ADMIN")
+            new User("admin", passwordEncoder.encode("adminpass"), "ROLE_ADMIN")
         );
     }
+    
 
     @PostConstruct
     public void initDatabase() throws ParseException {
@@ -79,10 +84,10 @@ public class InitInfoController {
         platformRepository.save(new Platform("Android"));
         platformRepository.save(new Platform("IOS"));
 
-        userRepository.save(new User("Julen", "wordpass", "ROLE_USER"));
-        userRepository.save(new User("Dani", "123", "ROLE_USER"));
-        userRepository.save(new User("Maria", "987", "ROLE_USER"));
-        User user = new User("Mariam", "password", "ROLE_USER");
+        userRepository.save(new User("Julen", passwordEncoder.encode("wordpass"), "ROLE_USER"));
+        userRepository.save(new User("Dani", passwordEncoder.encode("123"), "ROLE_USER"));
+        userRepository.save(new User("Maria", passwordEncoder.encode("987"), "ROLE_USER"));
+        User user = new User("Mariam", passwordEncoder.encode("password"), "ROLE_USER");
 
         Notification n0 = new Notification("/", "Welcome!");
         Notification n1 = new Notification("/", "Hello!");

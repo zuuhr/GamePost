@@ -78,8 +78,11 @@ public class UserService {
 
     public void setRoleUserOrAdmin(Model model, HttpServletRequest request){
         model.addAttribute("anonymous", false);
-        model.addAttribute("user", request.isUserInRole("USER"));
-        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+        model.addAttribute("user", request.isUserInRole("ROLE_USER"));
+        model.addAttribute("admin", request.isUserInRole("ROLE_ADMIN"));
+
+        log.info("INFO: Role user: " + request.isUserInRole("ROLE_USER"));
+        log.info("INFO: Role admin: " + request.isUserInRole("ROLE_ADMIN"));
     }
 
     public void loadInfo(Model model, HttpSession session){

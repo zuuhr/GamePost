@@ -38,7 +38,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/").permitAll();
         http.authorizeRequests().antMatchers("/login").permitAll();
         http.authorizeRequests().antMatchers("/signin").permitAll();
-        http.authorizeRequests().antMatchers("/signIn").permitAll();
         //http.authorizeRequests().antMatchers("/").permitAll();
         //http.authorizeRequests().antMatchers("/").permitAll();
         
@@ -48,19 +47,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // TODO: Assign roles.
         // Private pages
         //http.authorizeRequests().antMatchers("/").hasAnyRole("USER");   // Testing
-        http.authorizeRequests().antMatchers("/notifications").hasAnyRole("ROLE_USER");
-        http.authorizeRequests().antMatchers("/game/newGame").hasAnyRole("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers("/notifications").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/game/newgame").hasAnyRole("ADMIN");
 
         // Login form
-        http.formLogin().loginPage("/logIn").permitAll();
+        http.formLogin().loginPage("/login").permitAll();
         http.formLogin().usernameParameter("username");
         http.formLogin().passwordParameter("password");
-        http.formLogin().defaultSuccessUrl("/logInSuccess", true);
+        http.formLogin().defaultSuccessUrl("/loginSuccess", true);
         http.formLogin().failureUrl("/login").permitAll();
 
         // TODO: Define propper logout.
         // Logout
-        http.logout().logoutUrl("/logOut").permitAll();
+        http.logout().logoutUrl("/logout").permitAll();
         http.logout().logoutSuccessUrl("/").permitAll();
 
         // Disable CSRF at the moment
