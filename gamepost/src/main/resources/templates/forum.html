@@ -5,10 +5,11 @@
         <div class="container rounded border p-4">
             <h1 class="text-white text-center" style="font-family: Impact;">{{game.description.name}} </h1>
             <h2 class="text-white text-center" style="font-family: Impact;">{{forumentry.title}} </h2>
-            
+
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1 text-white">{{forumentry.author.name}}</h5>
                 <small class="text-white">{{forumentry.createdOn}}</small>
+                {{#user}}
                 <div>
                     <a href="/list/forumentries/add/forumentry/{{forumentry.id}}">
                         <button class="btn btn-secondary btn-block" type="button">Follow</button>
@@ -27,10 +28,14 @@
                         </ul>
                     </div>
                 </div>
+                {{/user}}
             </div>
             <p class="mb-1 bg-light mt-1">{{forumentry.content.text}}</p>
-            <!-- <button class="button"
-                onclick="window.location.href='/reply/{{game.id}}/{{forumentry.id}}/{{forumentry.id}}';">Reply</button> -->
+            {{#admin}}
+            <button class="button"
+                onclick="window.location.href='/game/{{game.id}}/{{forumentry.id}}/{{forumentry.id}}/delete';">Delete</button>
+            {{/admin}}
+            {{#user}}
             <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse"
                 href="#collapseReply{{forumentry.id}}">Reply</button>
             <div class="collapse" id="collapseReply{{forumentry.id}}">
@@ -42,18 +47,21 @@
                     </form>
                 </div>
             </div>
-            
+            {{/user}}
             <ul class="list-group mt-4">
                 {{#comments}}
-             
+
                 <li class="list-group-item ms-{{childness}}" style="margin-left: 1px;">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{author.name}}</h5>
                         <small>{{postedOn}}</small>
                     </div>
                     <p class="mb-1">{{content.text}}</p>
-                    <!-- <button class="button"
-                        onclick="window.location.href='/reply/{{game.id}}/{{forumentry.id}}/{{commentid}}';">Reply</button> -->
+                    {{#admin}}
+                    <button class="button"
+                        onclick="window.location.href='/game/{{game.id}}/{{forumentry.id}}/{{commentid}}/delete';">Delete</button>
+                    {{/admin}}
+                    {{#user}}
                     <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse"
                         href="#collapseReply{{commentid}}">Reply</button>
                     <div class="collapse" id="collapseReply{{commentid}}">
@@ -68,21 +76,23 @@
                     <a href="/list/comments/add/comment/{{forumentry.id}}/{{commentid}}">
                         <button class="btn btn-secondary btn-block" type="button">Follow</button>
                     </a>
-                    <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse" href="#collapseAddList{{commentid}}">Add to
+                    <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse"
+                        href="#collapseAddList{{commentid}}">Add to
                         List</button>
                     <div class="collapse" id="collapseAddList{{commentid}}">
                         <ul>
                             {{#customcommentlist}}
                             <li class="mt-2">
-                                <a href="/list/add/comment/{{id}}/{{forumEntry.id}}/{{commentid}}" >
+                                <a href="/list/add/comment/{{id}}/{{forumEntry.id}}/{{commentid}}">
                                     <button class="btn btn-secondary btn-block" type="button">{{name}}</button>
                                 </a>
                             </li>
                             {{/customcommentlist}}
                         </ul>
-                    </div>           
+                    </div>
+                    {{/user}}
                 </li>
-            {{/comments}}
+                {{/comments}}
             </ul>
         </div>
     </div>
@@ -91,44 +101,44 @@
 {{>latestposts}}
 </div>
 <script>
-     Context.prototype.lookup = function (name) {
-    var cache = this.cache;
+    Context.prototype.lookup = function (name) {
+        var cache = this.cache;
 
-    var value;
-    if (name in cache) {
-      console.log(name + ' found');
-      value = cache[name];
-    } else {
-      var context = this, names, index;
-
-      while (context) {
-        if (name.indexOf('.') > 0) {
-          value = context.view;
-          names = name.split('.');
-          index = 0;
-
-          while (value != null && index < names.length)
-            value = value[names[index++]];
-        } else if(name.match(/^\.\.\//)) {
-          name = name.replace(/^\.\.\//, '');
+        var value;
+        if (name in cache) {
+            console.log(name + ' found');
+            value = cache[name];
         } else {
-          value = context.view[name];
+            var context = this, names, index;
+
+            while (context) {
+                if (name.indexOf('.') > 0) {
+                    value = context.view;
+                    names = name.split('.');
+                    index = 0;
+
+                    while (value != null && index < names.length)
+                        value = value[names[index++]];
+                } else if (name.match(/^\.\.\//)) {
+                    name = name.replace(/^\.\.\//, '');
+                } else {
+                    value = context.view[name];
+                }
+
+                if (value != null)
+                    break;
+
+                context = context.parent;
+            }
+
+            cache[name] = value;
         }
 
-        if (value != null)
-          break;
+        if (isFunction(value))
+            value = value.call(this.view);
 
-        context = context.parent;
-      }
-
-      cache[name] = value;
-    }
-
-    if (isFunction(value))
-      value = value.call(this.view);
-
-    return value;
-  };
+        return value;
+    };
 </script>
 
 <!-- Optional JavaScript; keep it at last-->
