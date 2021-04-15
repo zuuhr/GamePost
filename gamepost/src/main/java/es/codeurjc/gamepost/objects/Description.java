@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import es.codeurjc.gamepost.objects.enums.Genre;
 import es.codeurjc.gamepost.objects.enums.Platform;
 
@@ -21,8 +23,11 @@ public class Description {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
+
     @OneToOne(mappedBy = "description")
+    @JsonIgnore
     Game game;
+
     String name;
     @ManyToMany List<Genre> genre;
     int numPlayers;

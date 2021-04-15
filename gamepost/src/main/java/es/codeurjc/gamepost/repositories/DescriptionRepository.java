@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import es.codeurjc.gamepost.objects.Description;
+import es.codeurjc.gamepost.objects.enums.Genre;
 
 public interface DescriptionRepository extends JpaRepository<Description, Integer>{
     
@@ -75,4 +76,8 @@ public interface DescriptionRepository extends JpaRepository<Description, Intege
         return resultList;
         */
     }
+
+
+    List<Description> findByGenre(Genre genre);
+    List<Description> findByDeveloper(String developer);
 }
