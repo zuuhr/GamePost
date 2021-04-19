@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import static org.springframework.web.servlet
@@ -101,10 +102,15 @@ public class GameService {
         
         //Get games from API Rest
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://localhost:8443/indexByPreferences/" + user.getId();  //TODO: Watch the url match the port correctly
+        //String url = "https://localhost:8443/indexByPreferences/" + user.getId();  //TODO: Watch the url match the port correctly
+        String url = "http://localhost:8081/indexByPreferences/" + user.getId();
 
-        GamesResponse data = restTemplate.getForObject(url, GamesResponse.class);
-        model.addAttribute("games", data);
+        try{
+            GamesResponse data = restTemplate.getForObject(url, GamesResponse.class);
+            model.addAttribute("games", data.items);
+        }catch(HttpClientErrorException notFound){
+            showIndexLatestUpdatedGames(model);
+        }
 
         return;
     }
