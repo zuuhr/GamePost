@@ -33,7 +33,13 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
     
     public Optional<User> get(String username){
-        return userRepository.findByName(username);
+        log.info("INFO: Wanted username is " + username);
+        Optional<User> user = userRepository.findByName(username);
+
+        if(!user.isPresent())
+            log.info("INFO: Wanted username is not present");
+
+        return user;
     }
 
     public void submit(Model model, HttpServletRequest request, HttpSession session, String username, String password){
@@ -70,6 +76,15 @@ public class UserService {
         session.setAttribute("logged", true);
     }
 
+    public void logOut(Model model, HttpServletRequest request, HttpSession session){
+        setRoleAnonymous(model, request);
+
+        session.setAttribute("username", null);
+        session.setAttribute("logged", false);
+
+        return;
+    }
+
     public void setRoleAnonymous(Model model, HttpServletRequest request){
         model.addAttribute("roleAnonymous", true);
         model.addAttribute("roleUser", false);
@@ -89,6 +104,7 @@ public class UserService {
 
         log.info("INFO: Role anonymous: " + model.getAttribute("roleAnonymous"));
         log.info("INFO: Role user: " + request.isUserInRole("ROLE_USER"));
+        log.info("INFO: User name: " + ((User) model.getAttribute("user")).getName());
         log.info("INFO: Role admin: " + request.isUserInRole("ROLE_ADMIN"));
     }
 

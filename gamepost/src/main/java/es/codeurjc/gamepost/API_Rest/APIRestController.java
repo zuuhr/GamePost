@@ -9,18 +9,19 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.codeurjc.gamepost.objects.CustomList;
 import es.codeurjc.gamepost.objects.Description;
 import es.codeurjc.gamepost.objects.Game;
 import es.codeurjc.gamepost.objects.Notification;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.objects.enums.Genre;
 import es.codeurjc.gamepost.repositories.DescriptionRepository;
+import es.codeurjc.gamepost.repositories.UserRepository;
 
 @RestController
 public class APIRestController {
@@ -28,8 +29,14 @@ public class APIRestController {
     @Autowired
     DescriptionRepository descriptionRepository;
 
-    @GetMapping("/indexByPreferences")  // Because I want to get existing games
-    public List<Game> indexByPreferences(User user){
+    @Autowired
+    UserRepository userRepository;
+
+    @GetMapping("/indexByPreferences/{id}")  // Because I want to get existing games
+    public List<Game> indexByPreferences(@PathVariable int userId){
+
+        // Get user
+        User user = userRepository.findById(userId).get();
 
         //Get inputs
         //Tener en cuenta genero y developers
@@ -46,7 +53,7 @@ public class APIRestController {
         //Operate
         HashMap<Game, Integer> result = new HashMap<Game, Integer>();
         for (Genre genre : genres) {
-            List<Description> tmp = descriptionRepository.findByGenre(genre);
+            List<Description> tmp = descriptionRepository.findByGenreContaining(genre);
             
             for (Description descr : tmp) {
                 Game game = descr.getGame();

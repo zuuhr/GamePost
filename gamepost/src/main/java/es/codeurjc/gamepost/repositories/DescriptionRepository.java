@@ -78,6 +78,6 @@ public interface DescriptionRepository extends JpaRepository<Description, Intege
     }
 
 
-    List<Description> findByGenre(Genre genre);
+    List<Description> findByGenreContaining(Genre genre);
     List<Description> findByDeveloper(String developer);
 }

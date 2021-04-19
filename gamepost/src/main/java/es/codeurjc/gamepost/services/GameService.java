@@ -10,17 +10,22 @@ import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import static org.springframework.web.servlet
         .support.ServletUriComponentsBuilder.fromCurrentRequest;
 
+import es.codeurjc.gamepost.API_Rest.GamesResponse;
 import es.codeurjc.gamepost.objects.Description;
 import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Game;
+import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.objects.enums.Genre;
 import es.codeurjc.gamepost.objects.enums.Platform;
 import es.codeurjc.gamepost.repositories.DescriptionRepository;
@@ -86,6 +91,20 @@ public class GameService {
     public void showIndexLatestUpdatedGames(Model model){
         List<Game> games = gameRepository.findTop20ByOrderByForumLastUpdatedOnDesc();
         model.addAttribute("games", games);
+
+        return;
+    }
+
+    private Logger log = LoggerFactory.getLogger(GameService.class);
+    public void showIndexGamesUserPreferences(Model model, User user){
+        //log.info("INFO: User id is " + user.getId());
+        
+        //Get games from API Rest
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "https://localhost:8443/indexByPreferences/" + user.getId();  //TODO: Watch the url match the port correctly
+
+        GamesResponse data = restTemplate.getForObject(url, GamesResponse.class);
+        model.addAttribute("games", data);
 
         return;
     }

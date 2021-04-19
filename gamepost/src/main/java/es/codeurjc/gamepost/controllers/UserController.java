@@ -15,6 +15,7 @@ import es.codeurjc.gamepost.services.UserService;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -75,8 +76,9 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public String logOut(HttpSession session){
+    public String logOut(Model model, HttpServletRequest request, HttpSession session){
         
+        userService.logOut(model, request, session);
         session.invalidate();
         
         return "redirect:/";
