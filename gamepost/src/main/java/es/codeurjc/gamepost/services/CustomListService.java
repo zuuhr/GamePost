@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -47,8 +49,10 @@ public class CustomListService {
 
     //#endregion
 
+    private Logger log = LoggerFactory.getLogger(ModelService.class);
     public CustomList<ListElement> submit(HttpSession session, String nameText){
         User author = userService.getSessionUser(session);
+        log.info("INFO: CustomListService: Submit. User: " + author);
         
         CustomList<ListElement> cl = new CustomList<ListElement>(nameText, author);
         author.addMyList(cl);
@@ -58,15 +62,15 @@ public class CustomListService {
     }
 
     // TODO: Check this methods modularity.
-    public void showIndex(Model model, User user){
+    public void showIndex(Model model, HttpSession session, User user){
 
         //model.addAttribute("user", user);
 
         List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
-        model.addAttribute("list", customLists);
+        session.setAttribute("list", customLists);
 
         List<CustomList<ListElement>> gameLists = getUserCustomListsGame(user);
-        model.addAttribute("customlist", gameLists);
+        session.setAttribute("customlist", gameLists);
         
     }
 
@@ -84,18 +88,18 @@ public class CustomListService {
         return gameLists;
     }
 
-    public void view(Model model, User user, int listId){
+    public void view(Model model, HttpSession session, User user, int listId){
 
         List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
-        model.addAttribute("list", customLists);
+        session.setAttribute("list", customLists);
         //model.addAttribute("user", user);
         
         // Show forum entries
-        model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
+        session.setAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
         
         Optional<CustomList<ListElement>> cl = customListRepository.findById(listId);
         
-        model.addAttribute("customlist", cl.get());
+        session.setAttribute("customlist", cl.get());
 
         if(cl.get().getAllElements().isEmpty()){
 
@@ -105,12 +109,14 @@ public class CustomListService {
             for (ListElement lElement : cl.get().getAllElements()){
                 games.add((Game) lElement);
             }
+            //session.setAttribute("games", games);
             model.addAttribute("games", games);
         } else if (cl.get().getElement(0) instanceof ForumEntry){
             List<ForumEntry> forumEntries  = new LinkedList<ForumEntry>();
             for (ListElement lElement : cl.get().getAllElements()){
                 forumEntries.add((ForumEntry) lElement);
             }
+            //session.setAttribute("posts", forumEntries);
             model.addAttribute("posts", forumEntries);
             
         } else if(cl.get().getElement(0) instanceof Comment){
@@ -118,8 +124,8 @@ public class CustomListService {
             for (ListElement lElement : cl.get().getAllElements()){
                 comments.add((Comment) lElement);
             }
+            //session.setAttribute("comments", comments);
             model.addAttribute("comments", comments);
-
         }
         //Optional<User> user = userRepository.findByName("Mariam");
         //if(user.isPresent()){

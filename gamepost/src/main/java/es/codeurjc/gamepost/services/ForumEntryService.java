@@ -77,11 +77,11 @@ public class ForumEntryService {
         return fe;
     }
 
-    public void showIndexLatestForumEntries(Model model){
-        model.addAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
+    public void showIndexLatestForumEntries(Model model, HttpSession session){
+        session.setAttribute("latestposts", forumEntryRepository.findTop20ByOrderByLastUpdatedOnDesc());
     }
 
-    public String view(Model model, int gameId, int forumId){
+    public String view(Model model, HttpSession session, int gameId, int forumId){
     
         Optional<ForumEntry> forumEntry = forumEntryRepository.findById(forumId);
         Optional<User> user = userRepository.findByName("Mariam");
@@ -105,16 +105,21 @@ public class ForumEntryService {
             // TODO: FIX THIS and put it into its correct place
             if (user.isPresent()) {
                 List<CustomList<ListElement>> customLists = customListRepository.findByUser(user.get());
-                model.addAttribute("list", customLists);
+                session.setAttribute("list", customLists);
                 //model.addAttribute("user", user.get());
                 // get forumentry lists
                 List<CustomList<ListElement>> forumEntryLists = getUserCustomListsForumEntry(user.get());
-                model.addAttribute("customforumentrylist", forumEntryLists);
+                session.setAttribute("customforumentrylist", forumEntryLists);
 
                 // get comment lists
                 List<CustomList<ListElement>> commentLists = getUserCustomListsComment(user.get());
-                model.addAttribute("customcommentlist", commentLists);
+                session.setAttribute("customcommentlist", commentLists);
             }
+            
+            //session.setAttribute("game", game.get());
+            //session.setAttribute("forumentry", forumEntry.get());
+            //session.setAttribute("comments", customComments);
+            
             model.addAttribute("game", game.get());
             model.addAttribute("forumentry", forumEntry.get());
             model.addAttribute("comments", customComments);

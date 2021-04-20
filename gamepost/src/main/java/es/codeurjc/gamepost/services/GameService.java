@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,31 +75,36 @@ public class GameService {
         }
     }
 
-    public boolean get(Model model, int id){
+    public boolean get(Model model, HttpSession session, int id){
         Optional<Game> game = gameRepository.findById(id);
 
         if (game.isPresent()) {
-                model.addAttribute("game", game.get());
-                model.addAttribute("description", game.get().getDescription());
+            //session.setAttribute("game", game.get());
+            //session.setAttribute("description", game.get().getDescription());
+            
+            model.addAttribute("game", game.get());
+            model.addAttribute("description", game.get().getDescription());
 
-                List<ForumEntry> posts = forumEntryRepository.findByGame(game.get());
-                model.addAttribute("posts", posts);
+            List<ForumEntry> posts = forumEntryRepository.findByGame(game.get());
+            //session.setAttribute("posts", posts);
+            model.addAttribute("posts", posts);
                 
-                return true;
+            return true;
         } else {
-                return false;
+            return false;
         }
     }
 
-    public void showIndexLatestUpdatedGames(Model model){
+    public void showIndexLatestUpdatedGames(Model model, HttpSession session){
         List<Game> games = gameRepository.findTop20ByOrderByForumLastUpdatedOnDesc();
+        //session.setAttribute("games", games);
         model.addAttribute("games", games);
 
         return;
     }
 
     private Logger log = LoggerFactory.getLogger(GameService.class);
-    public void showIndexGamesUserPreferences(Model model, User user){
+    public void showIndexGamesUserPreferences(Model model, HttpSession session, User user){
         //log.info("INFO: User id is " + user.getId());
         
         //Get games from API Rest
@@ -107,15 +114,16 @@ public class GameService {
 
         try{
             GamesResponse data = restTemplate.getForObject(url, GamesResponse.class);
+            //session.setAttribute("games", data.items);
             model.addAttribute("games", data.items);
         }catch(HttpClientErrorException notFound){
-            showIndexLatestUpdatedGames(model);
+            showIndexLatestUpdatedGames(model, session);
         }
 
         return;
     }
 
-    public void search(Model model, String searchText){
+    public void search(Model model, HttpSession session, String searchText){
         
         String[] words = searchText.split(" "); 
         List<Description> descriptions = descriptionRepository.findByNameInKeywords(words);
@@ -124,9 +132,11 @@ public class GameService {
             for (Description description : descriptions) {
                 games.add(description.getGame());
             }
+            //session.setAttribute("games", games);
             model.addAttribute("games", games);
         }
 
+        //session.setAttribute("searchText", searchText);
         model.addAttribute("searchText", searchText);
 
         return;

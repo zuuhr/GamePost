@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.codeurjc.gamepost.services.CustomListService;
 import es.codeurjc.gamepost.services.ForumEntryService;
 import es.codeurjc.gamepost.services.GameService;
+import es.codeurjc.gamepost.services.ModelService;
 import es.codeurjc.gamepost.services.UserService;
 
 @Controller
@@ -29,13 +30,17 @@ public class SearchEngineController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ModelService modelService;
+
     @PostMapping("/search")
     public String search(Model model, HttpSession session, @RequestParam String searchText){
         
-        gameService.search(model, searchText);
-        customListService.showIndex(model, userService.getSessionUser(session));
-        forumEntryService.showIndexLatestForumEntries(model);
+        gameService.search(model, session, searchText);
+        customListService.showIndex(model, session, userService.getSessionUser(session));
+        forumEntryService.showIndexLatestForumEntries(model, session);
         
+        modelService.updateModel(model, session);
         return "searchresults";
     }
 }

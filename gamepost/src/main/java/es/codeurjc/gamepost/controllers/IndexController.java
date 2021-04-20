@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.services.ForumEntryService;
 import es.codeurjc.gamepost.services.GameService;
+import es.codeurjc.gamepost.services.ModelService;
 import es.codeurjc.gamepost.services.UserService;
 
 @Controller
@@ -27,10 +28,13 @@ public class IndexController {
     @Autowired
     GameService gameService;
 
+    @Autowired
+    ModelService modelService;
+
     private Logger log = LoggerFactory.getLogger(IndexController.class);
     @GetMapping("/")
     public String enlace(Model model, HttpServletRequest request, HttpSession session) {
-        
+
         if(session.isNew()){
             session.setAttribute("logged", false);
             userService.setRoleAnonymous(model, request);
@@ -41,19 +45,20 @@ public class IndexController {
 
         if((boolean) session.getAttribute("logged")){
             //log.info("INFO: Try");
-            //User user = (User) model.getAttribute("user"); 
 
             User user = userService.getSessionUser(session);   
             
-            log.info("INFO: User id is " + user.getId() + " in index controller."); //TODO: Problem/Error. WTF, it's the same line as in UserService(104), and this line goes after it!! Why does it not work??!!
-            gameService.showIndexGamesUserPreferences(model, user);
+            log.info("INFO: User id is " + user.getId() + " in index controller.");
+            //gameService.showIndexGamesUserPreferences(model, session, user);
+            gameService.showIndexLatestUpdatedGames(model, session);  
+            userService.loadInfo(model, session);  
         }
         else
-            gameService.showIndexLatestUpdatedGames(model);
+            gameService.showIndexLatestUpdatedGames(model, session);
 
-        forumEntryService.showIndexLatestForumEntries(model);
-        userService.loadInfo(model, session);
+        forumEntryService.showIndexLatestForumEntries(model, session);
 
+        modelService.updateModel(model, session);
         return "index";
     }
 
@@ -70,18 +75,20 @@ public class IndexController {
     @GetMapping("/profile")
     public String profile(Model model, HttpSession session) {
         
-        forumEntryService.showIndexLatestForumEntries(model);
+        forumEntryService.showIndexLatestForumEntries(model, session);
         userService.loadInfo(model, session);
 
+        modelService.updateModel(model, session);
         return "profile";
     }
 
     @GetMapping("notifications")
     public String notifications(Model model, HttpSession session){
         
-        forumEntryService.showIndexLatestForumEntries(model);
+        forumEntryService.showIndexLatestForumEntries(model, session);
         userService.loadInfo(model, session);
         
+        modelService.updateModel(model, session);
         return "notifications";
     }    
 }

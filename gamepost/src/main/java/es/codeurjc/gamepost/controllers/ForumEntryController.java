@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.gamepost.services.ForumEntryService;
 import es.codeurjc.gamepost.services.GameService;
+import es.codeurjc.gamepost.services.ModelService;
 import es.codeurjc.gamepost.services.UserService;
 import es.codeurjc.gamepost.services.CustomListService;
 
@@ -35,14 +36,19 @@ public class ForumEntryController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ModelService modelService;
+
     @GetMapping("/game/{gameid}/newforumentry")
     public String newForumEntry(Model model, HttpSession session, @PathVariable int gameid) {
         
-        customListService.showIndex(model, userService.getSessionUser(session));
-        forumEntryService.showIndexLatestForumEntries(model);
+        customListService.showIndex(model, session, userService.getSessionUser(session));
+        forumEntryService.showIndexLatestForumEntries(model, session);
 
         // Show forum entries
-        gameService.get(model, gameid);
+        gameService.get(model, session, gameid);
+
+        modelService.updateModel(model, session);
 
         return "submitforum";
     }
@@ -61,10 +67,11 @@ public class ForumEntryController {
     @GetMapping("/game/{gameid}/{forumid}")
     public String getForumEntry(Model model, HttpSession session, @PathVariable int gameid, @PathVariable int forumid) {
         
-        customListService.showIndex(model, userService.getSessionUser(session));
-        forumEntryService.showIndexLatestForumEntries(model);
+        customListService.showIndex(model, session, userService.getSessionUser(session));
+        forumEntryService.showIndexLatestForumEntries(model, session);
 
-        return forumEntryService.view(model, gameid, forumid);
+        modelService.updateModel(model, session);
+        return forumEntryService.view(model, session, gameid, forumid);
     }
 }
 

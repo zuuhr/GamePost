@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.services.CustomListService;
 import es.codeurjc.gamepost.services.ForumEntryService;
+import es.codeurjc.gamepost.services.ModelService;
 import es.codeurjc.gamepost.services.UserService;
 
 @Controller
@@ -26,6 +27,9 @@ public class CustomListController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ModelService modelService;
 
     //TODO: Associate this method with the form in the web
     @PostMapping("/list/newlist")
@@ -41,8 +45,9 @@ public class CustomListController {
         
         //TODO: Avoid someone being able to snoop into other user's customLists.
         User user = userService.getSessionUser(session);
-        customListService.view(model, user, listid);
+        customListService.view(model, session, user, listid);
         
+        modelService.updateModel(model, session);
         return "list";
     }
 
