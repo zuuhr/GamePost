@@ -26,6 +26,10 @@ import es.codeurjc.gamepost.repositories.UserRepository;
 @RestController
 public class APIRestController {
 
+    ///
+    /// This class is not used in this project. It takes part in the API rest.
+    ///
+
     @Autowired
     DescriptionRepository descriptionRepository;
 
@@ -89,9 +93,11 @@ public class APIRestController {
         return result_games;
     }
 
+    /*
     @PostMapping("/sendNotifications")  // Because I'm going to create new notifications
     @ResponseStatus(HttpStatus.CREATED)
     public void sendNotifications(@RequestBody Notification notification){
         return;
     }
+    */
 }

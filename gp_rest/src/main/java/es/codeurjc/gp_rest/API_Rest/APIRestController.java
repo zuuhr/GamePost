@@ -1,5 +1,6 @@
 package es.codeurjc.gp_rest.API_Rest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -91,17 +92,25 @@ public class APIRestController {
             .map(Map.Entry::getKey)
             .collect(Collectors.toList());
 
-        log.info("INFO: IndexByPreferences Done");
+        //Pick only ids
+        List<Integer> result_games_ids = new ArrayList<Integer>();
+        for (Game game : result_games) {
+            result_games_ids.add(game.getId());
+        }
 
-        if(result_games.size() == 0)
+        log.info("INFO: IndexByPreferences Done");
+        
+        if(result_games_ids.size() == 0)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         else
             return new ResponseEntity<>(result_games, HttpStatus.OK);
     }
 
+    /*
     @PostMapping("/sendNotifications")  // Because I'm going to create new notifications
     @ResponseStatus(HttpStatus.CREATED)
     public void sendNotifications(@RequestBody Notification notification){
         return;
     }
+    */
 }

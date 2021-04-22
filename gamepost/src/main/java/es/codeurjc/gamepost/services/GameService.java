@@ -11,6 +11,11 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.HttpServerErrorException.InternalServerError;
 import org.springframework.web.multipart.MultipartFile;
 import static org.springframework.web.servlet
         .support.ServletUriComponentsBuilder.fromCurrentRequest;
@@ -113,10 +119,38 @@ public class GameService {
         String url = "http://localhost:8081/indexByPreferences/" + user.getId();
 
         try{
-            GamesResponse data = restTemplate.getForObject(url, GamesResponse.class);
+            //GamesResponse data = restTemplate.getForObject(url, GamesResponse.class);
+            
+            //ObjectNode data = restTemplate.getForObject(url, ObjectNode.class);
+            
+            //String data = restTemplate.getForObject(url, String.class);
+            
+            ArrayNode resources = restTemplate.getForObject(url, ArrayNode.class);
+            ArrayNode items = resources;
+
             //session.setAttribute("games", data.items);
-            model.addAttribute("games", data.items);
+            
+            List<Game> games = new ArrayList<Game>();
+            //ArrayNode items = (ArrayNode) data.get("items");
+            
+            for(int i = 0; i< items.size(); i++){
+                JsonNode item = items.get(i);
+                int gameId = item.get("id").asInt();
+                games.add(gameRepository.findById(gameId).get());
+            }
+            
+
+            //for (Integer gameId : data.get("items")) {
+            //    games.add(gameRepository.findById(gameId).get());
+            //}
+
+            model.addAttribute("games", games);
+
+            //showIndexLatestUpdatedGames(model, session);
         }catch(HttpClientErrorException notFound){
+            showIndexLatestUpdatedGames(model, session);
+        }catch(InternalServerError internal){
+            log.info("INFO: GameService: showIndexGamesUserPreferences. -> Internal Server Error.");
             showIndexLatestUpdatedGames(model, session);
         }
 

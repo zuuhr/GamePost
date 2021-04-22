@@ -49,8 +49,8 @@ public class IndexController {
             User user = userService.getSessionUser(session);   
             
             log.info("INFO: User id is " + user.getId() + " in index controller.");
-            //gameService.showIndexGamesUserPreferences(model, session, user);
-            gameService.showIndexLatestUpdatedGames(model, session);  
+            gameService.showIndexGamesUserPreferences(model, session, user);
+            //gameService.showIndexLatestUpdatedGames(model, session);  
             userService.loadInfo(model, session);  
         }
         else
