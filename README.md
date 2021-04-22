@@ -72,6 +72,33 @@ En la captura se puede ver el resultado al buscar "of".
 Muestra los elementos almacenados por el usuario en una lista personalizada. Los elementos a guardar pueden ser comentarios, entradas de foro o juegos.
 
 ---
+## Fase III
+
+### Lista de Ventanas
+1. **Index**
+![index anonymous](https://user-images.githubusercontent.com/43469886/115697452-dffe3200-a363-11eb-9078-13f7efd99416.png)
+![index user](https://user-images.githubusercontent.com/43469886/115697696-12a82a80-a364-11eb-940c-4ab914d3ccd0.png)
+![index admin](https://user-images.githubusercontent.com/43469886/115703132-08892a80-a36a-11eb-974d-73012eab0523.png)
+Página principal. Muestra una lista de juegos de interés y desde esta se puede navegar por el resto de la web. 
+Ahora contempla si el usuario está logueado o no. En caso negativo, se muestran los 20 juegos que hayan sufrido interactividad más recientemente. En caso afirmativo, se muestran los 20 juegos que mejor coincidan con los gustos del usuario, proporcionados por la API Rest. Si este no puede procesar la operación por falta de información sobre el usuario, se devuelven los 20 juegos con interactividad más reciente como opción por defecto. También muestra campos personalizados en función de si el usuario está logueado o no y su rol asignado. 
+
+3. **Notifications**
+![notifications user](https://user-images.githubusercontent.com/43469886/115700613-25702e80-a367-11eb-9b97-b1e1968f6f1b.png)
+La página ha sido restringida para que sólo se pueda accedar en caso de ser un usuario logueado. En caso de intentar acceder a la url sin estar logueado o con permisos de administrador, la página redirige al individuo a la página de login.
+
+4. **Game**
+![game anonymous](https://user-images.githubusercontent.com/43469886/115702754-99133b00-a369-11eb-9228-bb457a593881.png)
+![game user](https://user-images.githubusercontent.com/43469886/115702852-b516dc80-a369-11eb-8c8b-b15cafc5ea41.png)
+![game admin](https://user-images.githubusercontent.com/43469886/115703082-f8714b00-a369-11eb-809e-665fbfc46d2d.png)
+Al igual que en "5. Forum entry", solo se permite crear contenido a los usuarios logueados. Tanto los administradores como los individuos no logueados pordrán visitar las páginas, solo que no contarán con estas opciones.
+
+5. **Forum Entry**
+![forumentry anonymous](https://user-images.githubusercontent.com/43469886/115703282-3bcbb980-a36a-11eb-9d91-de2d909eae6b.png)
+![forumentry user](https://user-images.githubusercontent.com/43469886/115703361-53a33d80-a36a-11eb-9d30-fe1913266d12.png)
+Admin?
+Al igual que en "4. Game", solo se permite crear contenido a los usuarios logueados.
+
+---
 ## Integrantes del desarrollo:
 - Julen Justo Neira: [j.justo.2017@alumnos.urjc.es](mailto:j.justo.2017@alumnos.urjc.es) ([GitHub](https://github.com/JulenJus))
 - Mariam Baradi Del Álamo: [m.baradi.2017@alumnos.urjc.es](mailto:m.baradi.2017@alumnos.urjc.es) ([GitHub](https://github.com/zuuhr))
