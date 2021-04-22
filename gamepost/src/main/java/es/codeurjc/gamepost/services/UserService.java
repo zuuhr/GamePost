@@ -137,9 +137,13 @@ public class UserService {
     }
 
     public User getSessionUser(HttpSession session){
-        Optional<User> user = get((int)session.getAttribute("user"));
-        if (user.isPresent()){
-            return user.get();
+        if((boolean) session.getAttribute("logged")){
+            Optional<User> user = get((int)session.getAttribute("user"));
+            if (user.isPresent()){
+                return user.get();
+            }else{
+                return null;
+            }
         }else{
             return null;
         }
