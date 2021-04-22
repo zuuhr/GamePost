@@ -33,7 +33,23 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
     
     public Optional<User> get(String username){
-        return userRepository.findByName(username);
+        log.info("INFO: Wanted username is " + username);
+        Optional<User> user = userRepository.findByName(username);
+
+        if(!user.isPresent())
+            log.info("INFO: Wanted username is not present");
+
+        return user;
+    }
+
+    public Optional<User> get(int id){
+        log.info("INFO: Wanted username is id " + id);
+        Optional<User> user = userRepository.findById(id);
+
+        if(!user.isPresent())
+            log.info("INFO: Wanted username is not present");
+
+        return user;
     }
 
     public void submit(Model model, HttpServletRequest request, HttpSession session, String username, String password){
@@ -66,59 +82,66 @@ public class UserService {
     public void logIn(Model model, HttpServletRequest request, HttpSession session, User user){
         setRoleUserOrAdmin(model, request, user);
 
-        session.setAttribute("username", user.getName());
+        //session.setAttribute("username", user.getName());
         session.setAttribute("logged", true);
+
+        //Load info
+        loadInfo(model, session);
+    }
+
+    public void logOut(Model model, HttpServletRequest request, HttpSession session){
+        setRoleAnonymous(model, request);
+
+        //session.setAttribute("username", null);
+        session.setAttribute("logged", false);
+
+        return;
     }
 
     public void setRoleAnonymous(Model model, HttpServletRequest request){
-        model.addAttribute("roleAnonymous", true);
-        model.addAttribute("roleUser", false);
-        model.addAttribute("user", null);
-        model.addAttribute("roleAdmin", false);
+        HttpSession session = request.getSession();
 
-        log.info("INFO: Role anonymous: " + model.getAttribute("roleAnonymous"));
-        log.info("INFO: Role user: " + request.isUserInRole("ROLE_USER"));
-        log.info("INFO: Role admin: " + request.isUserInRole("ROLE_ADMIN"));
+        session.setAttribute("roleAnonymous", true);
+        session.setAttribute("roleUser", false);
+        session.setAttribute("user", null);
+        session.setAttribute("username", null);
+        session.setAttribute("roleAdmin", false);
+
+        //log.info("INFO: Role anonymous: " + model.getAttribute("roleAnonymous"));
+        //log.info("INFO: Role user: " + request.isUserInRole("ROLE_USER"));
+        //log.info("INFO: Role admin: " + request.isUserInRole("ROLE_ADMIN"));
     }
 
     public void setRoleUserOrAdmin(Model model, HttpServletRequest request, User user){
-        model.addAttribute("roleAnonymous", false);
-        model.addAttribute("roleUser", request.isUserInRole("ROLE_USER"));
-        model.addAttribute("user", user);
-        model.addAttribute("roleAdmin", request.isUserInRole("ROLE_ADMIN"));
+        HttpSession session = request.getSession();
 
-        log.info("INFO: Role anonymous: " + model.getAttribute("roleAnonymous"));
-        log.info("INFO: Role user: " + request.isUserInRole("ROLE_USER"));
-        log.info("INFO: Role admin: " + request.isUserInRole("ROLE_ADMIN"));
+        session.setAttribute("roleAnonymous", false);
+        session.setAttribute("roleUser", request.isUserInRole("ROLE_USER"));
+        session.setAttribute("user", user.getId());
+        session.setAttribute("username", user.getName());
+        session.setAttribute("roleAdmin", request.isUserInRole("ROLE_ADMIN"));
+
+        //log.info("INFO: Role anonymous: " + model.getAttribute("roleAnonymous"));
+        //log.info("INFO: Role user: " + request.isUserInRole("ROLE_USER"));
+        //log.info("INFO: User name: " + ((User) model.getAttribute("user")).getName());
+        //log.info("INFO: Role admin: " + request.isUserInRole("ROLE_ADMIN"));
     }
 
     public void loadInfo(Model model, HttpSession session){
-        String username = (String) session.getAttribute("username");
-        if (! (boolean) session.getAttribute("logged")){
-            //if (session.isNew()){
-                
-        }else{
+        Optional<User> user = get((int)session.getAttribute("user"));
+        if (user.isPresent()){
             // Load the user info
-            Optional<User> user = userRepository.findByName(username);
-            if (user.isPresent()){
-                    customListService.showIndex(model, user.get());
-                    notificationService.show(model, user.get());
-            }
+            customListService.showIndex(model, session, user.get());
+            notificationService.show(model, session, user.get());
         }
     }
 
     public User getSessionUser(HttpSession session){
-        String username = (String) session.getAttribute("username");
-        if (session.isNew() || ! (boolean) session.getAttribute("logged")){
-                return null;
+        Optional<User> user = get((int)session.getAttribute("user"));
+        if (user.isPresent()){
+            return user.get();
         }else{
-                // Load the user info
-                Optional<User> user = userRepository.findByName(username);
-                if (user.isPresent()){
-                        return user.get();
-                }else{
-                    return null;
-                }
+            return null;
         }
     }
 }

@@ -1,4 +1,4 @@
-package es.codeurjc.gamepost.objects;
+package es.codeurjc.gp_rest.objects;
 
 import java.util.Date;
 import java.util.List;
@@ -8,8 +8,8 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import es.codeurjc.gamepost.objects.enums.Genre;
-import es.codeurjc.gamepost.objects.enums.Platform;
+import es.codeurjc.gp_rest.objects.enums.Genre;
+import es.codeurjc.gp_rest.objects.enums.Platform;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -3,6 +3,8 @@ package es.codeurjc.gamepost.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -31,10 +33,10 @@ public class NotificationService {
     @Autowired
     private UserRepository userRepository;
 
-    public void show(Model model, User user){
+    public void show(Model model, HttpSession session, User user){
         
         List<Notification> notifications = user.getNotifications();
-        model.addAttribute("notification", notifications);
+        session.setAttribute("notification", notifications);
         
         return;
     }

@@ -11,10 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import es.codeurjc.gamepost.objects.User;
+import es.codeurjc.gamepost.services.ModelService;
 import es.codeurjc.gamepost.services.UserService;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -27,6 +29,9 @@ public class UserController {
     
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ModelService modelService;
 
     /*
     @GetMapping("/users")
@@ -48,6 +53,7 @@ public class UserController {
            return "signin";
         }else{
             userService.submit(model, request, session, username, password);
+            modelService.updateModel(model, session);
             return "redirect:/";
         }
     }
@@ -71,13 +77,16 @@ public class UserController {
     @GetMapping("/loginSuccess")
     public String logInSuccess(Model model, Authentication auth, HttpServletRequest request, HttpSession session){
         userService.logIn(model, request, session, userService.get(auth.getName()).get());
+        modelService.updateModel(model, session);
         return "redirect:/";
     }
 
     @GetMapping("/logout")
-    public String logOut(HttpSession session){
+    public String logOut(Model model, HttpServletRequest request, HttpSession session){
         
-        session.invalidate();
+        userService.logOut(model, request, session);
+        modelService.updateModel(model, session);
+        //session.invalidate();
         
         return "redirect:/";
     }

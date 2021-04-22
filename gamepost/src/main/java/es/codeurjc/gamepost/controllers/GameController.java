@@ -24,6 +24,7 @@ import es.codeurjc.gamepost.services.CustomListService;
 import es.codeurjc.gamepost.services.ForumEntryService;
 import es.codeurjc.gamepost.services.GameEnumService;
 import es.codeurjc.gamepost.services.GameService;
+import es.codeurjc.gamepost.services.ModelService;
 import es.codeurjc.gamepost.services.UserService;
 
 
@@ -50,6 +51,9 @@ public class GameController {
 
         @Autowired 
         UserService userService;
+
+        @Autowired
+        ModelService modelService;
 
 
         @PostMapping(value = "/game/submitgame")
@@ -96,12 +100,16 @@ public class GameController {
 
         @GetMapping("/game/{id}")
         public String getGame(Model model, HttpSession session, @PathVariable int id) {
-                customListService.showIndex(model, userService.getSessionUser(session));
-                forumEntryService.showIndexLatestForumEntries(model);
+                customListService.showIndex(model, session, userService.getSessionUser(session));
+                forumEntryService.showIndexLatestForumEntries(model, session);
                 
-                if(gameService.get(model, id))
+                if(gameService.get(model, session, id)){
+                        modelService.updateModel(model, session);
                         return "game";
-                else
+                }
+                else{
+                        modelService.updateModel(model, session);
                         return "redirect:/";
+                }
         }
 }

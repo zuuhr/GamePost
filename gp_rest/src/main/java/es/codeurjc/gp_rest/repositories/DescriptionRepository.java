@@ -1,4 +1,4 @@
-package es.codeurjc.gamepost.repositories;
+package es.codeurjc.gp_rest.repositories;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import es.codeurjc.gamepost.objects.Description;
-import es.codeurjc.gamepost.objects.enums.Genre;
+import es.codeurjc.gp_rest.objects.Description;
+import es.codeurjc.gp_rest.objects.enums.Genre;
 
 public interface DescriptionRepository extends JpaRepository<Description, Integer>{
     
