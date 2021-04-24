@@ -74,7 +74,7 @@ Muestra los elementos almacenados por el usuario en una lista personalizada. Los
 ---
 ## Fase III
 
-### Lista de Ventanas
+### Lista de Ventanas (actualizada)
 1. **Index**
 ![index anonymous](https://user-images.githubusercontent.com/43469886/115697452-dffe3200-a363-11eb-9078-13f7efd99416.png)
 ![index user](https://user-images.githubusercontent.com/43469886/115697696-12a82a80-a364-11eb-940c-4ab914d3ccd0.png)
@@ -97,6 +97,13 @@ Al igual que en "5. Forum entry", solo se permite crear contenido a los usuarios
 ![forumentry user](https://user-images.githubusercontent.com/43469886/115703361-53a33d80-a36a-11eb-9d30-fe1913266d12.png)
 Admin?
 Al igual que en "4. Game", solo se permite crear contenido a los usuarios logueados.
+
+---
+### Diagrama de clases y templates
+![Diagrama de clases y templates](https://user-images.githubusercontent.com/43469886/115966843-b6920180-a52f-11eb-9e02-0b5472a2e4dd.png)
+
+---
+### Instrucciones de despliegue
 
 ---
 ## Integrantes del desarrollo:
