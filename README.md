@@ -14,7 +14,6 @@ GamePost es una página web dedicada a la difusión, discusión y puesta en com�
 
 ### Descripción del servicio interno
 
-- Envío de notificaciones
 - Procesamiento de gustos de usuario
 
 ### [Trello](https://trello.com/b/XFN4E5ZO)
