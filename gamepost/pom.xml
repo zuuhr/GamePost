@@ -10,13 +10,17 @@
 	</parent>
 	<groupId>es.codeurjc</groupId>
 	<artifactId>gamepost</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>gamepost</name>
 	<description>Demo project for Spring Boot</description>
+	<packaging>jar</packaging>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>1.8</java.version>
+		
 	</properties>
 	<dependencies>
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
