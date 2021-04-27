@@ -54,7 +54,7 @@ public class UserController {
         }else{
             userService.submit(model, request, session, username, password);
             modelService.updateModel(model, session);
-            return "redirect:/";
+            return "redirect:/login";
         }
     }
 

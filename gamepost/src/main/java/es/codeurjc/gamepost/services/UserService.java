@@ -59,7 +59,7 @@ public class UserService {
                 "ROLE_USER"
             ));
 
-        logIn(model, request, session, user);
+        //logIn(model, request, session, user);
     }
 
     public boolean checkPassword(String username, String password){

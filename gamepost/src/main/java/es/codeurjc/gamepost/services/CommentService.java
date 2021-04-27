@@ -27,9 +27,6 @@ public class CommentService {
     UserService userService;
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
     ForumEntryRepository forumEntryRepository;
 
     @Autowired
