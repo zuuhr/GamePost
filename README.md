@@ -14,7 +14,6 @@ GamePost es una página web dedicada a la difusión, discusión y puesta en com�
 
 ### Descripción del servicio interno
 
-- Envío de notificaciones
 - Procesamiento de gustos de usuario
 
 ### [Trello](https://trello.com/b/XFN4E5ZO)
@@ -104,7 +103,12 @@ Al igual que en "4. Game", solo se permite crear contenido a los usuarios loguea
 
 ---
 ### Instrucciones de despliegue
-
+Requisitos previos: SO en el que se pueda instalar mysql y java y los 2 .jar "gamepost.jar" y "gp_rest.jar"
+1. En el SO instalar mysql versión 8.0
+2. En el SO instalar java versión 11 o 55 como mínimo
+3. java -jar gp_rest.jar 
+4. Ponerlo a ejecutar en background: Ctrl + Z y bg
+5. java -jar gamepost.jar 
 ---
 ## Integrantes del desarrollo:
 - Julen Justo Neira: [j.justo.2017@alumnos.urjc.es](mailto:j.justo.2017@alumnos.urjc.es) ([GitHub](https://github.com/JulenJus))

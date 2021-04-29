@@ -31,10 +31,6 @@
                 {{/roleUser}}
             </div>
             <p class="mb-1 bg-light mt-1">{{forumentry.content.text}}</p>
-            {{#roleAdmin}}
-            <button class="button"
-                onclick="window.location.href='/game/{{game.id}}/{{forumentry.id}}/{{forumentry.id}}/delete';">Delete</button>
-            {{/roleAdmin}}
             {{#roleUser}}
             <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse"
                 href="#collapseReply{{forumentry.id}}">Reply</button>
@@ -57,10 +53,6 @@
                         <small>{{postedOn}}</small>
                     </div>
                     <p class="mb-1">{{content.text}}</p>
-                    {{#roleAdmin}}
-                    <button class="button"
-                        onclick="window.location.href='/game/{{game.id}}/{{forumentry.id}}/{{commentid}}/delete';">Delete</button>
-                    {{/roleAdmin}}
                     {{#roleUser}}
                     <button class="btn btn-secondary btn-sm" data-bs-toggle="collapse"
                         href="#collapseReply{{commentid}}">Reply</button>
