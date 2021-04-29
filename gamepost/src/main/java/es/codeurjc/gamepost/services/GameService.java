@@ -30,7 +30,6 @@ import org.springframework.web.multipart.MultipartFile;
 import static org.springframework.web.servlet
         .support.ServletUriComponentsBuilder.fromCurrentRequest;
 
-import es.codeurjc.gamepost.API_Rest.GamesResponse;
 import es.codeurjc.gamepost.objects.Description;
 import es.codeurjc.gamepost.objects.ForumEntry;
 import es.codeurjc.gamepost.objects.Game;
