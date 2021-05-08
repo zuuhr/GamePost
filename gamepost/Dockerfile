@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM openjdk:11-jre
 
 COPY target/gamepost-0.0.2-SNAPSHOT.jar gamepost_webapp.jar
 
