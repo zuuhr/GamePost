@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -32,6 +33,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
+    @Cacheable
     public Optional<User> get(String username){
         log.info("INFO: Wanted username is " + username);
         Optional<User> user = userRepository.findByName(username);
@@ -42,6 +44,7 @@ public class UserService {
         return user;
     }
 
+    @Cacheable
     public Optional<User> get(int id){
         log.info("INFO: Wanted username is id " + id);
         Optional<User> user = userRepository.findById(id);
@@ -136,6 +139,7 @@ public class UserService {
         }
     }
 
+    @Cacheable
     public User getSessionUser(HttpSession session){
         if((boolean) session.getAttribute("logged")){
             Optional<User> user = get((int)session.getAttribute("user"));
