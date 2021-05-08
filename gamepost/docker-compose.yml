@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+    # App
+    web: 
+        container_name: web
+        image: julenjus/gamepost_webapp
+        build: .
+        ports:
+            - "8080:8433"
+        volumes:
+            - .:/todo
+        depends_on: 
+            - db
+        links:
+            - db
+
+    # MySQL
+    db:
+        container_name: mysql
+        image: mysql:8.0
+        environment: 
+            MYSQL_DATABASE: 'gamepost'
+            MYSQL_ROOT_PASSWORD: 'pass'
