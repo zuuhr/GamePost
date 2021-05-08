@@ -4,21 +4,30 @@ services:
     # App
     web: 
         container_name: web
-        image: julenjus/gamepost_webapp
-        build: .
+        image: julenjus/gamepost_webapp:v0.1
+        build: 
+            context: .
+            dockerfile: Dockerfile
         ports:
-            - "8080:8433"
+            - "8443:8443"
         volumes:
             - .:/todo
         depends_on: 
-            - db
+            - mysql
         links:
-            - db
+            - mysql
+        restart: always
+        environment:
+            SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gamepost
 
     # MySQL
-    db:
+    mysql:
         container_name: mysql
         image: mysql:8.0
+        ports:
+            - "3306:3306"
+        expose:
+            - "3306"
         environment: 
             MYSQL_DATABASE: 'gamepost'
             MYSQL_ROOT_PASSWORD: 'pass'
