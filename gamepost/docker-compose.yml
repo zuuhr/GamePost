@@ -2,14 +2,22 @@ version: '3.8'
 
 services:
     # App
-    web: 
-        container_name: web
+    web1: 
+        container_name: web1
         image: julenjus/gamepost_webapp:v0.4
-        build: 
-            context: .
-            dockerfile: Dockerfile
-        ports:
-            - "8443:8443"
+        depends_on: 
+            - mysql
+            - rest
+        links:
+            - mysql
+            - rest
+        restart: always
+        environment:
+            SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gamepost
+    
+    web2: 
+        container_name: web2
+        image: julenjus/gamepost_webapp:v0.0
         depends_on: 
             - mysql
             - rest
@@ -24,8 +32,6 @@ services:
     mysql:
         container_name: mysql
         image: julenjus/gamepost_mysql:v0.3
-        ports:
-            - "3306:3306"
         expose:
             - "3306"
         environment: 
@@ -33,10 +39,8 @@ services:
             MYSQL_ROOT_PASSWORD: 'pass'
 
     rest:
-        container_name: rest_findbypreferences
+        container_name: rest
         image: julenjus/gamepost_rest_00_homebypreferences:v0.1
-        ports: 
-            - "8081:8081"
         expose:
             - "8081"
         depends_on: 
@@ -46,3 +50,13 @@ services:
         restart: always
         environment:
             SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gamepost
+
+    lb:
+        container_name: lb
+        image: haproxy:1.9.6
+        ports:
+          - "80:80" # Only service that is exposed to the host is the lb 
+          - "443:443"
+        volumes:
+          - "./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"
+        restart: always

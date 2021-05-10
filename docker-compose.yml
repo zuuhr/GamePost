@@ -4,7 +4,7 @@ services:
     # App
     web1: 
         container_name: web1
-        image: julenjus/gamepost_webapp:v0.4
+        build: ./gamepost
         depends_on: 
             - mysql
             - rest
@@ -17,7 +17,7 @@ services:
     
     web2: 
         container_name: web2
-        image: julenjus/gamepost_webapp:v0.0
+        build: ./gamepost
         depends_on: 
             - mysql
             - rest
@@ -53,10 +53,12 @@ services:
 
     lb:
         container_name: lb
-        image: haproxy:1.9.6
+        build: ./
         ports:
           - "80:80" # Only service that is exposed to the host is the lb 
           - "443:443"
+        environment:
+            LOG_LEVEL: "debug"
         volumes:
           - "./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"
         restart: always
