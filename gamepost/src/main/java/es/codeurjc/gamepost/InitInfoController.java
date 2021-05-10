@@ -64,7 +64,7 @@ public class InitInfoController {
         );
     }
     */
-
+/*
     @PostConstruct
     public void initDatabase() throws ParseException {
         log.info("INFO: Checking if database is already initialized...");
@@ -180,5 +180,5 @@ public class InitInfoController {
         customListRepository.save(customList2);
 
         log.info("INFO: Database initialized.");
-    }   
+    }   */
 }
