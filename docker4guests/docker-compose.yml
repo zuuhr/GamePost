@@ -5,9 +5,6 @@ services:
     web: 
         container_name: web
         image: julenjus/gamepost_webapp:v0.3
-        build: 
-            context: .
-            dockerfile: Dockerfile
         ports:
             - "8443:8443"
         depends_on: 

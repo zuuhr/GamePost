@@ -1,9 +1,29 @@
 package es.codeurjc.gamepost;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
+import es.codeurjc.gamepost.objects.Comment;
+import es.codeurjc.gamepost.objects.Content;
+import es.codeurjc.gamepost.objects.CustomList;
+import es.codeurjc.gamepost.objects.Description;
+import es.codeurjc.gamepost.objects.ForumEntry;
+import es.codeurjc.gamepost.objects.Game;
+import es.codeurjc.gamepost.objects.ListElement;
+import es.codeurjc.gamepost.objects.Notification;
+import es.codeurjc.gamepost.objects.User;
+import es.codeurjc.gamepost.objects.enums.Genre;
+import es.codeurjc.gamepost.objects.enums.Platform;
 import es.codeurjc.gamepost.repositories.CustomListRepository;
 import es.codeurjc.gamepost.repositories.GameRepository;
 import es.codeurjc.gamepost.repositories.UserRepository;
@@ -31,6 +51,7 @@ public class InitInfoController {
     @Autowired
     CustomListRepository customListRepository;
     
+    private Logger log = LoggerFactory.getLogger(InitInfoController.class);
     /*
     @PostConstruct
     public void initUsers(){
@@ -42,10 +63,27 @@ public class InitInfoController {
             new User("admin", passwordEncoder.encode("adminpass"), "ROLE_ADMIN")
         );
     }
-    
+    */
 
     @PostConstruct
     public void initDatabase() throws ParseException {
+        log.info("INFO: Checking if database is already initialized...");
+        
+        if(userRepository.findByName("admin").isPresent()){
+                log.info("INFO: Database was already initialized.");
+                return;
+        }
+        
+        log.info("INFO: Initializing database.");
+        
+        userRepository.save(
+                new User("user", passwordEncoder.encode("pass"), "ROLE_USER")
+            );
+    
+        userRepository.save(
+                new User("admin", passwordEncoder.encode("adminpass"), "ROLE_ADMIN")
+            );
+
         genreRepository.save(new Genre("Action"));
         genreRepository.save(new Genre("Adventure"));
         genreRepository.save(new Genre("Fighting"));
@@ -140,6 +178,7 @@ public class InitInfoController {
         customList2.addElement((ListElement) fe);
         user.addMyList(customList2);
         customListRepository.save(customList2);
-    }
-    */
+
+        log.info("INFO: Database initialized.");
+    }   
 }
