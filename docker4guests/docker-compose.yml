@@ -38,6 +38,7 @@ services:
             MYSQL_DATABASE: 'gamepost'
             MYSQL_ROOT_PASSWORD: 'pass'
 
+    # Rest
     rest:
         container_name: rest
         image: julenjus/gamepost_rest_00_homebypreferences:v0.1
