@@ -116,6 +116,8 @@ Requisitos previos: SO en el que se pueda instalar mysql y java y los 2 .jar "ga
 El controlador llamará a un servicio interno que hace de interfaz con la API REST la cual accede a la base de datos para mostrar los juegos ordenados según la relación que tienen con aquillos jeugos que el usuaurio sigue.
 
 ### Diagrama de clases y templates
+Templates con sus clases asociadas:
+![Blank diagram(8)](https://user-images.githubusercontent.com/43469859/117963153-4f8e8e00-b320-11eb-99b2-572c9be67001.png)
 
 
 ### Infraestructura de Docker
