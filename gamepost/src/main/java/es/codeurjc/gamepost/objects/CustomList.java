@@ -1,5 +1,6 @@
 package es.codeurjc.gamepost.objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Entity;
 
 @Entity
-public class CustomList<T> {
+public class CustomList<T> implements Serializable{
 
     //#region Variables
 
