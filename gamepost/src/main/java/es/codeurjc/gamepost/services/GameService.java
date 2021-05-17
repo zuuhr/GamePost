@@ -115,7 +115,8 @@ public class GameService {
         //Get games from API Rest
         RestTemplate restTemplate = new RestTemplate();
         //String url = "https://localhost:8443/indexByPreferences/" + user.getId();  //TODO: Watch the url match the port correctly
-        String url = "http://localhost:8081/indexByPreferences/" + user.getId();
+        //String url = "http://rest_findbypreferences:8081/indexByPreferences/" + user.getId();
+        String url = "http://rest:8081/indexByPreferences/" + user.getId();
 
         try{
             //GamesResponse data = restTemplate.getForObject(url, GamesResponse.class);
