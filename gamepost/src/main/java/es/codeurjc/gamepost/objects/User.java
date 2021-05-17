@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 
 @Entity
 public class User implements Serializable{
@@ -30,8 +33,10 @@ public class User implements Serializable{
     @OneToOne(cascade=CascadeType.ALL) CustomList<ForumEntry> forumEntries;
     @OneToOne(cascade=CascadeType.ALL) CustomList<Comment> comments;
     @OneToOne(cascade=CascadeType.ALL) CustomList<Game> games;
-    @OneToMany(cascade=CascadeType.ALL) List<Notification> notifications;
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL) List<CustomList<ListElement>> myLists;    
+    @Fetch(FetchMode.SELECT)
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER) List<Notification> notifications;
+    @Fetch(FetchMode.SELECT)
+    @OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch = FetchType.EAGER) List<CustomList<ListElement>> myLists;    
 
     //#endregion
 

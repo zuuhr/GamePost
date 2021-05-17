@@ -12,7 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 
 @Entity
 public class ForumEntry extends ListElement{
@@ -30,7 +34,8 @@ public class ForumEntry extends ListElement{
     int votes;
     int replies;
     @OneToOne(cascade=CascadeType.ALL) Content content;
-    @OneToMany(mappedBy = "forumEntry",cascade=CascadeType.ALL) List<Comment> comments;
+    @Fetch(FetchMode.SELECT)
+    @OneToMany(mappedBy = "forumEntry",cascade=CascadeType.ALL, fetch = FetchType.EAGER) List<Comment> comments;
 
     //#endregion
 
