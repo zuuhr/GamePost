@@ -1,5 +1,6 @@
 package es.codeurjc.gamepost.objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Forum {
+public class Forum implements Serializable{
 
     //#region Variables
 

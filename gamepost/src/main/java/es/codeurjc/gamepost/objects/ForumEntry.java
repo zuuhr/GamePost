@@ -1,5 +1,6 @@
 package es.codeurjc.gamepost.objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
 @Entity
-public class ForumEntry extends ListElement{
+public class ForumEntry extends ListElement implements Serializable{
     //#region Variables
 
     @Id

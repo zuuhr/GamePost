@@ -1,5 +1,6 @@
 package es.codeurjc.gamepost.objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Comment extends ListElement{
+public class Comment extends ListElement implements Serializable{
     
     //#region Variable
     

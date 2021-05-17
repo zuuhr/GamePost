@@ -1,5 +1,6 @@
 package es.codeurjc.gamepost.objects;
 
+import java.io.Serializable;
 import java.sql.Blob;
 
 import javax.persistence.CascadeType;
@@ -16,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Entity;
 
 @Entity
-public class Game extends ListElement{
+public class Game extends ListElement implements Serializable{
     
     //#region Variables
 
