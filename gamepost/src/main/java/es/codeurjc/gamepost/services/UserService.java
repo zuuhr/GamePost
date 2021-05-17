@@ -33,7 +33,6 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
-    @Cacheable
     public Optional<User> get(String username){
         log.info("INFO: Wanted username is " + username);
         Optional<User> user = userRepository.findByName(username);
@@ -44,7 +43,6 @@ public class UserService {
         return user;
     }
 
-    @Cacheable
     public Optional<User> get(int id){
         log.info("INFO: Wanted username is id " + id);
         Optional<User> user = userRepository.findById(id);
@@ -139,7 +137,6 @@ public class UserService {
         }
     }
 
-    @Cacheable
     public User getSessionUser(HttpSession session){
         if((boolean) session.getAttribute("logged")){
             Optional<User> user = get((int)session.getAttribute("user"));

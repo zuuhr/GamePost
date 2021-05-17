@@ -50,6 +50,8 @@ public class CustomListService {
     //#endregion
 
     private Logger log = LoggerFactory.getLogger(ModelService.class);
+
+    
     public CustomList<ListElement> submit(HttpSession session, String nameText){
         User author = userService.getSessionUser(session);
         log.info("INFO: CustomListService: Submit. User: " + author);
