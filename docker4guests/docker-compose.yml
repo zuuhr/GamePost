@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+    # App
+    web: 
+        container_name: web
+        image: julenjus/gamepost_webapp:v0.4
+        ports:
+            - "8443:8443"
+        depends_on: 
+            - mysql
+            - rest
+        links:
+            - mysql
+            - rest
+        restart: always
+        environment:
+            SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gamepost
+
+    # MySQL
+    mysql:
+        container_name: mysql
+        image: julenjus/gamepost_mysql:v0.3
+        ports:
+            - "3306:3306"
+        expose:
+            - "3306"
+        environment: 
+            MYSQL_DATABASE: 'gamepost'
+            MYSQL_ROOT_PASSWORD: 'pass'
+
+    # Rest
+    rest:
+        container_name: rest_findbypreferences
+        image: julenjus/gamepost_rest_00_homebypreferences:v0.1
+        ports: 
+            - "8081:8081"
+        expose:
+            - "8081"
+        depends_on: 
+            - mysql
+        links:
+            - mysql
+        restart: always
+        environment:
+            SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gamepost

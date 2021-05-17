@@ -14,14 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.codeurjc.gp_rest.objects.Description;
 import es.codeurjc.gp_rest.objects.Game;
-import es.codeurjc.gp_rest.objects.Notification;
 import es.codeurjc.gp_rest.objects.User;
 import es.codeurjc.gp_rest.objects.enums.Genre;
 import es.codeurjc.gp_rest.repositories.DescriptionRepository;
@@ -40,6 +36,8 @@ public class APIRestController {
     private Logger log = LoggerFactory.getLogger(APIRestController.class);
     @GetMapping("/indexByPreferences/{userId}")  // Because I want to get existing games
     public ResponseEntity<List<Game>> indexByPreferences(@PathVariable int userId){
+
+        log.info("INFO: IndexByPreferences Start for user " + userId);
 
         // Get user
         User user = userRepository.findById(userId).get();
@@ -105,12 +103,4 @@ public class APIRestController {
         else
             return new ResponseEntity<>(result_games, HttpStatus.OK);
     }
-
-    /*
-    @PostMapping("/sendNotifications")  // Because I'm going to create new notifications
-    @ResponseStatus(HttpStatus.CREATED)
-    public void sendNotifications(@RequestBody Notification notification){
-        return;
-    }
-    */
 }
