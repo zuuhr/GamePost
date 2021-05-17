@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -50,6 +52,7 @@ public class CustomListService {
     //#endregion
 
     private Logger log = LoggerFactory.getLogger(ModelService.class);
+
     public CustomList<ListElement> submit(HttpSession session, String nameText){
         User author = userService.getSessionUser(session);
         log.info("INFO: CustomListService: Submit. User: " + author);
@@ -61,12 +64,16 @@ public class CustomListService {
         return cl;
     }
 
+    public List<CustomList<ListElement>> getCustomLists(User user){
+        return customListRepository.findByUser(user);
+    }
+
     // TODO: Check this methods modularity.
     public void showIndex(Model model, HttpSession session, User user){
 
         //model.addAttribute("user", user);
 
-        List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
+        List<CustomList<ListElement>> customLists = getCustomLists(user);
         session.setAttribute("list", customLists);
 
         List<CustomList<ListElement>> gameLists = getUserCustomListsGame(user);
@@ -74,7 +81,9 @@ public class CustomListService {
         
     }
 
+    @Cacheable("gameLists")
     private List<CustomList<ListElement>> getUserCustomListsGame(User user) {
+        log.info("---------------CACHAO gameLists--------------------");
 
         List<CustomList<ListElement>> customLists = customListRepository.findByUser(user);
         List<CustomList<ListElement>> gameLists = new LinkedList<CustomList<ListElement>>();
@@ -137,7 +146,10 @@ public class CustomListService {
         return;
     }
 
+    @CacheEvict(value = "gameLists", allEntries = true)
     public void addGame(int gameId, int listId){
+        log.info("---------------AHORA TE DIGO GUDBAI gameLists--------------------");
+
         CustomList<ListElement> customList = customListRepository.findById(listId).get();
         customList.addElement(gameRepository.findById(gameId).get());
         customListRepository.save(customList);

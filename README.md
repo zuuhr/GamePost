@@ -97,11 +97,9 @@ Al igual que en "5. Forum entry", solo se permite crear contenido a los usuarios
 Admin?
 Al igual que en "4. Game", solo se permite crear contenido a los usuarios logueados.
 
----
 ### Diagrama de clases y templates
 ![Diagrama de clases y templates](https://user-images.githubusercontent.com/43469886/115966843-b6920180-a52f-11eb-9e02-0b5472a2e4dd.png)
 
----
 ### Instrucciones de despliegue
 Requisitos previos: SO en el que se pueda instalar mysql y java y los 2 .jar "gamepost.jar" y "gp_rest.jar"
 1. En el SO instalar mysql versión 8.0
@@ -109,6 +107,33 @@ Requisitos previos: SO en el que se pueda instalar mysql y java y los 2 .jar "ga
 3. java -jar gp_rest.jar 
 4. Ponerlo a ejecutar en background: Ctrl + Z y bg
 5. java -jar gamepost.jar 
+6. 
+---
+## FASE IV
+
+### Interfaz servicio interno
+- Búsqueda de juegos ordenadas por preferencias del usuario logueado: 
+El controlador llamará a un servicio interno que hace de interfaz con la API REST la cual accede a la base de datos para mostrar los juegos ordenados según la relación que tienen con aquillos jeugos que el usuaurio sigue.
+
+### Diagrama de clases y templates
+Templates con sus clases asociadas:
+![Blank diagram(8)](https://user-images.githubusercontent.com/43469859/117963153-4f8e8e00-b320-11eb-99b2-572c9be67001.png)
+Diagrama de clases: [TODO]
+![Diagrama de clases y templates](https://user-images.githubusercontent.com/43469886/115966843-b6920180-a52f-11eb-9e02-0b5472a2e4dd.png)
+
+### Infraestructura de Docker
+![image](https://user-images.githubusercontent.com/43469859/117958921-ca08df00-b31b-11eb-910f-7f94701de3e5.png)
+Se ha construido una infraestrucura que consta de cinco contenedores:
+1. Contenedor de la Base de Datos
+2. Contenedor del servicio interno
+3. 2 Contenedores con la web
+4. Balanceador de los servidores web
+
+
+### Vídeo demostrativo
+[Insertar vídeo aquí] [TODO]
+
+
 ---
 ## Integrantes del desarrollo:
 - Julen Justo Neira: [j.justo.2017@alumnos.urjc.es](mailto:j.justo.2017@alumnos.urjc.es) ([GitHub](https://github.com/JulenJus))

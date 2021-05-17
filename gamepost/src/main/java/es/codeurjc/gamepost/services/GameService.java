@@ -20,6 +20,7 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -109,6 +110,7 @@ public class GameService {
     }
 
     private Logger log = LoggerFactory.getLogger(GameService.class);
+
     public void showIndexGamesUserPreferences(Model model, HttpSession session, User user){
         //log.info("INFO: User id is " + user.getId());
         
