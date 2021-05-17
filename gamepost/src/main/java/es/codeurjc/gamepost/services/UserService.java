@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -90,6 +91,7 @@ public class UserService {
         loadInfo(model, session);
     }
 
+    @CacheEvict(value = "gameLists", allEntries = true)
     public void logOut(Model model, HttpServletRequest request, HttpSession session){
         setRoleAnonymous(model, request);
 

@@ -111,7 +111,6 @@ public class GameService {
 
     private Logger log = LoggerFactory.getLogger(GameService.class);
 
-    @Cacheable(value = "gamesPerUserPreferences", key="#user.id")
     public void showIndexGamesUserPreferences(Model model, HttpSession session, User user){
         //log.info("INFO: User id is " + user.getId());
         
