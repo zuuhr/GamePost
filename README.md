@@ -4,6 +4,9 @@ GamePost es una página web dedicada a la difusión, discusión y puesta en com�
 - Parte Pública: Visualización de la información de juegos y discusiones. Página principal personalizada según actualidad.
 - Parte Privada: Creación de nuevas entradas en el foro, almacenado de juegos y entradas de foros en listas. Página principal personalizada según gustos. Notificaciones sobre discusiones marcadas.
 - Parte de administrador: Gestión de descripciones y comentarios de foros en juegos. Herramienta para añadir o retirar juegos del catálogo.
+
+[Video de demostración](https://youtu.be/vvD4rQgVQcA)
+
 ---
 ## Fase I
 ### Entidades
@@ -131,8 +134,7 @@ Se ha construido una infraestrucura que consta de cinco contenedores:
 
 
 ### Vídeo demostrativo
-[Insertar vídeo aquí] [TODO]
-
+[Video de demostración](https://youtu.be/vvD4rQgVQcA)
 
 ---
 ## Integrantes del desarrollo:
