@@ -2,6 +2,8 @@ package es.codeurjc.gamepost.controllers;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,14 +35,17 @@ public class SearchEngineController {
     @Autowired
     ModelService modelService;
 
+    private Logger log = LoggerFactory.getLogger(SearchEngineController.class);
+
     @PostMapping("/search")
     public String search(Model model, HttpSession session, @RequestParam String searchText){
-        
+        log.info("INFO: Search.");
+
         gameService.search(model, session, searchText);
         customListService.showIndex(model, session, userService.getSessionUser(session));
         forumEntryService.showIndexLatestForumEntries(model, session);
         
         modelService.updateModel(model, session);
-        return "searchresults";
+        return "searchResults";
     }
 }
