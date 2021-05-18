@@ -10,10 +10,13 @@ import com.hazelcast.web.WebFilter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.session.hazelcast.config.annotation.web.http.EnableHazelcastHttpSession;
 
-
+@Configuration
 @SpringBootApplication
 @EnableHazelcastHttpSession
 public class GamepostApplication {
@@ -35,6 +38,11 @@ public class GamepostApplication {
 		properties.put("sticky-session", "false");
 
 		return new WebFilter(properties);
+	}
+
+	@Bean 
+	public ServletListenerRegistrationBean<HttpSessionEventPublisher> getHttpSessionEventPublisher() {
+		     return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
 	}
 	/*
 	 * @Bean public Config config(){ Config config = new Config();

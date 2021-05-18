@@ -16,6 +16,7 @@ import es.codeurjc.gamepost.services.UserService;
 
 import java.util.Optional;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -82,15 +83,16 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public String logOut(Model model, HttpServletRequest request, HttpSession session){
-        
+    public String logOut(Model model, HttpServletRequest request, HttpSession session) throws ServletException{
+        request.logout();
         userService.logOut(model, request, session);
+        if(! (boolean)session.getAttribute("logged")) log.info("[UserController][logOut] successfully logged out");
         modelService.updateModel(model, session);
         //session.invalidate();
-        
         return "redirect:/";
     }
 
+   
     /*
     @GetMapping("/notifications")
     public String showNotifications(Model model){

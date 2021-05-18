@@ -17,14 +17,15 @@
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 text-lg " href="/"
       style="font-family:Impact; font-size: 300%; ">GamePost</a>
     <form class="form-text" method="POST" action="/search">
-      <input class="form-control bg-dark border-light text-white" type="text" placeholder="Search" aria-label="Search" name="searchText">
+      <input class="form-control bg-dark border-light text-white" type="text" placeholder="Search" aria-label="Search"
+        name="searchText">
     </form>
     <button class="btn btn-lg btn-secondary btn-block mx-4" type="submit">Search</button>
     <ul class="navbar-nav px-3 h-auto">
       <li class="nav-item text-nowrap ">
         {{#roleUser}}
         <a class="nav-link " href="/profile">{{username}}</a>
-        <a class="nav-link " href="/logout">Log out</a>        
+        <a class="nav-link " href="/logout2">Log out</a>
         {{/roleUser}}
         {{#roleAnonymous}}
         <a class="nav-link " href="/signin">Sign in</a>
@@ -32,7 +33,7 @@
         {{/roleAnonymous}}
         {{#roleAdmin}}
         <div style="color:white">You're an admin</div>
-        <a class="nav-link " href="/logout">Log out</a>
+        <a class="nav-link " href="/logout2">Log out</a>
         {{/roleAdmin}}
       </li>
     </ul>

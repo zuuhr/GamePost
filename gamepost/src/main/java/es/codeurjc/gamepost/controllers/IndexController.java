@@ -43,8 +43,14 @@ public class IndexController {
 
             // log.info("INFO: Try");
             // log.info("INFO: User name: " + (session.getAttribute("username")));
+            if(! (boolean)session.getAttribute("logged")){
+                log.info("[IndexController][enlace] SUCCESSFULLY logged out");
+                session.setAttribute("logged", false);
+                userService.setRoleAnonymous(model, request);
+                gameService.showIndexLatestUpdatedGames(model, session);
+            }
 
-            if ((boolean) session.getAttribute("logged")) {
+            else if ((boolean) session.getAttribute("logged")) {
                 // log.info("INFO: Try");
 
                 User user = userService.getSessionUser(session);

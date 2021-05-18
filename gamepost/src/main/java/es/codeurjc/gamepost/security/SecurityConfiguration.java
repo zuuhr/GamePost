@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -59,8 +60,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         // TODO: Define propper logout.
         // Logout
-        http.logout().logoutUrl("/logout").permitAll();
-        http.logout().logoutSuccessUrl("/").permitAll();
+        //http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").deleteCookies("JSESSIONID").invalidateHttpSession(true) ;
+        http.logout().logoutUrl("/logout2").permitAll();
+        http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout2")).logoutSuccessUrl("/logout").permitAll();
 
         // Disable CSRF at the moment
         http.csrf().disable();

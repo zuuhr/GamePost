@@ -13,6 +13,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import es.codeurjc.gamepost.objects.User;
 import es.codeurjc.gamepost.repositories.UserRepository;
@@ -94,13 +95,13 @@ public class UserService {
     @CacheEvict(value = "gameLists", allEntries = true)
     public void logOut(Model model, HttpServletRequest request, HttpSession session){
         setRoleAnonymous(model, request);
-
         //session.setAttribute("username", null);
         session.setAttribute("logged", false);
-
-        return;
+        if(! (boolean)session.getAttribute("logged")) log.info("[UserService][logOut] logged out");
+        model.addAttribute("logged", false);
     }
 
+    @CacheEvict(value = "user", allEntries = true)
     public void setRoleAnonymous(Model model, HttpServletRequest request){
         HttpSession session = request.getSession();
 
