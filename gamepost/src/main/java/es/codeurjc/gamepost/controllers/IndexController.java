@@ -32,34 +32,42 @@ public class IndexController {
     ModelService modelService;
 
     private Logger log = LoggerFactory.getLogger(IndexController.class);
-    @GetMapping("/")
-    public String enlace(Model model, HttpServletRequest request, HttpSession session) {
 
-        if(session.isNew()){
+    @GetMapping("/")
+    public String enlace(Model model, HttpServletRequest request, HttpSession session) throws NullPointerException {
+        try {
+            if (session.isNew()) {
+                session.setAttribute("logged", false);
+                userService.setRoleAnonymous(model, request);
+            }
+
+            // log.info("INFO: Try");
+            // log.info("INFO: User name: " + (session.getAttribute("username")));
+
+            if ((boolean) session.getAttribute("logged")) {
+                // log.info("INFO: Try");
+
+                User user = userService.getSessionUser(session);
+
+                log.info("INFO: User id is " + user.getId() + " in index controller.");
+                gameService.showIndexGamesUserPreferences(model, session, user);
+                // gameService.showIndexLatestUpdatedGames(model, session);
+                userService.loadInfo(model, session);
+            } else
+                gameService.showIndexLatestUpdatedGames(model, session);
+
+            forumEntryService.showIndexLatestForumEntries(model, session);
+
+            modelService.updateModel(model, session);
+            return "index";
+        } catch (Exception e) {
             session.setAttribute("logged", false);
             userService.setRoleAnonymous(model, request);
-        }
-
-        //log.info("INFO: Try");
-        //log.info("INFO: User name: " + (session.getAttribute("username")));
-
-        if((boolean) session.getAttribute("logged")){
-            //log.info("INFO: Try");
-
-            User user = userService.getSessionUser(session);   
-            
-            log.info("INFO: User id is " + user.getId() + " in index controller.");
-            gameService.showIndexGamesUserPreferences(model, session, user);
-            //gameService.showIndexLatestUpdatedGames(model, session);  
-            userService.loadInfo(model, session);  
-        }
-        else
             gameService.showIndexLatestUpdatedGames(model, session);
-
-        forumEntryService.showIndexLatestForumEntries(model, session);
-
-        modelService.updateModel(model, session);
-        return "index";
+            forumEntryService.showIndexLatestForumEntries(model, session);
+            modelService.updateModel(model, session);
+            return "index";
+        }
     }
 
     @GetMapping("/signin")
@@ -74,7 +82,7 @@ public class IndexController {
 
     @GetMapping("/profile")
     public String profile(Model model, HttpSession session) {
-        
+
         forumEntryService.showIndexLatestForumEntries(model, session);
         userService.loadInfo(model, session);
 
@@ -83,12 +91,12 @@ public class IndexController {
     }
 
     @GetMapping("notifications")
-    public String notifications(Model model, HttpSession session){
-        
+    public String notifications(Model model, HttpSession session) {
+
         forumEntryService.showIndexLatestForumEntries(model, session);
         userService.loadInfo(model, session);
-        
+
         modelService.updateModel(model, session);
         return "notifications";
-    }    
+    }
 }
